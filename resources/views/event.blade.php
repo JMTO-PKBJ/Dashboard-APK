@@ -35,10 +35,10 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('event') }}">
+                <a class="nav-link" href="{{ url('index') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span>
-                </a>
+            </a>
             </li>
 
             <!-- Divider -->
