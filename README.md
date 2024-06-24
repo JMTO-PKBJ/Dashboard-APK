@@ -21,9 +21,6 @@ composer update
 
 #### 4. Setup Environment
 buatlah (copy & paste) .env dari file .env.example.
-```
-composer update
-```
 #### 5. Start Laragon & MySQL
 pastikan laragon berjalan dan MySQL berjalan juga.
 #### 6. Create Database
