@@ -12,67 +12,50 @@
 
     {{-- Custom Fonts --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-   
+
 </head>
-<body class="bg-gradient-primary">
+<body class="bg-gradient-light">
 
     <div class="container">
 
         <!-- Outer Row -->
         <div class="row justify-content-center">
 
-            <div class="col-xl-10 col-lg-12 col-md-9">
+            <div class="col-xl-10 col-lg-12 col-md-9 my-5">
 
-                <div class="card o-hidden border-0 shadow-lg my-5">
-                    <div class="card-body p-0">
-                        <!-- Nested Row within Card Body -->
-                        <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
-                            <div class="col-lg-6">
-                                <div class="p-5">
-                                    <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
-                                    </div>
-                                    <form class="user">
-                                        <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address...">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Password">
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Remember
-                                                    Me</label>
-                                            </div>
-                                        </div>
-                                        <a href="{{ url('index') }}" class="btn btn-primary btn-user btn-block">
-                                            Login
-                                        </a>
-                                        <hr>
-                                        <a href="index.html" class="btn btn-google btn-user btn-block">
-                                            <i class="fab fa-google fa-fw"></i> Login with Google
-                                        </a>
-                                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                            <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                                        </a>
-                                    </form>
-                                    <hr>
-                                    <div class="text-center">
-                                        <a class="small" href="forgot-password.html">Forgot Password?</a>
-                                    </div>
-                                    <div class="text-center">
-                                        <a class="small" href="register.html">Create an Account!</a>
+                {{-- <div class="card o-hidden border-0 shadow-lg my-5"> --}}
+                    <div class="border border-black login-cont d-flex my-5" style="border-radius: 20px">
+                        <div class="col-xl-6 image-container p-0">
+                            <img src="{{ asset('images/jalantol_login.png') }}" alt="Login Image">
+                        </div>
+                        <div class="col-xl-6 text-container d-flex flex-column">
+                            <img class="my-4" style="width: 35%" src="{{ asset('images/jasamarga_icon.png') }}" alt="">
+                            <h1 style="font-size: 18px; font-style: italic; font-weight:400; color:#000000;">Login Admin</h1>
+
+                            <div class="row w-75 my-2">
+                                <p class="m-0" style="font-size: 13px">Username</p>
+                                <input class="form-control text-field w-100" type="text" name="username" id="username" placeholder="Enter your username">
+                            </div>
+
+                            <div class="row w-75 my-2">
+                                <p class="m-0" style="font-size: 13px">Password</p>
+                                <div class="input-group">
+                                    <input class="form-control text-field w-100" type="password" name="password" id="password" placeholder="Enter your password">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text password-toggle" onclick="togglePasswordVisibility()">
+                                            <i class="fas fa-eye"></i>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
+
+                            <a href="{{ url('index') }}" class="login-button w-75 my-2" style="font-weight: 400;">Login</a>
+
+
+                            <p>© 2024 Deteksi Bahu Tol JMTO| V 1.0.0</p>
                         </div>
                     </div>
-                </div>
+                
 
             </div>
 
@@ -90,6 +73,8 @@
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
+    {{-- JS --}}
+    <script src="main.js"></script>
 </body>
 
 </html>

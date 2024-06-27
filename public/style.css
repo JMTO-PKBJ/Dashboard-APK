@@ -3,3 +3,79 @@
     padding: 0;
     /* background-color: aqua; */
 }
+
+.image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-container img {
+    max-height: 100%;
+    max-width: 100%;
+    height: auto;
+}
+
+.text-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.text-container h1 {
+    margin: 0;
+}
+
+.text-field, .login-button {
+    border-radius: 11px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    font-size: 14px;
+    padding: 10px 15px;
+    width: 100%;
+}
+
+.image-container img {
+    max-height: 100%;
+    max-width: 100%;
+    height: auto;
+    object-fit: cover; 
+    border-radius: 20px 0 0 20px; 
+}
+
+.login-cont{
+    background-color: #FFFFFF;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.login-button {
+    background-color: #0E1040;
+    color: #FFFFFF;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+}
+
+.login-button:hover {
+    background-color: #1A1C59;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+/* 
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+} */
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
