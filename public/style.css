@@ -81,4 +81,16 @@
     border: 1px solid; /* Warna dan ketebalan border */
     padding: 5px; /* Jarak antara border dan ikon */
     border-radius: 10px; /* Untuk membuat border menjadi lingkaran */
+    text-decoration: none;
+}
+
+.icon-border-delete {
+    background-color: #FC0202;
+    color: #FFFFFF;
+    width: 38px; /* Sesuaikan ukuran ikon sesuai kebutuhan */
+    height: 32px;
+    border: 1px solid; /* Warna dan ketebalan border */
+    padding: 5px; /* Jarak antara border dan ikon */
+    border-radius: 10px; /* Untuk membuat border menjadi lingkaran */
+    text-decoration: none;
 }

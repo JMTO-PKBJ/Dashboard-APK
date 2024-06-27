@@ -14,12 +14,20 @@ Route::get('/viewCCTV', function () {
     return view('viewCCTV');
 });
 
+Route::get('/addCCTV', function () {
+    return view('addCCTV');
+});
+
 Route::get('/event', function () {
     return view('event');
 });
 
 Route::get('/login', function () {
     return view('login');
+});
+
+Route::get('/users', function () {
+    return view('users');
 });
 
 Route::get('/test', function () {
