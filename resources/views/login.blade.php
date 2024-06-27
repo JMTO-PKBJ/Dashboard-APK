@@ -34,22 +34,22 @@
 
                             <div class="row w-75 my-2">
                                 <p class="m-0" style="font-size: 13px">Username</p>
-                                <input class="form-control text-field w-100" type="text" name="username" id="username" placeholder="Enter your username">
+                                <input class="form-control text-field w-100" style="border-radius: 7px"  type="text" name="username" id="username" placeholder="Enter your username">
                             </div>
 
                             <div class="row w-75 my-2">
                                 <p class="m-0" style="font-size: 13px">Password</p>
                                 <div class="input-group">
-                                    <input class="form-control text-field w-100" type="password" name="password" id="password" placeholder="Enter your password">
+                                    <input class="form-control text-field w-100" style="border-radius: 7px" type="password" name="password" id="password" placeholder="Enter your password">
                                     <div class="input-group-append">
-                                        <span class="input-group-text password-toggle" onclick="togglePasswordVisibility()">
+                                        <span class="input-group-text password-toggle" onclick="togglePasswordVisibility()" style="border: none">
                                             <i class="fas fa-eye"></i>
                                         </span>
                                     </div>
                                 </div>
                             </div>
 
-                            <a href="{{ url('index') }}" class="login-button w-75 my-2" style="font-weight: 400;">Login</a>
+                            <a href="{{ url('dashboard') }}" class="login-button w-75 my-2" style="font-weight: 400;">Login</a>
 
 
                             <p>© 2024 Deteksi Bahu Tol JMTO| V 1.0.0</p>
