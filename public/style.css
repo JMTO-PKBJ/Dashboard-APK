@@ -94,3 +94,11 @@
     border-radius: 10px; /* Untuk membuat border menjadi lingkaran */
     text-decoration: none;
 }
+
+.scroll-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    display: none; /* Awalnya disembunyikan */
+    z-index: 1000;
+}

@@ -30,7 +30,7 @@
                         </div>
                         <div class="col-xl-6 text-container d-flex flex-column">
                             <img class="my-4" style="width: 35%" src="{{ asset('images/jasamarga_icon.png') }}" alt="">
-                            <h1 style="font-size: 18px; font-style: italic; font-weight:400; color:#000000;">Login Admin</h1>
+                            <h1 style="font-size: 18px; font-style: italic; font-weight:400; color:#000000;">Login</h1>
 
                             <div class="row w-75 my-2">
                                 <p class="m-0" style="font-size: 13px">Username</p>
