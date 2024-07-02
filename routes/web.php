@@ -34,6 +34,10 @@ Route::get('/users', function () {
     return view('users');
 });
 
+Route::get('/addUser', function () {
+    return view('addUser');
+});
+
 Route::get('/test', function () {
     return response()->json(['message' => 'Hello, world!']);
 });

@@ -88,10 +88,37 @@
     background-color: #FC0202;
     color: #FFFFFF;
     width: 38px; /* Sesuaikan ukuran ikon sesuai kebutuhan */
-    height: 32px;
+    height: 35px;
     border: 1px solid; /* Warna dan ketebalan border */
     padding: 5px; /* Jarak antara border dan ikon */
     border-radius: 10px; /* Untuk membuat border menjadi lingkaran */
     text-decoration: none;
 }
+
+.addUser{
+    background-color: #6484E1;
+    color: #FFFFFF;
+    border-radius: 5px;
+    width: 125px;
+    height: 35px;
+    padding: 4px;
+    display: flex;
+    transition: border 0.3s ease;
+}
+
+.addUser:hover{
+    text-decoration: none;
+    color: #FFFFFF; /* Tetap putih saat di-hover */
+    border: 2px solid #FFFFFF; 
+
+}
+
+/* .dropdown .btn {
+    width: 100%;
+    border-radius: 7px;
+}
+.dropdown-menu {
+    width: 100%;
+} */
+
 
