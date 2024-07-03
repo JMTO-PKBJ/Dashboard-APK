@@ -51,12 +51,15 @@
                         </div>
                     </div>
                     
+                    <div class="btnAdd p-3 d-flex justify-content-center">
+                        <a href="#" class="login-button w-100 my-2" style="font-weight: 400;">Tambah User</a>
+                    </div>
                 </div>
 
-                <div class="my-5">
+                <div class="my-2">
                     &nbsp;
                 </div>
-                <div class="my-3">
+                <div class="my-2">
                     &nbsp;
                 </div>
 
