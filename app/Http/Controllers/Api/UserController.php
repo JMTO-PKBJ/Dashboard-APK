@@ -13,13 +13,12 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class UserController extends Controller
 {
     const ROLES = [
-        1 => 'admin',
-        2 => 'supervisor',
-        3 => 'operator',
+        1 => 'Admin',
+        2 => 'Supervisor',
+        3 => 'Operator',
     ];
 
     public function register(Request $request)
-
     {
         $request->validate([
             'username' => 'required|string|max:255|unique:users',
@@ -40,41 +39,34 @@ class UserController extends Controller
                 'id' => $user->id,
                 'username' => $user->username,
                 'role' => self::ROLES[$user->role_id],
-                'created_at'=> $user->created_at,
+                'created_at' => $user->created_at,
             ],
             'remember_token' => $token,
         ], 201);
     }
 
-        public function login(Request $request)
-        {
-            $credentials = $request->only('username', 'password');
-    
-            if (!$token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'Invalid credentials'], 401);
-            }
-    
-            $user = auth()->user();
-            $user->load('role');
-            return response()->json([
-                'user' => [
-                    'id' => $user->id,
-                    'username' => $user->username,
-                    'role' => self::ROLES[$user->role_id],
+    public function login(Request $request)
+    {
+        $credentials = $request->only('username', 'password');
+
+        if (!$token = JWTAuth::attempt($credentials)) {
+            return response()->json(['error' => 'Invalid credentials'], 401);
+        }
+
+        $user = auth()->user();
+        $user->load('role');
+        return response()->json([
+            'user' => [
+                'id' => $user->id,
+                'username' => $user->username,
+                'role' => self::ROLES[$user->role_id],
             ],
             'remember_token' => $token,
-            ]);
-        }
+        ]);
+    }
 
     public function index()
     {
-        // Verifikasi token
-        // $user = auth()->guard('api')->user();
-        // if (!$user) {
-        //     return response()->json(['error' => 'Unauthenticated'], 401);
-        // }
-    
-        // Ambil dan proses daftar pengguna
         $users = User::latest()->get();
         $users = $users->map(function ($user) {
             return [
@@ -83,11 +75,10 @@ class UserController extends Controller
                 'role' => self::ROLES[$user->role_id],
             ];
         });
-    
+
         return new UserResource($users);
     }
 
-     // Update a user's details
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
@@ -120,7 +111,6 @@ class UserController extends Controller
         ], 200);
     }
 
-     // Delete a user
     public function destroy($id)
     {
         $user = User::findOrFail($id);
@@ -128,5 +118,4 @@ class UserController extends Controller
 
         return response()->json(['message' => 'User deleted successfully'], 200);
     }
-
 }
