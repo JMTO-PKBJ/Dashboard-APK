@@ -9,7 +9,7 @@
     
     {{-- Bootstrap --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
+    
     {{-- CSS --}}  
     <link rel="stylesheet" href="{{ asset('style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/sb-admin-2.min.css')}}">
@@ -20,6 +20,12 @@
     {{-- Custom Table --}}
     <link href="datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     
+    <!-- Date Range Picker CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
+
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 </head>
 <body id="page-top">
 
@@ -141,6 +147,10 @@
         function setRole(role) {
             document.getElementById('roleDropdownButton').textContent = role;
         }
+
+        function setDropdownValue(dropdownId, value) {
+            document.getElementById(dropdownId).textContent = value;
+        }
     </script>
 
     <script>
@@ -206,6 +216,56 @@
             }
         }
     </script>
+
+    <!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Moment.js -->
+<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<!-- Date Range Picker JS -->
+<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        // Inisialisasi Date Range Picker
+        $('#dateRangePicker').daterangepicker({
+            locale: {
+                format: 'YYYY-MM-DD'
+            },
+            opens: 'right',
+            alwaysShowCalendars: true,
+            autoUpdateInput: false,
+            startDate: moment().startOf('month'),
+            endDate: moment().endOf('month'),
+            ranges: {
+                'Sekarang': [moment(), moment()],
+                'Kemarin': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                '7 Hari Terakhir': [moment().subtract(6, 'days'), moment()],
+                '30 Hari Terakhir': [moment().subtract(29, 'days'), moment()],
+                'Bulan Ini': [moment().startOf('month'), moment().endOf('month')],
+                'Bulan Lalu': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            }
+        });
+
+        // Fungsi tombol Apply
+        $("#applyDateButton").on("click", function() {
+            var selectedDates = $('#dateRangePicker').data('daterangepicker');
+            var startDate = selectedDates.startDate.format('YYYY-MM-DD');
+            var endDate = selectedDates.endDate.format('YYYY-MM-DD');
+            $("#dateDropdownButton").text(startDate + " to " + endDate);
+            // Tutup dropdown
+            $(".dropdown-toggle").dropdown("toggle");
+        });
+
+        // Fungsi tombol Cancel
+        $("#cancelDateButton").on("click", function() {
+            // Tutup dropdown
+            $(".dropdown-toggle").dropdown("toggle");
+        });
+    });
+</script>
+
+    
+    
 
     @include('includes.script')
 

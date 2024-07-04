@@ -42,5 +42,25 @@ function togglePasswordVisibility() {
     });
 
 
+// Date
+$(document).ready(function(){
+    $('#startDate').datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        todayHighlight: true
+    });
 
+    $('#endDate').datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        todayHighlight: true
+    });
+
+    $('#selectToday').click(function(){
+        var today = new Date();
+        var formattedDate = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+        $('#startDate').datepicker('update', formattedDate);
+        $('#endDate').datepicker('update', formattedDate);
+    });
+});
 

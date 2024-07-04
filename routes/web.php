@@ -18,8 +18,8 @@ Route::get('/addCCTV', function () {
     return view('addCCTV');
 });
 
-Route::get('/event', function () {
-    return view('event');
+Route::get('/events', function () {
+    return view('events');
 });
 
 Route::get('/register', function () {

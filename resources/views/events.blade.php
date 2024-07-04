@@ -10,45 +10,48 @@
                 <div class="col-sm-3 ruas p-0">
                     Ruas
                     <div class="dropdown p-2">
-                        <button class="btn btn-secondary dropdown-toggle w-75" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="roleDropdownButton" >
+                        <button class="btn btn-secondary dropdown-toggle w-75" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="ruasDropdownButton">
                             Pilih Ruas
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#" onclick="setRole('Admin')">Admin</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="setRole('Monitoring')">Monitoring</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="setRole('Supervisor')">Supervisor</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="setDropdownValue('ruasDropdownButton', 'Dalam Kota')">Dalam Kota</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="setDropdownValue('ruasDropdownButton', 'Jakarta-Tangerang')">Jakarta-Tangerang</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="setDropdownValue('ruasDropdownButton', 'Jagorawi')">Jagorawi</a></li>
                         </ul>
                     </div>
                 </div>
-
-                <div class="col-sm-3 ruas p-0">
+                
+                <div class="col-sm-3 cctv p-0">
                     CCTV
                     <div class="dropdown p-2">
-                        <button class="btn btn-secondary dropdown-toggle w-75" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="roleDropdownButton" >
-                            Pilih Ruas
+                        <button class="btn btn-secondary dropdown-toggle w-75" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="cctvDropdownButton">
+                            Pilih CCTV
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#" onclick="setRole('Admin')">Admin</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="setRole('Monitoring')">Monitoring</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="setRole('Supervisor')">Supervisor</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="setDropdownValue('cctvDropdownButton', 'CCTV Cawang Uki')">CCTV Cawang Uki</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="setDropdownValue('cctvDropdownButton', 'CCTV Tomang')">CCTV Tomang</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="setDropdownValue('cctvDropdownButton', 'All')">All</a></li>
                         </ul>
                     </div>
                 </div>
-
-                <div class="col-sm-3 ruas p-0">
+                
+                <div class="col-sm-3 tanggal p-0">
                     Tanggal
                     <div class="dropdown p-2">
-                        <button class="btn btn-secondary dropdown-toggle w-75" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="roleDropdownButton" >
-                            Pilih Ruas
+                        <button class="btn btn-secondary dropdown-toggle w-75" type="button" id="dateDropdownButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            Pilih Tanggal
                         </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#" onclick="setRole('Admin')">Admin</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="setRole('Monitoring')">Monitoring</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="setRole('Supervisor')">Supervisor</a></li>
-                        </ul>
+                        <div class="dropdown-menu p-3" style="min-width: 500px;">
+                            <div id="dateRangePicker" style="width: 100%;"></div>
+                            <div class="d-flex justify-content-end mt-2">
+                                <button id="applyDateButton" class="btn btn-primary me-2">Apply</button>
+                                <button id="cancelDateButton" class="btn btn-secondary">Cancel</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
+                
+                
                 <div class="col-sm-3 ruas d-flex justify-content-between p-4 border border-danger">
                     <a class="eventBtn d-flex justify-content-center align-items-center" style="background-color: #6484E1" href="#">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -142,7 +145,6 @@
                         ?>
                     </tbody>
                 </table>
-                
                 
             </div>
         </div>
