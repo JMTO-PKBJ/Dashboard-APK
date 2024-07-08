@@ -9,25 +9,27 @@
             <div class="d-flex">
                 <div class="col-sm-3 ruas p-0">
                     Ruas
-                    <div class="dropdown p-2">
-                        <button class="btn btn-secondary dropdown-toggle w-75" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="ruasDropdownButton">
-                            Pilih Ruas
+                    <div class="dropdown w-75 p-2">
+                        <button class="btn btn-outline-secondary dropdown-toggle w-100 d-flex justify-content-between align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="ruasDropdownButton">
+                            <span>Pilih Ruas</span>
+                            <span class="dropdown-toggle-icon"></span>
                         </button>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu" id="ruasDropdownMenu">
                             <li><a class="dropdown-item" href="#" onclick="setDropdownValue('ruasDropdownButton', 'Dalam Kota')">Dalam Kota</a></li>
                             <li><a class="dropdown-item" href="#" onclick="setDropdownValue('ruasDropdownButton', 'Jakarta-Tangerang')">Jakarta-Tangerang</a></li>
                             <li><a class="dropdown-item" href="#" onclick="setDropdownValue('ruasDropdownButton', 'Jagorawi')">Jagorawi</a></li>
                         </ul>
                     </div>
                 </div>
-                
-                <div class="col-sm-3 cctv p-0">
+
+                <div class="col-sm-3 ruas p-0">
                     CCTV
-                    <div class="dropdown p-2">
-                        <button class="btn btn-secondary dropdown-toggle w-75" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="cctvDropdownButton">
-                            Pilih CCTV
+                    <div class="dropdown w-75 p-2">
+                        <button class="btn btn-outline-secondary dropdown-toggle w-100 d-flex justify-content-between align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="cctvDropdownButton">
+                            <span>Pilih Ruas</span>
+                            <span class="dropdown-toggle-icon"></span>
                         </button>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu" id="cctvDropdownMenu">
                             <li><a class="dropdown-item" href="#" onclick="setDropdownValue('cctvDropdownButton', 'CCTV Cawang Uki')">CCTV Cawang Uki</a></li>
                             <li><a class="dropdown-item" href="#" onclick="setDropdownValue('cctvDropdownButton', 'CCTV Tomang')">CCTV Tomang</a></li>
                             <li><a class="dropdown-item" href="#" onclick="setDropdownValue('cctvDropdownButton', 'All')">All</a></li>
@@ -37,9 +39,10 @@
                 
                 <div class="col-sm-3 tanggal p-0">
                     Tanggal
-                    <div class="dropdown p-2">
-                        <button class="btn btn-secondary dropdown-toggle w-75" type="button" id="dateDropdownButton" data-bs-toggle="dropdown" aria-expanded="false">
-                            Pilih Tanggal
+                    <div class="dropdown w-75 p-2">
+                        <button class="btn btn-outline-secondary dropdown-toggle w-100 d-flex justify-content-between align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span>Pilih Tanggal</span>
+                            <span class="dropdown-toggle-icon"></span>
                         </button>
                         <div class="dropdown-menu p-3" style="min-width: 500px;">
                             <div id="dateRangePicker" style="width: 100%;"></div>
@@ -51,13 +54,12 @@
                     </div>
                 </div>
                 
-                
-                <div class="col-sm-3 ruas d-flex justify-content-between p-4 border border-danger">
-                    <a class="eventBtn d-flex justify-content-center align-items-center" style="background-color: #6484E1" href="#">
+                <div class="col-sm-3 ruas d-flex justify-content-start align-items-center">
+                    <a class="eventBtn d-flex justify-content-center align-items-center mx-2 " style="background-color: #6484E1" href="#">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
                         </svg>
-                        <span class="ms-2">
+                        <span class="ms-1">
                             Search
                         </span>
                     </a>
@@ -133,7 +135,7 @@
                             echo "<td>$class</td>";
                             echo "<td>$waktu</td>";
                             echo "<td>
-                                    <a href='#'>
+                                    <a class='viewCCTV' data-bs-toggle='modal' data-bs-target='#viewCCTV'>
                                         <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='icon-border bi bi-eye' viewBox='0 0 16 16'>
                                             <path d='M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z'/>
                                             <path d='M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0'/>
@@ -146,7 +148,26 @@
                     </tbody>
                 </table>
                 
+                {{-- View CCTV --}}
+                <div class="modal fade" id="viewCCTV" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="viewCCTVLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="viewCCTVLabel" style="font-size: 25px; color: #0E1040; font-weight: 700;">Image</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="d-flex justify-content-center">
+                                    <img src="{{ asset('images/event_image.png') }}" alt="" style="max-width: 100%; height: auto;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+
             </div>
+
         </div>
     </div>
 @stop

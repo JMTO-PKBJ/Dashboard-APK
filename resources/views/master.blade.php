@@ -89,6 +89,8 @@
     {{-- Script --}}
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+    {{-- Active Nav & Role --}}
     <script>
         // Active Nav
         document.addEventListener('DOMContentLoaded', function () {
@@ -153,8 +155,8 @@
         }
     </script>
 
+    {{-- Layout CCTV --}}
     <script>
-        // Layout CCTV
         document.addEventListener("DOMContentLoaded", function() {
             changeLayout(2); 
         });
@@ -233,56 +235,121 @@
         });
     </script>
 
+    {{-- Dropdown Menu --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            adjustDropdownWidth('ruasDropdownButton', 'ruasDropdownMenu');
+            adjustDropdownWidth('lokasiDropdownButton', 'lokasiDropdownMenu');
 
-    <!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- Moment.js -->
-<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<!-- Date Range Picker JS -->
-<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+            // Function to adjust dropdown width
+            function adjustDropdownWidth(buttonId, menuId) {
+                var dropdownButton = document.getElementById(buttonId);
+                var dropdownMenu = document.getElementById(menuId);
 
-<script>
-    $(document).ready(function() {
-        // Inisialisasi Date Range Picker
-        $('#dateRangePicker').daterangepicker({
-            locale: {
-                format: 'YYYY-MM-DD'
-            },
-            opens: 'right',
-            alwaysShowCalendars: true,
-            autoUpdateInput: false,
-            startDate: moment().startOf('month'),
-            endDate: moment().endOf('month'),
-            ranges: {
-                'Sekarang': [moment(), moment()],
-                'Kemarin': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                '7 Hari Terakhir': [moment().subtract(6, 'days'), moment()],
-                '30 Hari Terakhir': [moment().subtract(29, 'days'), moment()],
-                'Bulan Ini': [moment().startOf('month'), moment().endOf('month')],
-                'Bulan Lalu': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                function setDropdownWidth() {
+                    dropdownMenu.style.width = dropdownButton.offsetWidth + 'px';
+                }
+
+                setDropdownWidth();
+
+                // Adjust the width whenever the window is resized
+                window.addEventListener('resize', setDropdownWidth);
+            }
+
+            function setDropdownValue(buttonId, value) {
+                document.getElementById(buttonId).querySelector('span:first-child').innerText = value;
             }
         });
 
-        // Fungsi tombol Apply
-        $("#applyDateButton").on("click", function() {
-            var selectedDates = $('#dateRangePicker').data('daterangepicker');
-            var startDate = selectedDates.startDate.format('YYYY-MM-DD');
-            var endDate = selectedDates.endDate.format('YYYY-MM-DD');
-            $("#dateDropdownButton").text(startDate + " to " + endDate);
-            // Tutup dropdown
-            $(".dropdown-toggle").dropdown("toggle");
-        });
+        document.addEventListener('DOMContentLoaded', function () {
+            adjustDropdownWidth('ruasDropdownButton', 'ruasDropdownMenu');
+            adjustDropdownWidth('cctvDropdownButton', 'cctvDropdownMenu');
 
-        // Fungsi tombol Cancel
-        $("#cancelDateButton").on("click", function() {
-            // Tutup dropdown
-            $(".dropdown-toggle").dropdown("toggle");
-        });
-    });
-</script>
+            // Function to adjust dropdown width
+            function adjustDropdownWidth(buttonId, menuId) {
+                var dropdownButton = document.getElementById(buttonId);
+                var dropdownMenu = document.getElementById(menuId);
 
+                function setDropdownWidth() {
+                    dropdownMenu.style.width = dropdownButton.offsetWidth + 'px';
+                }
+
+                setDropdownWidth();
+
+                // Adjust the width whenever the window is resized
+                window.addEventListener('resize', setDropdownWidth);
+            }
+
+            function setDropdownValue(buttonId, value) {
+                document.getElementById(buttonId).querySelector('span:first-child').innerText = value;
+            }
+        });
+    </script>
+
+    {{-- View CCTV --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var images = document.querySelectorAll('.cctv img');
+            var modalImage = document.getElementById('modalImage');
     
-    
+            images.forEach(function (image) {
+                image.addEventListener('click', function () {
+                    modalImage.src = this.src;
+                    modalImage.alt = this.alt;
+                    $('#viewCCTV').modal('show');
+                    $('#viewCCTV').addClass('show');
+                    $('.modal-dialog').addClass('modal-fullscreen');
+                });
+            });
+        });
+    </script>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Moment.js -->
+    <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <!-- Date Range Picker JS -->
+    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Inisialisasi Date Range Picker
+            $('#dateRangePicker').daterangepicker({
+                locale: {
+                    format: 'YYYY-MM-DD'
+                },
+                opens: 'right',
+                alwaysShowCalendars: true,
+                autoUpdateInput: false,
+                startDate: moment().startOf('month'),
+                endDate: moment().endOf('month'),
+                ranges: {
+                    'Sekarang': [moment(), moment()],
+                    'Kemarin': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    '7 Hari Terakhir': [moment().subtract(6, 'days'), moment()],
+                    '30 Hari Terakhir': [moment().subtract(29, 'days'), moment()],
+                    'Bulan Ini': [moment().startOf('month'), moment().endOf('month')],
+                    'Bulan Lalu': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                }
+            });
+
+            // Fungsi tombol Apply
+            $("#applyDateButton").on("click", function() {
+                var selectedDates = $('#dateRangePicker').data('daterangepicker');
+                var startDate = selectedDates.startDate.format('YYYY-MM-DD');
+                var endDate = selectedDates.endDate.format('YYYY-MM-DD');
+                $("#dateDropdownButton").text(startDate + " to " + endDate);
+                // Tutup dropdown
+                $(".dropdown-toggle").dropdown("toggle");
+            });
+
+            // Fungsi tombol Cancel
+            $("#cancelDateButton").on("click", function() {
+                // Tutup dropdown
+                $(".dropdown-toggle").dropdown("toggle");
+            });
+        });
+    </script>
 
     @include('includes.script')
 

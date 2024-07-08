@@ -156,7 +156,7 @@
                             </div>
                             <div class="modal-footer d-flex justify-content-center">
                                 <button class="btn btn-secondary" data-bs-target="#editUser" data-bs-toggle="modal">Back</button>
-                                <button type="button" class="btn" style="background-color: #0E1040; color: #ffffff">Accept</button>
+                                <button type="button" class="btn" style="background-color: #0E1040; color: #ffffff" data-bs-dismiss="modal" aria-label="Close">Accept</button>
                             </div>
                             </div>
                         </div>
@@ -174,7 +174,7 @@
                             </div>
                             <div class="modal-footer d-flex justify-content-center">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-                            <button type="button" class="btn btn-danger">Delete</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">Delete</button>
                             </div>
                         </div>
                         </div>

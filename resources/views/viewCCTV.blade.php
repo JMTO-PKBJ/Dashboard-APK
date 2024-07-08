@@ -17,10 +17,34 @@
                 @for ($i = 0; $i < 12; $i++)
                     <div class="col-6 cctv mb-3 d-flex flex-column">
                         <h1 style="color: #000000; font-size: 18px; font-weight: bold;" >CCTV Tomang</h1>
-                        <img src="{{ asset('images/cctv.png') }}" class="img-fluid" alt="Image {{ $i + 1 }}">
+                        <img src="{{ asset('images/video.png') }}" class="img-fluid" alt="Image {{ $i + 1 }}">
                     </div>
                 @endfor
+
+                {{-- @for ($i = 0; $i < 12; $i++)
+                    <div class="col-6 cctv mb-3 d-flex flex-column">
+                        <h1 style="color: #000000; font-size: 18px; font-weight: bold;">CCTV Tomang</h1>
+                        <img src="{{ asset('images/video.png') }}" class="img-fluid" alt="Image {{ $i + 1 }}"
+                            data-bs-toggle="modal" data-bs-target="#viewCCTV" data-image="{{ asset('images/video.png') }}"
+                            data-image-alt="Image {{ $i + 1 }}">
+                    </div>
+                @endfor --}}
             </div>
+
+            {{-- <div class="modal fade" id="viewCCTV" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="viewCCTVLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="viewCCTVLabel" style="font-size: 25px; color: #0E1040; font-weight: 700;">View CCTV</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <img id="modalImage" src="{{ asset('images/video.png') }}" class="img-fluid" alt="Viewed Image">
+                        </div>
+                    </div>
+                </div>
+            </div> --}}
         </div>
         
     </div>

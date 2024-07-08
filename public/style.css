@@ -132,6 +132,23 @@
     border: 2px solid #FFFFFF; 
 }
 
+.addBtn{
+    color: #FFFFFF;
+    border-radius: 5px;
+    width: 150px;
+    height: 38px;
+    padding: 4px;
+    display: flex;
+    transition: border 0.3s ease;
+    cursor: pointer;
+}
+
+.addBtn:hover{
+    text-decoration: none;
+    color: #FFFFFF;
+    border: 2px solid #FFFFFF; 
+}
+
 .grid-icon {
     cursor: pointer;
     margin: 0 5px;
@@ -146,4 +163,40 @@
 .cctv h1{
     font-size: 18px;
     font-weight: bold;
+}
+
+.btn.dropdown-toggle {
+    background-color: white;
+    color: gray;
+    border: 1px solid #ced4da;
+}
+
+.btn.dropdown-toggle:hover,
+
+.btn.dropdown-toggle:focus,
+
+.btn.dropdown-toggle:active,
+
+.btn.dropdown-toggle:active:focus {
+    background-color: white !important;
+    color: gray !important;
+    border-color: #ced4da !important;
+    box-shadow: none !important;
+}
+
+.dropdown-menu {
+    width: 100%;
+    border: 1px solid #ced4da;
+}
+
+.dropdown-item {
+    color: #6c757d;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+}
+
+.viewCCTV{
+    cursor: pointer;
 }
