@@ -112,6 +112,9 @@
     color: #FFFFFF;
 }
 
+.editUser{
+    cursor: pointer;
+}
 
 .eventBtn{
     color: #FFFFFF;

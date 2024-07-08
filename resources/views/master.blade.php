@@ -217,6 +217,23 @@
         }
     </script>
 
+    {{-- Edit User Modal --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.editUser').forEach(function (editBtn) {
+                editBtn.addEventListener('click', function () {
+                    var username = this.parentNode.parentNode.children[1].innerText.trim(); 
+                    var role = this.parentNode.parentNode.children[2].innerText.trim(); 
+                    var modal = document.getElementById('editUser');
+                    modal.querySelector('input[name="username"]').value = username; 
+                    var roleSelect = modal.querySelector('select');
+                    roleSelect.value = role; 
+                });
+            });
+        });
+    </script>
+
+
     <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Moment.js -->
