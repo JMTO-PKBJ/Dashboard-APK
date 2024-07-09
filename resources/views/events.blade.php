@@ -38,22 +38,10 @@
                 </div>
                 
                 <div class="col-sm-3 tanggal p-0">
-                    Tanggal
-                    <div class="dropdown w-75 p-2">
-                        <button class="btn btn-outline-secondary dropdown-toggle w-100 d-flex justify-content-between align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span>Pilih Tanggal</span>
-                            <span class="dropdown-toggle-icon"></span>
-                        </button>
-                        <div class="dropdown-menu p-3" style="min-width: 500px;">
-                            <div id="dateRangePicker" style="width: 100%;"></div>
-                            <div class="d-flex justify-content-end mt-2">
-                                <button id="applyDateButton" class="btn btn-primary me-2">Apply</button>
-                                <button id="cancelDateButton" class="btn btn-secondary">Cancel</button>
-                            </div>
-                        </div>
-                    </div>
+                    <label for="datePickerInput">Tanggal</label>
+                    <input type="text" id="datePickerInput" class="form-control" readonly>
                 </div>
-                
+
                 <div class="col-sm-3 ruas d-flex justify-content-start align-items-center">
                     <a class="eventBtn d-flex justify-content-center align-items-center mx-2 " style="background-color: #6484E1" href="#">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -170,4 +158,30 @@
 
         </div>
     </div>
+
+    {{-- No Search --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var labels = document.getElementsByTagName('label');
+            for (var i = 0; i < labels.length; i++) {
+                if (labels[i].textContent.trim() === 'Search:') {
+                    labels[i].style.display = 'none';
+                    break;
+                }
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var labels = document.querySelectorAll('label[for^="search"]');
+            var inputs = document.querySelectorAll('input[type="search"].form-control.form-control-sm');
+
+            for (var i = 0; i < labels.length; i++) {
+                labels[i].style.display = 'none';
+            }
+            for (var j = 0; j < inputs.length; j++) {
+                inputs[j].style.display = 'none';
+            }
+        });
+    </script>
+    
 @stop

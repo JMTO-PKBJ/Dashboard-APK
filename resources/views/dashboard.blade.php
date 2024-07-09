@@ -5,9 +5,10 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0" style="font-size: 25px; color:#0E1040; font-weight:700">Dashboard</h1>
-            <a href="#" style="font-size: 18px; color:#0E1040; text-decoration:none">Juni, 2024
-                <span class="mx-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="currentColor" class="bi bi-filter" viewBox="0 0 16 16">
+            <a class="date d-flex align-items-center justify-content-center" href="#" style="text-decoration: none">
+                <input type="text" id="datePickerChart" class="form-control p-1" readonly >
+                <span id="filterIcon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="#0E1040" class="bi bi-filter" viewBox="0 0 16 16">
                         <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5"/>
                     </svg>
                 </span>
