@@ -201,9 +201,9 @@
     cursor: pointer;
 }
 
-.daterangepicker, .tanggal {
+/* .daterangepicker, .tanggal {
     z-index: 999999 !important;
-}
+} */
 
 #datePickerInput{
     /* width: auto; */
