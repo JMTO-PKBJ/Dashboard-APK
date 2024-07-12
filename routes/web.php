@@ -13,9 +13,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 });
 
-Route::get('/viewCCTV', function () {
-    return view('viewCCTV');
-});
+Route::get('/viewCCTV', [CctvController::class, 'showAll']);
 
 Route::get('/addCCTV', function () {
     return view('addCCTV');
@@ -70,6 +68,7 @@ Route::get('/', function () {
 // Route::get('/cctv/{lokasi}', [CctvController::class, 'showByLocation'])->name('cctv.showByLocation');
 Route::get('cctv/{id}/show', [App\Http\Controllers\CctvController::class, 'showPage']);
 // Route::get('cctv/all', [App\Http\Controllers\CctvController::class, 'showAll']);
+
 
 Route::get('cctv/all', [CctvController::class, 'showAll']);
 

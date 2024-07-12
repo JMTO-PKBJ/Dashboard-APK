@@ -15,11 +15,11 @@ Route::get('/user', function (Request $request) {
 // Public routes
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/refresh', [UserController::class, 'refreshToken']);
+Route::post('/register', [UserController::class, 'register']);
 
 // Protected routes
 Route::middleware(['auth:api'])->group(function () {
     Route::middleware([AdminMiddleware::class])->group(function () {
-        Route::post('/register', [UserController::class, 'register']);
         Route::get('/users', [UserController::class, 'index']);
         Route::put('/users/{id}', [UserController::class, 'update']);
         Route::delete('/users/{id}', [UserController::class, 'destroy']);

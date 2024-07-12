@@ -81,6 +81,7 @@ function changeLayout(columns) {
     for (var i = 0; i < container.children.length; i++) {
         container.children[i].className = colClass + ' cctv mb-3 d-flex flex-column';
     }
+
 }
 
 function updateIcon() {
