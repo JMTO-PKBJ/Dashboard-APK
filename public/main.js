@@ -258,4 +258,3 @@ $(document).ready(function() {
     $('#datePickerInput').val(moment().subtract(29, 'days').format('YYYY-MM-DD HH:mm:ss') + ' - ' + moment().format('YYYY-MM-DD HH:mm:ss'));
 });
 
-

@@ -28,9 +28,9 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
-    {{-- Video --}}
+    {{-- Video CCTV --}}
     <link href="https://vjs.zencdn.net/7.2.3/video-js.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body id="page-top">
 
@@ -101,8 +101,13 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
+    {{-- Video CCTV --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.10.2/video.min.js"></script>
+    <script src="https://vjs.zencdn.net/7.2.3/video.js"></script>
+
     {{-- Active Nav & Role --}}
     <script>
+        
         // Active Nav
         document.addEventListener('DOMContentLoaded', function () {
             // Set initial active class for Dashboard link
@@ -165,6 +170,9 @@
             document.getElementById(dropdownId).textContent = value;
         }
     </script>
+
+    
+
 
 </body>
 </html>
