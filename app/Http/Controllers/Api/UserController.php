@@ -65,6 +65,36 @@ class UserController extends Controller
         ]);
     }
 
+    public function logout(Request $request)
+    {
+        try {
+            JWTAuth::invalidate(JWTAuth::getToken());
+            return response()->json(['message' => 'User logged out successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to logout, please try again.'], 500);
+        }
+    }
+
+    public function refreshToken()
+    {
+        // try {
+        //     $newToken = JWTAuth::refresh(JWTAuth::getToken());
+        //     return response()->json([
+        //         'remember_token' => $newToken
+        //     ]);
+        // } catch (\Exception $e) {
+        //     return response()->json(['error' => 'Failed to refresh token'], 500);
+        // }
+        
+            $token = JWTAuth::getToken();
+            $newToken = JWTAuth::refresh($token);
+    
+            return response()->json([
+                'remember_token' => $newToken,
+            ]);
+        
+    }
+
     public function index()
     {
         $users = User::latest()->get();
