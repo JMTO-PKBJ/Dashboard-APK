@@ -32,6 +32,7 @@
         
     </div>
     
+    {{-- Video CCTV --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             @foreach($cctvs as $cctv)

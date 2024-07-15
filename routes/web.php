@@ -15,6 +15,8 @@ Route::get('/dashboard', function () {
 
 Route::get('/viewCCTV', [CctvController::class, 'showAll']);
 
+// Route::get('/addCCTV', [CctvController::class, 'showAll']);
+
 
 Route::get('/addCCTV', function () {
     return view('addCCTV');

@@ -89,20 +89,20 @@ class CctvController extends Controller
     }
 
     public function showPage($id)
-{
-    $cctv = Cctv::find($id);
+    {
+        $cctv = Cctv::find($id);
 
-    if (!$cctv) {
-        abort(404);
+        if (!$cctv) {
+            abort(404);
+        }
+
+        return view('show', compact('cctv'));
     }
-
-    return view('show', compact('cctv'));
-}
-public function showAll()
-{
-    $cctvs = Cctv::all();
-    return view('viewCCTV', compact('cctvs'));
-}
+    public function showAll()
+    {
+        $cctvs = Cctv::all();
+        return view('viewCCTV', compact('cctvs'));
+    }
 
 
 

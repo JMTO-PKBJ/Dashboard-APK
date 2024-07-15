@@ -159,6 +159,7 @@
                             <div class="modal-body">
                                 <div class="d-flex justify-content-center">
                                     <img src="{{ asset('images/event_image.png') }}" alt="" style="max-width: 100%; height: auto;">
+                                    
                                 </div>
                             </div>
                         </div>
@@ -170,6 +171,8 @@
 
         </div>
     </div>
+
+    
 
     {{-- No Search --}}
     <script>
