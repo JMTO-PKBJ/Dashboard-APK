@@ -14,18 +14,21 @@
         <div class="container mt-3">
             <div class="row" id="imageContainer">
                 {{-- Menampilkan CCTV --}}
-                {{-- @for ($i = 0; $i < 12; $i++) --}}
                     @foreach($cctvs as $cctv)
                     <div class="col-6 cctv d-flex flex-column">
-                        <h1 style="color: #000000; font-size: 18px; font-weight: bold;" >{{ $cctv->cctv_ruas }}</h1>
-                        {{-- <img src="{{ asset('images/video.png') }}" class="img-fluid" alt="Image {{ $i + 1 }}"> --}}
-                        <video id="cctv-video-{{ $cctv->id }}" class="video-js vjs-default-skin w-100 custom-video-height" controls preload="auto" autoplay muted>
-                            <source src="{{ $cctv->cctv_video }}" type="application/x-mpegURL">
-                            Your browser does not support the video tag.
-                        </video>    
+                        <div class="card view-cctv">
+                            <div class="card-header p-0">
+                                <h1 style="color: #000000; font-size: 18px; font-weight: bold;" >CCTV {{ $cctv->cctv_lokasi }}</h1>
+                            </div>
+                            <div class="card-body p-0" style="border: none;" >
+                                <video id="cctv-video-{{ $cctv->id }}" class="video-js vjs-default-skin w-100"  controls preload="auto" autoplay muted>
+                                    <source src="{{ $cctv->cctv_video }}" type="application/x-mpegURL">
+                                    Your browser does not support the video tag.
+                                </video>   
+                            </div>
+                        </div>
                     </div>
                     @endforeach
-                {{-- @endfor --}}
             </div>
 
         </div>
@@ -37,8 +40,8 @@
         document.addEventListener('DOMContentLoaded', function() {
             @foreach($cctvs as $cctv)
                 var player = videojs('cctv-video-{{ $cctv->id }}');
-                player.muted(true);  // Ensure the video is muted
-                player.play();       // Auto-play the video
+                player.muted(true);  
+                player.play();      
             @endforeach
         });
     </script>

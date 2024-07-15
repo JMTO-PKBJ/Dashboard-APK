@@ -232,6 +232,18 @@
 }
 
 .custom-video-height {
-    height: 350px; 
+    height: 330px; 
+}
+
+.video-addCCTV{
+    height: 600px;
+}
+
+.event-gambar{
+    height: 600px;
+}
+
+.view-cctv{
+    border: none;
 }
 

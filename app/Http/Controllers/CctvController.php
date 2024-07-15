@@ -104,6 +104,12 @@ class CctvController extends Controller
         return view('viewCCTV', compact('cctvs'));
     }
 
+    public function showAdd()
+    {
+        $cctvs = Cctv::all();
+        return view('addCCTV', compact('cctvs'));
+    }
+
 
 
 }

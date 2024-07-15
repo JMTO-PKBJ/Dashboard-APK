@@ -97,74 +97,48 @@
                         </tr>
                     </tfoot>
                     <tbody>
-                        <?php
-                        // Contoh 20 data dummy dengan tambahan data Ruas dan menghapus Class
-                        $data = [
-                            ["Dalam Kota", "Cawang Uki", "2024-06-24 17:26:44"],
-                            ["Jalan Raya", "Cilandak KKO", "2024-06-24 18:30:12"],
-                            ["Tol", "Tebet Barat", "2024-06-25 08:45:22"],
-                            ["Kawasan Bisnis", "Kuningan", "2024-06-25 10:00:00"],
-                            ["Jalan Utama", "Gatot Subroto", "2024-06-25 11:15:45"],
-                            ["Dalam Kota", "Mampang Prapatan", "2024-06-25 12:20:35"],
-                            ["Jalan Raya", "Pancoran", "2024-06-25 14:50:10"],
-                            ["Tol", "Semanggi", "2024-06-25 15:30:50"],
-                            ["Kawasan Bisnis", "Slipi", "2024-06-25 16:45:25"],
-                            ["Jalan Utama", "Palmerah", "2024-06-25 17:55:15"],
-                            ["Dalam Kota", "Sudirman", "2024-06-25 18:40:20"],
-                            ["Jalan Raya", "Thamrin", "2024-06-25 19:30:05"],
-                            ["Tol", "Senayan", "2024-06-25 20:45:30"],
-                            ["Kawasan Bisnis", "Permata Hijau", "2024-06-25 21:50:45"],
-                            ["Jalan Utama", "Kebayoran Lama", "2024-06-26 08:20:10"],
-                            ["Dalam Kota", "Pondok Indah", "2024-06-26 09:30:50"],
-                            ["Jalan Raya", "Puri Indah", "2024-06-26 10:45:05"],
-                            ["Tol", "Kembangan", "2024-06-26 11:55:30"],
-                            ["Kawasan Bisnis", "Kebon Jeruk", "2024-06-26 13:10:40"],
-                            ["Jalan Utama", "Tomang", "2024-06-26 14:25:55"],
-                        ];
-                
-                        // Iterasi data untuk menampilkan baris tabel
-                        foreach ($data as $key => $row) {
-                            $ruas = $row[0];
-                            $cctv = $row[1];
-                            $createat = $row[2];
-                            $nomor = $key + 1; // Menghitung nomor urut (dimulai dari 1)
-                
-                            echo "<tr>";
-                            echo "<td>$nomor</td>";
-                            echo "<td>$ruas</td>";
-                            echo "<td>$cctv</td>";
-                            echo "<td>$createat</td>";
-                            echo "<td>
-                                    <a class='viewCCTV' data-bs-toggle='modal' data-bs-target='#viewCCTV'>
+                        @foreach($cctvs as $cctv)
+                            <tr>
+                                <td>{{ $cctv->id }}</td>
+                                <td>{{ $cctv->cctv_ruas }}</td>
+                                <td>CCTV {{ $cctv->cctv_lokasi }}</td>
+                                <td>{{ $cctv->created_at }}</td>
+                                <td>
+                                    <a href="#" class="viewCCTV" data-bs-toggle="modal" data-bs-target="#viewCCTV-{{ $cctv->id }}" data-id="{{ $cctv->id }}">
                                         <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='icon-border bi bi-eye' viewBox='0 0 16 16'>
                                             <path d='M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z'/>
                                             <path d='M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0'/>
                                         </svg>
                                     </a>
-                                </td>";
-                            echo "</tr>";
-                        }
-                        ?>
+                                </td>
+                            </tr>
+                        @endforeach
+
                     </tbody>
                 </table>
 
-                {{-- View CCTV --}}
-                <div class="modal fade" id="viewCCTV" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="viewCCTVLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-xl">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="viewCCTVLabel" style="font-size: 25px; color: #0E1040; font-weight: 700;">Image</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="d-flex justify-content-center">
-                                    <img src="{{ asset('images/event_image.png') }}" alt="" style="max-width: 100%; height: auto;">
-                                    
+                {{-- Modal Tampil CCTV --}}
+                @foreach($cctvs as $cctv)
+                    <div class="modal fade" id="viewCCTV-{{ $cctv->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="viewCCTVLabel-{{ $cctv->id }}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-xl">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="viewCCTVLabel-{{ $cctv->id }}" style="font-size: 25px; color: #0E1040; font-weight: 700;">CCTV {{ $cctv->cctv_lokasi }}</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="d-flex justify-content-center">
+                                        <video id="cctv-video-{{ $cctv->id }}" class="video-js vjs-default-skin w-100 video-addCCTV" controls preload="auto" autoplay muted>
+                                            <source src="{{ $cctv->cctv_video }}" type="application/x-mpegURL">
+                                            Your browser does not support the video tag.
+                                        </video>  
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                @endforeach
+                {{-- End Modal Tampil CCTV --}}
 
             </div>
             
@@ -172,7 +146,16 @@
         </div>
     </div>
 
-    
+    {{-- Video CCTV --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            @foreach($cctvs as $cctv)
+                var player = videojs('cctv-video-{{ $cctv->id }}');
+                player.muted(true);  
+                player.play();       
+            @endforeach
+        });
+    </script>
 
     {{-- No Search --}}
     <script>

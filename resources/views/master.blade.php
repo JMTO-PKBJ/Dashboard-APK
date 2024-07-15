@@ -286,7 +286,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-        function setRole(role) {
+        function setRole(role) {z
             document.getElementById('roleDropdownButton').textContent = role;
         }
 

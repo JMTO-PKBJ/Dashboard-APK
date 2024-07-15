@@ -92,7 +92,7 @@ class EventController extends Controller
     public function show1()
         {
     $events = Event::all();
-    return view('show1', compact('events'));
+    return view('events', compact('events'));
     }
 
     // public function exportCSV()

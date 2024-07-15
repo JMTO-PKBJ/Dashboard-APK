@@ -15,16 +15,21 @@ Route::get('/dashboard', function () {
 
 Route::get('/viewCCTV', [CctvController::class, 'showAll']);
 
-// Route::get('/addCCTV', [CctvController::class, 'showAll']);
+Route::get('/addCCTV', [CctvController::class, 'showAdd']);
+
+// Route::get('/addCCTV/{id}', [CctvController::class, 'showPage']);
 
 
-Route::get('/addCCTV', function () {
-    return view('addCCTV');
-});
+Route::get('/events', [EventController::class, 'show1']);
 
-Route::get('/events', function () {
-    return view('events');
-});
+
+// Route::get('/addCCTV', function () {
+//     return view('addCCTV');
+// });
+
+// Route::get('/events', function () {
+//     return view('events');
+// });
 
 Route::get('/register', function () {
     return view('register');
