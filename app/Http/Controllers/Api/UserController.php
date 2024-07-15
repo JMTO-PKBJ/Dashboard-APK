@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\UserResource;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use App\Http\Controllers\Api\Response;
+
 
 class UserController extends Controller
 {
@@ -148,4 +150,39 @@ class UserController extends Controller
 
         return response()->json(['message' => 'User deleted successfully'], 200);
     }
+
+    public function showAll()
+    {
+        $users = User::latest()->get();
+        $users = $users->map(function ($user) {
+            return [
+                'id' => $user->id,
+                'username' => $user->username,
+                'role' => self::ROLES[$user->role_id],
+            ];
+        });
+        return view('show2', compact('users'));
+    
+    }
+
+    public function exportUsersCsv()
+    {
+        $users = User::all();
+        $csvData = "No,Username,Role\n";
+        $index = 1;
+    
+        foreach ($users as $user) {
+            // Assuming self::ROLES is defined somewhere in your controller or class
+            $role = self::ROLES[$user->role_id];
+            $csvData .= "{$index},{$user->username},{$role}\n";
+            $index++;
+        }
+    
+        $fileName = 'users.csv';
+        return response()->make($csvData, 200, [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"$fileName\"",
+        ]);
+    }
+
 }

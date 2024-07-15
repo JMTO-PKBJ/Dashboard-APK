@@ -6,6 +6,9 @@ use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Laracsv\Export;
+use App\Exports\EventsExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class EventController extends Controller
 {
@@ -70,23 +73,33 @@ class EventController extends Controller
         return response()->json(null, 204);
     }
 
+    // public function exportCSV()
+// {
+//     $events = Event::all();
 
+//     return Excel::download(new EventsExport($events), 'events.csv');
+// }
+
+    // public function exportCSV()
+    // {
+    //     $events = Event::all();
+    //     $csvExporter = new Export();
+    //     $csvExporter->beforeEach(function ($event) {
+    //         $event->event_gambar = url($event->event_gambar);
+    //     });
+
+    //     $csvExporter->build($events, [
+    //         'event_id',
+    //         'cctv_id',
+    //         'event_waktu',
+    //         'event_lokasi',
+    //         'event_class',
+    //         'event_gambar'
+    //     ])->download('events.csv');
+    // }
     public function exportCSV()
     {
-        $events = Event::all();
-        $csvExporter = new Export();
-        $csvExporter->beforeEach(function ($event) {
-            $event->event_gambar = url($event->event_gambar);
-        });
-
-        $csvExporter->build($events, [
-            'event_id',
-            'cctv_id',
-            'event_waktu',
-            'event_lokasi',
-            'event_class',
-            'event_gambar'
-        ])->download('events.csv');
+        return Excel::download(new EventsExport, 'events.xlsx');
     }
 
     public function show1()
