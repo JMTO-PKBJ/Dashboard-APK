@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
@@ -81,5 +82,11 @@ Route::get('cctv/{id}/show', [App\Http\Controllers\CctvController::class, 'showP
 Route::get('cctv/all', [CctvController::class, 'showAll']);
 
 
-
+Route::get('events/export/csv', [EventController::class, 'exportCSV']);
 Route::get('events/show', [EventController::class, 'show1']);
+
+
+// Route to display the users list page
+Route::get('/show-users', [UserController::class, 'showAll'])->name('show.users');
+// Route to download users CSV
+Route::get('users/export/csv', [UserController::class, 'exportUsersCsv'])->name('users.export.csv');
