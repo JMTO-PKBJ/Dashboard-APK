@@ -31,4 +31,8 @@ class Cctv extends Model
     {
         return $this->belongsTo(User::class, 'roles_id');
     }
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
 }

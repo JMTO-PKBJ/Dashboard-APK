@@ -90,7 +90,12 @@ Route::get('cctv/all', [CctvController::class, 'showAll']);
 
 Route::get('events/export/csv', [EventController::class, 'exportCSV']);
 Route::get('events/show', [EventController::class, 'show1']);
+Route::get('/events/search', [EventController::class, 'searchByDateRange']);
+Route::view('/search', 'search');
 
+// dashboard
+Route::get('/events/most-frequent-location', [EventController::class, 'getMostFrequentEventLocation']);
+Route::view('/search-frequent-location', 'search_frequent_location');
 
 // Route to display the users list page
 Route::get('/show-users', [UserController::class, 'showAll'])->name('show.users');

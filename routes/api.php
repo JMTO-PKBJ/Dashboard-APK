@@ -22,7 +22,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::middleware([AdminMiddleware::class])->group(function () {
         Route::get('/users', [UserController::class, 'index']);
         Route::put('/users/{id}', [UserController::class, 'update']);
-        Route::delete('/users/{id}', [UserController::class, 'destroy']);
+        
     });
     Route::post('/logout', [UserController::class, 'logout']);
 });
@@ -47,40 +47,15 @@ Route::get('cctv/location/{lokasi}', [CctvController::class, 'showByLocation']);
 
 // Route::apiResource('/events', CctvController::class);
 Route::get('/events', [EventController::class, 'index']);
-Route::get('/events/{id}', [EventController::class, 'show']);
+// Route::get('/events/{event_id}', [EventController::class, 'show']);
+Route::get('/events/{event_id}', [EventController::class, 'show']);
 Route::post('/events', [EventController::class, 'store']);
 Route::put('/events/{id}', [EventController::class, 'update']);
-Route::delete('/events/{id}', [EventController::class, 'destroy']);
+Route::delete('/events/{event_id}', [EventController::class, 'destroy']);
 // Route::get('events/export/csv', [EventController::class, 'exportCSV']);
 Route::get('events/export/csv', [EventController::class, 'exportCSV']);
 Route::get('events/show', [EventController::class, 'showEvents']);
-
-
-
-// //posts
-// // Route::apiResource('/posts', App\Http\Controllers\Api\PostController::class);
-// // Route::post('/addusers', [UserController::class, 'store']);
-// Route::get('/showusers', [UserController::class, 'index']);
-
-// Route::post('/register', [UserController::class, 'register']);
-// Route::post('/login', [UserController::class, 'login']);
-// Route::middleware('auth:api')->group(function () {
-//     Route::get('/users', [UserController::class, 'index']);
-//     // Route::post('/users', [UserController::class, 'store']);
-// });
-
-
-// Route::middleware('auth:api')->group(function () {
-//     Route::get('/users', [UserController::class, 'index']);
-//     Route::post('/login', [UserController::class, 'login']);
-
-//     Route::middleware('admin')->group(function () {
-//         Route::post('/register', [UserController::class, 'register']);
-//         Route::put('/users/{id}', [UserController::class, 'update']);
-//         Route::delete('/users/{id}', [UserController::class, 'destroy']);
-//     });
-// });
-
+Route::get('/events/search', [EventController::class, 'searchByDateRange']);
 
 
 

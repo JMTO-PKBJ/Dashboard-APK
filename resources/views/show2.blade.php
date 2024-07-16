@@ -11,14 +11,23 @@
                 <th>No</th>
                 <th>Username</th>
                 <th>Role</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-          @foreach($users->reverse() as $index => $user)
+            @foreach($users->reverse() as $index => $user)
                 <tr>
                     <td>{{ count($users) - $index }}</td>
                     <td>{{ $user['username'] }}</td>
                     <td>{{ $user['role'] }}</td>
+                    <td>
+                        <a href="{{ url('users/' . $user['id'] . '/edit') }}">Update</a>
+                        <form action="{{ url('users/' . $user['id']) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
                 </tr>
             @endforeach
         </tbody>
