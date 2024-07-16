@@ -126,7 +126,6 @@
         </div>
     </div>
 
-    {{-- No Search --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var labels = document.getElementsByTagName('label');
@@ -150,5 +149,4 @@
             }
         });
     </script>
-
 @stop

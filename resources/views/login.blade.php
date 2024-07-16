@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -17,7 +16,6 @@
     <div class="container">
         <!-- Outer Row -->
         <div class="row justify-content-center">
-<<<<<<< Updated upstream
 
             <div class="col-xl-10 col-lg-12 col-md-9 my-5"> 
 
@@ -30,18 +28,6 @@
                             <img class="my-4" style="width: 35%" src="{{ asset('images/jasamarga_icon.png') }}" alt="">
                             <h1 style="font-size: 18px; font-style: italic; font-weight:400; color:#000000;">Login</h1>
 
-=======
-            <div class="col-xl-10 col-lg-12 col-md-9 my-5">
-                <div class="border border-black login-cont d-flex my-5" style="border-radius: 20px">
-                    <div class="col-xl-6 image-container p-0">
-                        <img src="{{ asset('images/jalantol_login.png') }}" alt="Login Image">
-                    </div>
-                    <div class="col-xl-6 text-container d-flex flex-column" id="loginForm">
-                        <img class="my-4" style="width: 35%" src="{{ asset('images/jasamarga_icon.png') }}" alt="">
-                        <h1 style="font-size: 18px; font-style: italic; font-weight:400; color:#000000;">Login</h1>
-                        <form method="POST" onsubmit="event.preventDefault(); login();">
-                            @csrf
->>>>>>> Stashed changes
                             <div class="row w-75 my-2">
                                 <p class="m-0" style="font-size: 13px">Username</p>
                                 <input class="form-control text-field w-100" style="border-radius: 7px" type="text" name="username" id="username" placeholder="Enter your username" required>
@@ -57,7 +43,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button class="login-button w-75 my-2" type="submit" style="font-weight: 400;">Login</button>
+                            <a href="{{ url('dashboard') }}" class="login-button w-75 my-2" style="font-weight: 400;">Login</a>
                         </form>
                         <p>© 2024 Deteksi Bahu Tol JMTO| V 1.0.0</p>
                     </div>

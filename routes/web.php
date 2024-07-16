@@ -73,6 +73,12 @@ Route::get('/', function () {
     return redirect()->route('login');
 })->middleware('guest');
 
+// Route::group('middleware'=>["isLogin"], function(){
+//     Route::get('/', function () {
+//         return redirect()->route('login');
+//     })
+// } )
+
 // Route::get('/cctv/{id}', [CctvController::class, 'showPage'])->name('cctv.showPage');
 // Route::get('/cctv/{lokasi}', [CctvController::class, 'showByLocation'])->name('cctv.showByLocation');
 Route::get('cctv/{id}/show', [App\Http\Controllers\CctvController::class, 'showPage']);

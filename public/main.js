@@ -18,7 +18,6 @@ function togglePasswordVisibility() {
 document.addEventListener('DOMContentLoaded', function() {
     var scrollButton = document.querySelector('.scroll-to-top');
 
-    // Fungsi untuk memeriksa posisi scroll dan mengatur visibilitas tombol
     function checkScrollPosition() {
         if (window.scrollY > 100) {
             scrollButton.style.display = 'block';
@@ -27,11 +26,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Panggil fungsi saat dokumen dimuat dan saat pengguna melakukan scroll
     document.addEventListener('scroll', checkScrollPosition);
-    checkScrollPosition(); // Panggil satu kali untuk memastikan status awal
+    checkScrollPosition(); 
 
-    // Animasi smooth scroll ke atas saat tombol di-klik
     scrollButton.addEventListener('click', function(e) {
         e.preventDefault();
         window.scrollTo({
@@ -123,7 +120,6 @@ document.addEventListener('DOMContentLoaded', function () {
     adjustDropdownWidth('ruasDropdownButton', 'ruasDropdownMenu');
     adjustDropdownWidth('lokasiDropdownButton', 'lokasiDropdownMenu');
 
-    // Function to adjust dropdown width
     function adjustDropdownWidth(buttonId, menuId) {
         var dropdownButton = document.getElementById(buttonId);
         var dropdownMenu = document.getElementById(menuId);
@@ -134,7 +130,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         setDropdownWidth();
 
-        // Adjust the width whenever the window is resized
         window.addEventListener('resize', setDropdownWidth);
     }
 
@@ -147,7 +142,6 @@ document.addEventListener('DOMContentLoaded', function () {
     adjustDropdownWidth('ruasDropdownButton', 'ruasDropdownMenu');
     adjustDropdownWidth('cctvDropdownButton', 'cctvDropdownMenu');
 
-    // Function to adjust dropdown width
     function adjustDropdownWidth(buttonId, menuId) {
         var dropdownButton = document.getElementById(buttonId);
         var dropdownMenu = document.getElementById(menuId);
@@ -158,7 +152,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         setDropdownWidth();
 
-        // Adjust the width whenever the window is resized
         window.addEventListener('resize', setDropdownWidth);
     }
 
@@ -185,13 +178,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Dashboard Datepicker
 $(document).ready(function() {
-    // Initialize date range picker
     $('#datePickerChart').daterangepicker({
         opens: 'center',
         showDropdowns: true,
-        timePicker: false, // Tidak menampilkan time picker
+        timePicker: false, 
         locale: {
-            format: 'D MMMM YYYY', // Format untuk menampilkan tanggal (2 Juni 2024)
+            format: 'D MMMM YYYY', 
             separator: ' - ',
             applyLabel: 'Pilih',
             cancelLabel: 'Batal',
@@ -209,23 +201,19 @@ $(document).ready(function() {
             'Tahun Lalu': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')],
         }
     }, function(start, end, label) {
-        // Callback apply, disini kita set nilai untuk menampilkan rentang tanggal
         $('#datePickerChart').val(start.format('D MMMM YYYY') + ' - ' + end.format('D MMMM YYYY'));
     });
 
-    // Event listener untuk ikon filter
     $('#filterIcon').click(function(e) {
         e.preventDefault();
-        $('#datePickerChart').click(); // Klik input date picker
+        $('#datePickerChart').click(); 
     });
 
-    // Set initial value, default menampilkan rentang bulan ini
     $('#datePickerChart').val(moment().startOf('month').format('D MMMM YYYY') + ' - ' + moment().endOf('month').format('D MMMM YYYY'));
 });
 
 // Events Datepicker
 $(document).ready(function() {
-    // Initialize date range picker
     $('#datePickerInput').daterangepicker({
         opens: 'center',
         showDropdowns: true,
@@ -254,7 +242,14 @@ $(document).ready(function() {
         $('#datePickerInput').val(start.format('YYYY-MM-DD HH:mm:ss') + ' - ' + end.format('YYYY-MM-DD HH:mm:ss'));
     });
 
-    // Set initial value
     $('#datePickerInput').val(moment().subtract(29, 'days').format('YYYY-MM-DD HH:mm:ss') + ' - ' + moment().format('YYYY-MM-DD HH:mm:ss'));
 });
 
+
+function setRole(role) {
+    document.getElementById('roleDropdownButton').textContent = role;
+}
+
+function setDropdownValue(dropdownId, value) {
+    document.getElementById(dropdownId).textContent = value;
+}

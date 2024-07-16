@@ -58,3 +58,80 @@
     </div> --}}
 
 </ul>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    // Menambahkan event listener untuk semua collapse-item
+    const collapseItems = document.querySelectorAll('.collapse-item');
+    collapseItems.forEach(item => {
+        item.addEventListener('click', function (event) {
+            event.preventDefault(); // Mencegah perilaku default dari anchor tag
+
+            // Menghapus kelas 'active' dari semua collapse-item lainnya
+            collapseItems.forEach(otherItem => {
+                otherItem.classList.remove('active');
+            });
+
+            // Menambahkan kelas 'active' pada collapse-item yang diklik
+            this.classList.add('active');
+
+            // Mengatur style untuk sidebar CCTVs
+            const sideCCTV = document.querySelector('.sideCCTV');
+            if (sideCCTV) {
+                sideCCTV.classList.add('active');
+                sideCCTV.style.fontWeight = 'bold';
+            }
+
+            // Navigasi ke URL yang sesuai
+            const href = this.getAttribute('href');
+            if (href && href !== '#') {
+                window.location.href = href;
+            }
+        });
+    });
+
+    // Menambahkan event listener untuk semua nav-link di sidebar
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function (event) {
+            event.preventDefault(); // Mencegah perilaku default dari anchor tag
+
+            // Menghapus kelas 'active' dari semua nav-link lainnya
+            navLinks.forEach(otherLink => {
+                otherLink.classList.remove('active');
+                otherLink.style.fontWeight = 'normal'; // Mengembalikan font-weight menjadi normal
+            });
+
+            // Menambahkan kelas 'active' pada nav-link yang diklik
+            this.classList.add('active');
+            this.style.fontWeight = 'bold'; // Mengatur font-weight menjadi bold
+
+            // Navigasi ke URL yang sesuai
+            const href = this.getAttribute('href');
+            if (href && href !== '#') {
+                window.location.href = href;
+            }
+        });
+
+        // Inisialisasi sidebar untuk link yang aktif saat halaman dimuat
+        const url = window.location.href;
+        if (link.href === url) {
+            link.classList.add('active');
+            link.style.fontWeight = 'bold';
+        }
+    });
+
+    // Inisialisasi sidebar untuk collapse-item yang aktif saat halaman dimuat
+    const activeCollapseLink = document.querySelector(`.collapse-item[href='${url}']`);
+    if (activeCollapseLink) {
+        activeCollapseLink.classList.add('active');
+
+        // Mengatur style untuk sidebar CCTVs
+        const sideCCTV = document.querySelector('.sideCCTV');
+        if (sideCCTV) {
+            sideCCTV.classList.add('active');
+            sideCCTV.style.fontWeight = 'bold';
+        }
+    }
+    });
+</script>
