@@ -219,7 +219,7 @@ class EventController extends Controller
             ->whereDate('event_waktu', '>=', $startDate)
             ->whereDate('event_waktu', '<=', $endDate)
             ->groupBy('event_lokasi')
-            ->orderBy('total', 'desc')
+            ->orderBy('total', 'asc')
             ->limit(4)
             ->get();
 
@@ -251,6 +251,9 @@ class EventController extends Controller
 
         return response()->json(['labels' => $labels, 'data' => $data]);
     }
+
+    
+    
 
 
     // public function getData(Request $request)

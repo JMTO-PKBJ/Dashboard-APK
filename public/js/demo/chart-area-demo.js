@@ -32,7 +32,7 @@ var ctx = document.getElementById("myAreaChart");
 var myLineChart = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: [],
+    labels: ["Tangerang", "Pluit", "Jatiasih", "Cawang Uki"],
     datasets: [{
       label: "Total",
       lineTension: 0.3,
@@ -46,7 +46,7 @@ var myLineChart = new Chart(ctx, {
       pointHoverBorderColor: "rgba(78, 115, 223, 1)",
       pointHitRadius: 10,
       pointBorderWidth: 2,
-      data: [],
+      data: [3, 12, 13, 23 ],
     }],
   },
   options: {
@@ -76,8 +76,10 @@ var myLineChart = new Chart(ctx, {
         ticks: {
           maxTicksLimit: 5,
           padding: 10,
+          // Include a dollar sign in the ticks
           callback: function(value, index, values) {
             return number_format(value);
+            // return '$' + number_format(value);
           }
         },
         gridLines: {

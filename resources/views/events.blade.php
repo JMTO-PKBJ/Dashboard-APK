@@ -26,7 +26,7 @@
                     CCTV
                     <div class="dropdown w-75 p-2">
                         <button class="btn btn-outline-secondary dropdown-toggle w-100 d-flex justify-content-between align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="cctvDropdownButton">
-                            <span>Pilih Ruas</span>
+                            <span>Pilih Lokasi CCTV</span>
                             <span class="dropdown-toggle-icon"></span>
                         </button>
                         <ul class="dropdown-menu" id="cctvDropdownMenu">
@@ -147,6 +147,39 @@
             for (var j = 0; j < inputs.length; j++) {
                 inputs[j].style.display = 'none';
             }
+        });
+
+        // Events Datepicker
+        $(document).ready(function() {
+            $('#datePickerInput').daterangepicker({
+                opens: 'center',
+                showDropdowns: true,
+                timePicker: true,
+                timePicker24Hour: true,
+                locale: {
+                    format: 'YYYY-MM-DD HH:mm:ss',
+                    separator: ' - ',
+                    applyLabel: 'Apply',
+                    cancelLabel: 'Cancel',
+                    customRangeLabel: 'Custom Range',
+                    daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+                    monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                },
+                ranges: {
+                    'Sekarang': [moment(), moment()],
+                    'Kemarin': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    '7 Hari Terakhir': [moment().subtract(6, 'days'), moment()],
+                    '30 Hari Terakhir': [moment().subtract(29, 'days'), moment()],
+                    'Bulan Ini': [moment().startOf('month'), moment().endOf('month')],
+                    'Bulan Lalu': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                },
+                startDate: moment().subtract(29, 'days'),
+                endDate: moment()
+            }, function(start, end, label) {
+                $('#datePickerInput').val(start.format('YYYY-MM-DD HH:mm:ss') + ' - ' + end.format('YYYY-MM-DD HH:mm:ss'));
+            });
+
+            $('#datePickerInput').val(moment().subtract(29, 'days').format('YYYY-MM-DD HH:mm:ss') + ' - ' + moment().format('YYYY-MM-DD HH:mm:ss'));
         });
     </script>
 @stop
