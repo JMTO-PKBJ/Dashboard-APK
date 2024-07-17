@@ -16,11 +16,11 @@
                 {{-- Menampilkan CCTV --}}
                     @foreach($cctvs as $cctv)
                     <div class="col-6 cctv d-flex flex-column">
-                        <div class="card view-cctv">
+                        <div class="card view-cctv" style="border: none;">
                             <div class="card-header p-0">
                                 <h1 style="color: #000000; font-size: 18px; font-weight: bold;" >CCTV {{ $cctv->cctv_lokasi }}</h1>
                             </div>
-                            <div class="card-body p-0" style="border: none;" >
+                            <div class="card-body p-0">
                                 <video id="cctv-video-{{ $cctv->id }}" class="video-js vjs-default-skin w-100" height="300px"  controls preload="auto" autoplay muted>
                                     <source src="{{ $cctv->cctv_video }}" type="application/x-mpegURL">
                                     Your browser does not support the video tag.

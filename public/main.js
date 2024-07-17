@@ -177,40 +177,40 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // Dashboard Datepicker
-$(document).ready(function() {
-    $('#datePickerChart').daterangepicker({
-        opens: 'center',
-        showDropdowns: true,
-        timePicker: false, 
-        locale: {
-            format: 'D MMMM YYYY', 
-            separator: ' - ',
-            applyLabel: 'Pilih',
-            cancelLabel: 'Batal',
-            customRangeLabel: 'Rentang Kustom',
-            daysOfWeek: ['Mg', 'Sn', 'Sl', 'Rb', 'Km', 'Jm', 'Sb'],
-            monthNames: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
-            firstDay: 1
-        },
-        ranges: {
-            'Sekarang': [moment(), moment()],
-            'Kemarin': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-            'Bulan Ini': [moment().startOf('month'), moment().endOf('month')],
-            'Bulan Lalu': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-            'Tahun Ini': [moment().startOf('year'), moment().endOf('year')],
-            'Tahun Lalu': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')],
-        }
-    }, function(start, end, label) {
-        $('#datePickerChart').val(start.format('D MMMM YYYY') + ' - ' + end.format('D MMMM YYYY'));
-    });
+// $(document).ready(function() {
+//     $('#datePickerChart').daterangepicker({
+//         opens: 'center',
+//         showDropdowns: true,
+//         timePicker: false, 
+//         locale: {
+//             format: 'D MMMM YYYY', 
+//             separator: ' - ',
+//             applyLabel: 'Pilih',
+//             cancelLabel: 'Batal',
+//             customRangeLabel: 'Rentang Kustom',
+//             daysOfWeek: ['Mg', 'Sn', 'Sl', 'Rb', 'Km', 'Jm', 'Sb'],
+//             monthNames: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+//             firstDay: 1
+//         },
+//         ranges: {
+//             'Sekarang': [moment(), moment()],
+//             'Kemarin': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+//             'Bulan Ini': [moment().startOf('month'), moment().endOf('month')],
+//             'Bulan Lalu': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+//             'Tahun Ini': [moment().startOf('year'), moment().endOf('year')],
+//             'Tahun Lalu': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')],
+//         }
+//     }, function(start, end, label) {
+//         $('#datePickerChart').val(start.format('D MMMM YYYY') + ' - ' + end.format('D MMMM YYYY'));
+//     });
 
-    $('#filterIcon').click(function(e) {
-        e.preventDefault();
-        $('#datePickerChart').click(); 
-    });
+//     $('#filterIcon').click(function(e) {
+//         e.preventDefault();
+//         $('#datePickerChart').click(); 
+//     });
 
-    $('#datePickerChart').val(moment().startOf('month').format('D MMMM YYYY') + ' - ' + moment().endOf('month').format('D MMMM YYYY'));
-});
+//     $('#datePickerChart').val(moment().startOf('month').format('D MMMM YYYY') + ' - ' + moment().endOf('month').format('D MMMM YYYY'));
+// });
 
 // Events Datepicker
 $(document).ready(function() {

@@ -19,14 +19,14 @@
         <div class="row">
 
             {{-- CCTV Event Terbanyak --}}
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-xl-4 col-md-6 mb-4">
                 <div class="card border-left-custom shadow h-100 py-2" style="border-left: 4px solid #0E1040;">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-uppercase mb-1" style="color: #0E1040">
                                     CCTV Event Terbanyak</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">CCTV Cawang Uki </div>
+                                <div class="h5 result mb-0 font-weight-bold text-gray-800" id="mostFrequentLocation"></div>
                             </div>
                             <div class="col-auto">
                                 <svg class="text-gray-300" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-camera-video" viewBox="0 0 16 16">
@@ -40,14 +40,14 @@
             </div>
 
             {{-- Jumlah Event Terbanyak --}}
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-xl-4 col-md-6 mb-4">
                 <div class="card border-left-custom shadow h-100 py-2" style="border-left: 4px solid #FECB05;">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-uppercase mb-1" style="color: #FECB05">
                                     Jumlah Event Tertinggi</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">23</div>
+                                <div class="h5 result mb-0 font-weight-bold text-gray-800" id="highestEventCount"></div>
                             </div>
                             <div class="col-auto">
                                 <svg class="text-gray-300" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-graph-up" viewBox="0 0 16 16">
@@ -60,7 +60,7 @@
             </div>
 
             {{-- Waktu Event Terlama --}}
-            <div class="col-xl-3 col-md-6 mb-4">
+            {{-- <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-custom shadow h-100 py-2" style="border-left: 4px solid #0E1040;">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
@@ -70,7 +70,7 @@
                                 </div>
                                 <div class="row no-gutters align-items-center">
                                     <div class="col-auto">
-                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">6 jam 23 menit</div>
+                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">6 Jam 23 Menit</div>
                                     </div>
                                 </div>
                             </div>
@@ -84,17 +84,17 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             {{-- Jenis Kendaraan Terbanyak --}}
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-xl-4 col-md-6 mb-4">
                 <div class="card border-left-custom shadow h-100 py-2" style="border-left: 4px solid #FECB05;">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-uppercase mb-1" style="color: #FECB05">
                                     Jenis Kendaraan Terbanyak</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">Bus</div>
+                                <div class="h5 result mb-0 font-weight-bold text-gray-800" id="mostFrequentVehicleType"></div>
                             </div>
                             <div class="col-auto">
                                 <svg class="text-gray-300" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-truck" viewBox="0 0 16 16">
@@ -141,16 +141,8 @@
                         <div class="chart-pie pt-4 pb-2">
                             <canvas id="myPieChart"></canvas>
                         </div>
-                        <div class="mt-4 text-center small">
-                            <span class="mr-2">
-                                <i class="fas fa-circle text-primary"></i> Mobil Keluarga
-                            </span>
-                            <span class="mr-2">
-                                <i class="fas fa-circle text-success"></i> Truk
-                            </span>
-                            <span class="mr-2">
-                                <i class="fas fa-circle text-info"></i> Bus
-                            </span>
+                        <div class="mt-4 text-center small" id="legend-container">
+                            <!-- Dynamic content will be inserted here -->
                         </div>
                     </div>
                 </div>
@@ -158,4 +150,114 @@
         </div>
 
     </div>
+    
+    <script>
+        $(document).ready(function() {
+            // Date picker initialization
+            $('#datePickerChart').daterangepicker({
+                opens: 'center',
+                showDropdowns: true,
+                timePicker: false,
+                locale: {
+                    format: 'D MMMM YYYY',
+                    separator: ' - ',
+                    applyLabel: 'Pilih',
+                    cancelLabel: 'Batal',
+                    customRangeLabel: 'Rentang Kustom',
+                    daysOfWeek: ['Mg', 'Sn', 'Sl', 'Rb', 'Km', 'Jm', 'Sb'],
+                    monthNames: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+                    firstDay: 1
+                },
+                ranges: {
+                    'Sekarang': [moment(), moment()],
+                    'Kemarin': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Bulan Ini': [moment().startOf('month'), moment().endOf('month')],
+                    'Bulan Lalu': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                    'Tahun Ini': [moment().startOf('year'), moment().endOf('year')],
+                    'Tahun Lalu': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')],
+                }
+            }, function(start, end, label) {
+                $('#datePickerChart').val(start.format('D MMMM YYYY') + ' - ' + end.format('D MMMM YYYY'));
+                fetchDashboardData(start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'));
+                fetchLineChartData(start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'));
+                fetchPieChartData(start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'));
+            });
+    
+            // Click handler for filter icon
+            $('#filterIcon').click(function(e) {
+                e.preventDefault();
+                $('#datePickerChart').click();
+            });
+    
+            // Initialize date picker value
+            $('#datePickerChart').val(moment().startOf('month').format('D MMMM YYYY') + ' - ' + moment().endOf('month').format('D MMMM YYYY'));
+    
+            // Initial data fetch on page load
+            fetchDashboardData(moment().startOf('month').format('YYYY-MM-DD'), moment().endOf('month').format('YYYY-MM-DD'));
+            fetchLineChartData(moment().startOf('month').format('YYYY-MM-DD'), moment().endOf('month').format('YYYY-MM-DD'));
+            fetchPieChartData(moment().startOf('month').format('YYYY-MM-DD'), moment().endOf('month').format('YYYY-MM-DD'));
+    
+            // Function to fetch dashboard data
+            function fetchDashboardData(startDate, endDate) {
+                $.ajax({
+                    url: '{{ route("dashboard.data") }}',
+                    type: 'GET',
+                    data: {
+                        start_date: startDate,
+                        end_date: endDate
+                    },
+                    success: function(data) {
+                        $('#mostFrequentLocation').text(data.mostFrequentLocation || 'N/A');
+                        $('#highestEventCount').text(data.highestEventCount || 'N/A');
+                        $('#mostFrequentVehicleType').text(data.mostFrequentVehicleType || 'N/A');
+                    }
+                });
+            }
+    
+            // Function to fetch line chart data
+            function fetchLineChartData(startDate, endDate) {
+                $.ajax({
+                    url: '{{ route("event.location.data") }}',
+                    type: 'GET',
+                    data: {
+                        start_date: startDate,
+                        end_date: endDate
+                    },
+                    success: function(data) {
+                        updateLineChart(data.labels, data.data);
+                    }
+                });
+            }
+    
+            // Function to update line chart
+            function updateLineChart(labels, data) {
+                myLineChart.data.labels = labels;
+                myLineChart.data.datasets[0].data = data;
+                myLineChart.update();
+            }
+    
+            // Function to fetch pie chart data
+            function fetchPieChartData(startDate, endDate) {
+                $.ajax({
+                    url: '{{ route("event.class.data") }}',
+                    type: 'GET',
+                    data: {
+                        start_date: startDate,
+                        end_date: endDate
+                    },
+                    success: function(data) {
+                        updatePieChart(data.labels, data.data);
+                    }
+                });
+            }
+    
+            // Function to update pie chart
+            function updatePieChart(labels, data) {
+                myPieChart.data.labels = labels;
+                myPieChart.data.datasets[0].data = data;
+                myPieChart.update();
+            }
+        });
+    </script>
+    
 @stop

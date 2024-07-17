@@ -84,9 +84,9 @@
                         </tr>
                     </tfoot>
                     <tbody>
-                        @foreach($events as $event)
+                        @foreach($events as $index => $event)
                             <tr>
-                                <td>{{ $event->event_id }}</td>
+                                <td>{{ $index + 1 }}</td>
                                 <td>CCTV {{ $event->event_lokasi }}</td>
                                 <td>{{ $event->event_class }}</td>
                                 <td>{{ $event->event_waktu }}</td>

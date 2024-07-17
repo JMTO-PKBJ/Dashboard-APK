@@ -6,12 +6,19 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CctvController;
 use App\Http\Controllers\EventController;
+
 // Route::get('/', function () {
 //     return view('welcome');
 // });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
+});
+
+Route::group(['prefix' => 'api'], function () {
+    Route::get('/dashboard-data', [EventController::class, 'getDashboardData'])->name('dashboard.data');
+    Route::get('/event-location-data', [EventController::class, 'getEventLocationData'])->name('event.location.data');
+    Route::get('/event/class/data', [EventController::class, 'getEventClassData'])->name('event.class.data');
 });
 
 Route::get('/viewCCTV', [CctvController::class, 'showAll']);
@@ -23,6 +30,7 @@ Route::get('/addCCTV', [CctvController::class, 'showAdd']);
 
 Route::get('/events', [EventController::class, 'show1']);
 
+// Route::get('/dashboard', [EventController::class, 'getDashboardData']);
 
 // Route::get('/addCCTV', function () {
 //     return view('addCCTV');
@@ -96,6 +104,9 @@ Route::view('/search', 'search');
 // dashboard
 Route::get('/events/most-frequent-location', [EventController::class, 'getMostFrequentEventLocation']);
 Route::view('/search-frequent-location', 'search_frequent_location');
+
+// Route::get('/dashboard', [EventController::class, 'getDashboardData']);
+
 
 // Route to display the users list page
 Route::get('/show-users', [UserController::class, 'showAll'])->name('show.users');
