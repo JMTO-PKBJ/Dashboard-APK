@@ -7,10 +7,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Laracsv\Export;
 use App\Exports\EventsExport;
+use App\Http\Controllers\EventsExport as ControllersEventsExport;
 use App\Models\Cctv;
 use Illuminate\Support\Facades\DB;
+use League\Csv\CannotInsertRecord;
+use League\Csv\Writer;
 use Maatwebsite\Excel\Facades\Excel;
-
+use PHPExcel;
+use PHPExcel_IOFactory;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class EventController extends Controller
 {
@@ -203,6 +208,7 @@ class EventController extends Controller
             'mostFrequentVehicleType' => $mostFrequentVehicleType ? $mostFrequentVehicleType->event_class : null,
         ]);
     }
+    
 
     public function getEventLocationData(Request $request)
     {
@@ -277,6 +283,63 @@ class EventController extends Controller
     //     ]);
     // }
 
+    public function exportExcel()
+    {
+        // Ambil data yang ingin diekspor, contoh: data dari model Event
+        $events = \App\Models\Event::all();
+    
+        // Buat objek PHPExcel
+        $objPHPExcel = new PHPExcel();
+    
+        // Atur properti dokumen (optional)
+        $objPHPExcel->getProperties()
+            ->setCreator("Your Name")
+            ->setTitle("Export Data Event")
+            ->setDescription("Excel file generated using PHPExcel.");
+    
+        // Mulai menulis data ke dalam sheet
+        $objPHPExcel->setActiveSheetIndex(0);
+        $sheet = $objPHPExcel->getActiveSheet();
+        $sheet->setCellValue('A1', 'ID');
+        $sheet->setCellValue('B1', 'CCTV ID');
+        $sheet->setCellValue('C1', 'Waktu');
+        $sheet->setCellValue('D1', 'Lokasi');
+        $sheet->setCellValue('E1', 'Class');
+        $sheet->setCellValue('F1', 'Gambar');
+    
+        // Isi data dari database ke dalam sheet
+        $row = 2;
+        foreach ($events as $event) {
+            $sheet->setCellValue('A' . $row, $event->id);
+            $sheet->setCellValue('B' . $row, $event->cctv_id);
+            $sheet->setCellValue('C' . $row, $event->waktu);
+            $sheet->setCellValue('D' . $row, $event->lokasi);
+            $sheet->setCellValue('E' . $row, $event->class);
+            $sheet->setCellValue('F' . $row, $event->gambar);
+            $row++;
+        }
+    
+        // Set header untuk response HTTP
+        $headers = [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'Content-Disposition' => 'attachment;filename="events.xlsx"',
+            'Cache-Control' => 'max-age=0',
+        ];
+    
+        // Buat response untuk file Excel
+        $writer = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        ob_start();
+        $writer->save('php://output');
+        $content = ob_get_clean();
+    
+        $response = Response::make($content, 200, $headers);
+    
+        // Return response untuk didownload
+        return $response;
+    }
+    
+}
+    
 
 //     public function exportCSV()
 // {
@@ -321,4 +384,4 @@ class EventController extends Controller
     //     $events = Event::all();
     //     return view('show1', compact('events'));
     // }
-}
+
