@@ -6,13 +6,15 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CctvController;
 use App\Http\Controllers\EventController;
+use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\OperatorMiddleware;
+use App\Http\Middleware\RedirectIfAuthenticated;
+use App\Http\Middleware\SupervisorMiddleware;
+use Illuminate\Support\Facades\Auth;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
+Route::get('/', function () {
+    return view('welcome');
 });
 
 Route::group(['prefix' => 'api'], function () {
@@ -50,31 +52,31 @@ Route::get('/test', function () {
     // return response()->json(['message' => 'Hello, world!']);
 });
 
-// Route untuk halaman login
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
+Route::middleware(['redirect'])->group(function () {
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+});
 
-// Route untuk logout
+Route::middleware(['auth' ])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard'); // Sesuaikan dengan view dashboard Anda
+    });
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/testlog', function () {
+        return view('testlog'); // Sesuaikan dengan view testlog Anda
+    });
+});
+
+// Route::middleware(['auth', 'operator'])->group(function () {
+//     Route::get('/testlog', function () {
+//         return view('testlog'); // Sesuaikan dengan view testlog Anda
+//     });
+// });
+
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Route untuk halaman home, dilindungi oleh middleware auth
-Route::get('/home', [HomeController::class, 'index'])->middleware('auth')->name('home');
-
-// Redirect ke home jika root diakses dan user sudah login
-Route::get('/', function () {
-    return redirect()->route('home');
-})->middleware('auth');
-
-// Jika user belum login, arahkan ke halaman login
-Route::get('/', function () {
-    return redirect()->route('login');
-})->middleware('guest');
-
-// Route::group('middleware'=>["isLogin"], function(){
-//     Route::get('/', function () {
-//         return redirect()->route('login');
-//     })
-// } )
 
 // Route::get('/cctv/{id}', [CctvController::class, 'showPage'])->name('cctv.showPage');
 // Route::get('/cctv/{lokasi}', [CctvController::class, 'showByLocation'])->name('cctv.showByLocation');
@@ -85,6 +87,8 @@ Route::get('cctv/{id}/show', [App\Http\Controllers\CctvController::class, 'showP
 Route::get('cctv/all', [CctvController::class, 'showAll']);
 
 
+
+Route::get('events/export/excel', [EventController::class, 'exportExcel']);
 Route::get('events/export/csv', [EventController::class, 'exportCSV']);
 Route::get('events/show', [EventController::class, 'show1']);
 Route::get('/events/search', [EventController::class, 'searchByDateRange']);
@@ -101,3 +105,5 @@ Route::view('/search-frequent-location', 'search_frequent_location');
 Route::get('/show-users', [UserController::class, 'showAll'])->name('show.users');
 // Route to download users CSV
 Route::get('users/export/csv', [UserController::class, 'exportUsersCsv'])->name('users.export.csv');
+
+

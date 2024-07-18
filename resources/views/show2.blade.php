@@ -21,8 +21,8 @@
                     <td>{{ $user['username'] }}</td>
                     <td>{{ $user['role'] }}</td>
                     <td>
-                        <a href="{{ url('users/' . $user['id'] . '/edit') }}">Update</a>
-                        <form action="{{ url('users/' . $user['id']) }}" method="POST" style="display:inline;">
+                        <a href="{{ url('api/users/' . $user['id'] . '/edit') }}">Update</a>
+                        <form action="{{ url('api/users/' . $user['id']) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit">Delete</button>

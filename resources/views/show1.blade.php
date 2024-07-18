@@ -29,6 +29,6 @@
             @endforeach
         </tbody>
     </table>
-    <a href="{{ url('events/export/csv') }}">Download CSV</a>
+    <a href="{{ url('events/export/excel') }}">Download Excel</a>
 </body>
 </html>
