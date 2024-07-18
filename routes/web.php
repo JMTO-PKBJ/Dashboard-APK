@@ -28,6 +28,10 @@ Route::get('/addCCTV', [CctvController::class, 'showAdd']);
 Route::get('/events', [EventController::class, 'show1']);
 
 
+// Route::get('/events', [EventController::class, 'showEvents']);
+// Route::get('/filterEvents', [EventController::class, 'filterEvents']);
+// Route::get('/getCctvByRuas', [EventController::class, 'getCctvByRuas']);
+
 
 Route::get('/register', function () {
     return view('register');

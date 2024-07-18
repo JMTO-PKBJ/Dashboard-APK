@@ -212,38 +212,38 @@ document.addEventListener('DOMContentLoaded', function () {
 //     $('#datePickerChart').val(moment().startOf('month').format('D MMMM YYYY') + ' - ' + moment().endOf('month').format('D MMMM YYYY'));
 // });
 
-// Events Datepicker
-$(document).ready(function() {
-    $('#datePickerInput').daterangepicker({
-        opens: 'center',
-        showDropdowns: true,
-        timePicker: true,
-        timePicker24Hour: true,
-        locale: {
-            format: 'YYYY-MM-DD HH:mm:ss',
-            separator: ' - ',
-            applyLabel: 'Apply',
-            cancelLabel: 'Cancel',
-            customRangeLabel: 'Custom Range',
-            daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-            monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-        },
-        ranges: {
-            'Sekarang': [moment(), moment()],
-            'Kemarin': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-            '7 Hari Terakhir': [moment().subtract(6, 'days'), moment()],
-            '30 Hari Terakhir': [moment().subtract(29, 'days'), moment()],
-            'Bulan Ini': [moment().startOf('month'), moment().endOf('month')],
-            'Bulan Lalu': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-        },
-        startDate: moment().subtract(29, 'days'),
-        endDate: moment()
-    }, function(start, end, label) {
-        $('#datePickerInput').val(start.format('YYYY-MM-DD HH:mm:ss') + ' - ' + end.format('YYYY-MM-DD HH:mm:ss'));
-    });
+// // Events Datepicker
+// $(document).ready(function() {
+//     $('#datePickerInput').daterangepicker({
+//         opens: 'center',
+//         showDropdowns: true,
+//         timePicker: true,
+//         timePicker24Hour: true,
+//         locale: {
+//             format: 'YYYY-MM-DD HH:mm:ss',
+//             separator: ' - ',
+//             applyLabel: 'Apply',
+//             cancelLabel: 'Cancel',
+//             customRangeLabel: 'Custom Range',
+//             daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+//             monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+//         },
+//         ranges: {
+//             'Sekarang': [moment(), moment()],
+//             'Kemarin': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+//             '7 Hari Terakhir': [moment().subtract(6, 'days'), moment()],
+//             '30 Hari Terakhir': [moment().subtract(29, 'days'), moment()],
+//             'Bulan Ini': [moment().startOf('month'), moment().endOf('month')],
+//             'Bulan Lalu': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+//         },
+//         startDate: moment().subtract(29, 'days'),
+//         endDate: moment()
+//     }, function(start, end, label) {
+//         $('#datePickerInput').val(start.format('YYYY-MM-DD HH:mm:ss') + ' - ' + end.format('YYYY-MM-DD HH:mm:ss'));
+//     });
 
-    $('#datePickerInput').val(moment().subtract(29, 'days').format('YYYY-MM-DD HH:mm:ss') + ' - ' + moment().format('YYYY-MM-DD HH:mm:ss'));
-});
+//     $('#datePickerInput').val(moment().subtract(29, 'days').format('YYYY-MM-DD HH:mm:ss') + ' - ' + moment().format('YYYY-MM-DD HH:mm:ss'));
+// });
 
 
 function setRole(role) {
@@ -253,3 +253,5 @@ function setRole(role) {
 function setDropdownValue(dropdownId, value) {
     document.getElementById(dropdownId).textContent = value;
 }
+
+

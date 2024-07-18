@@ -88,11 +88,11 @@
 
             {{-- Jenis Kendaraan Terbanyak --}}
             <div class="col-xl-4 col-md-6 mb-4">
-                <div class="card border-left-custom shadow h-100 py-2" style="border-left: 4px solid #FECB05;">
+                <div class="card border-left-custom shadow h-100 py-2" style="border-left: 4px solid #0E1040;">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-uppercase mb-1" style="color: #FECB05">
+                                <div class="text-xs font-weight-bold text-uppercase mb-1" style="color: #0E1040">
                                     Jenis Kendaraan Terbanyak</div>
                                 <div class="h5 result mb-0 font-weight-bold text-gray-800" id="mostFrequentVehicleType"></div>
                             </div>
@@ -207,7 +207,7 @@
                         end_date: endDate
                     },
                     success: function(data) {
-                        $('#mostFrequentLocation').text(data.mostFrequentLocation || 'N/A');
+                        $('#mostFrequentLocation').text(data.mostFrequentLocation ? 'CCTV ' + data.mostFrequentLocation : 'N/A');
                         $('#highestEventCount').text(data.highestEventCount || 'N/A');
                         $('#mostFrequentVehicleType').text(data.mostFrequentVehicleType || 'N/A');
                     }

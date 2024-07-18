@@ -31,6 +31,7 @@
     {{-- Video CCTV --}}
     <link href="https://vjs.zencdn.net/7.2.3/video-js.css" rel="stylesheet">
 
+    
 </head>
 <body id="page-top">
 

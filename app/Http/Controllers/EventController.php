@@ -251,9 +251,8 @@ class EventController extends Controller
 
         return response()->json(['labels' => $labels, 'data' => $data]);
     }
+    
 
-    
-    
 
 
     // public function getData(Request $request)
