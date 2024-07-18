@@ -27,24 +27,30 @@
                         <div class="col-xl-6 text-container d-flex flex-column">
                             <img class="my-4" style="width: 35%" src="{{ asset('images/jasamarga_icon.png') }}" alt="">
                             <h1 style="font-size: 18px; font-style: italic; font-weight:400; color:#000000;">Login</h1>
-                            <form class="row w-75 my-2 "method="POST" action="{{ route('login') }}"">
+
+                            <form class="row my-2 d-flex flex-column justify-content-center align-items-center" method="POST" action="{{ route('login') }}"">
                                 @csrf
                             <div>
-                                <p class="m-0" style="font-size: 13px">Username</p>
+                                <div class="my-2">
+                                    <p class="m-0" style="font-size: 13px">Username</p>
                                 <input class="form-control text-field w-100" style="border-radius: 7px" type="text" name="username" id="username" placeholder="Enter your username" required>
+                                </div>
+                                
                             </div>
                             <div>
-                                <p class="m-0" style="font-size: 13px">Password</p>
-                                <div class="input-group">
-                                    <input class="form-control text-field w-100" style="border-radius: 7px" type="password" name="password" id="password" placeholder="Enter your password" required>
-                                    <div class="input-group-append">
-                                        <span class="input-group-text password-toggle" onclick="togglePasswordVisibility()" style="border: none">
-                                            <i class="fas fa-eye"></i>
-                                        </span>
+                                <div class="my-1">
+                                    <p class="m-0" style="font-size: 13px">Password</p>
+                                    <div class="input-group">
+                                        <input class="form-control text-field w-100" style="border-radius: 7px" type="password" name="password" id="password" placeholder="Enter your password" required>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text password-toggle" onclick="togglePasswordVisibility()" style="border: none">
+                                                <i class="fas fa-eye"></i>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <button class="login-button w-75 my-2" style="font-weight: 400;" type="submit">Login</button>
+                            <button class="login-button w-100 my-2" style="font-weight: 400;" type="submit">Login</button>
                             {{-- <a href="{{ url('dashboard') }}" class="login-button w-75 my-2" style="font-weight: 400;">Login</a> --}}
                         </form>
                         <p>© 2024 Deteksi Bahu Tol JMTO| V 1.0.0</p>
@@ -53,6 +59,23 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function togglePasswordVisibility() {
+        var passwordInput = document.getElementById('password');
+        var icon = document.querySelector('.password-toggle i');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
+    </script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
@@ -65,6 +88,6 @@
     <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
 
     {{-- JS --}}
-    {{-- <script src="{{ asset('js/main.js') }}"></script> --}}
+    <script src="{{ asset('js/main.js') }}"></script>
 </body>
 </html>

@@ -29,10 +29,10 @@ Route::get('/addCCTV', [CctvController::class, 'showAdd']);
 
 Route::get('/events', [EventController::class, 'show1']);
 
+Route::get('/getCctvRuas', [EventController::class, 'getCctvRuas'])->name('getCctvRuas');
+Route::get('/getCctvLocations', [EventController::class, 'getCctvLocations'])->name('getCctvLocations');
+Route::get('/getData', [EventController::class, 'getData'])->name('getData');
 
-// Route::get('/events', [EventController::class, 'showEvents']);
-// Route::get('/filterEvents', [EventController::class, 'filterEvents']);
-// Route::get('/getCctvByRuas', [EventController::class, 'getCctvByRuas']);
 
 
 Route::get('/register', function () {

@@ -121,6 +121,8 @@ class EventController extends Controller
     }
 }
 
+
+
     // public function getMostFrequentEventLocation(Request $request)
     // {
     //     $validatedData = $request->validate([
@@ -258,8 +260,52 @@ class EventController extends Controller
         return response()->json(['labels' => $labels, 'data' => $data]);
     }
     
+    public function getCctvRuas()
+    {
+        // Ambil semua cctv_ruas yang tersedia
+        $cctvRuas = Cctv::distinct()->pluck('cctv_ruas');
+
+        return response()->json($cctvRuas);
+    }
+
+    public function getCctvLocations(Request $request)
+    {
+        $ruas = $request->get('ruas');
+
+        // Ambil event_lokasi berdasarkan cctv_ruas yang dipilih
+        $locations = Event::whereHas('cctv', function ($query) use ($ruas) {
+            $query->where('cctv_ruas', $ruas);
+        })->distinct()->pluck('event_lokasi');
+
+        return response()->json($locations);
+    }
+    
+
+    public function getData(Request $request)
+    {
+        // Validate incoming request if necessary
+        $request->validate([
+            'ruas' => 'required|string',
+            'location' => 'required|string',
+        ]);
+
+        // Retrieve events based on ruas and location
+        $ruas = $request->input('ruas');
+        $location = $request->input('location');
+
+        // Example query to retrieve events, adjust as per your application
+        $events = Event::whereHas('cctv', function ($query) use ($ruas) {
+            $query->where('cctv_ruas', $ruas);
+        })
+        ->where('event_lokasi', $location)
+        ->get();
+
+        // Return JSON response
+        return response()->json($events);
+    }
 
 
+    
 
     // public function getData(Request $request)
     // {
@@ -339,6 +385,8 @@ class EventController extends Controller
     
 }
     
+
+
 
 //     public function exportCSV()
 // {
