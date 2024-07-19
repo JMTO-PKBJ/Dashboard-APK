@@ -9,6 +9,8 @@ use Laracsv\Export;
 use App\Exports\EventsExport;
 use App\Http\Controllers\EventsExport as ControllersEventsExport;
 use App\Models\Cctv;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Illuminate\Support\Facades\DB;
 use League\Csv\CannotInsertRecord;
 use League\Csv\Writer;
@@ -23,6 +25,7 @@ class EventController extends Controller
     {
         $events = Event::all();
         return response()->json($events);
+        
     }
 
     public function show($event_id)
@@ -251,63 +254,88 @@ class EventController extends Controller
         return response()->json($events);
     }
     
-    public function exportExcel()
+
+
+    // public function getData(Request $request)
+    // {
+    //     $startDate = $request->query('start_date');
+    //     $endDate = $request->query('end_date');
+
+    //     $data = DB::table('event_waktu')
+    //         ->whereBetween('event_waktu', [$startDate, $endDate])
+    //         ->select(
+    //             DB::raw('COUNT(*) as highestEventCount'),
+    //             DB::raw('MAX(event_lokasi) as mostFrequentLocation'),
+    //             DB::raw('MAX(event_jenis_kendaraan) as mostFrequentVehicleType')
+    //         )
+    //         ->first();
+
+    //     return response()->json([
+    //         'mostFrequentLocation' => $data->mostFrequentLocation,
+    //         'highestEventCount' => $data->highestEventCount,
+    //         'mostFrequentVehicleType' => $data->mostFrequentVehicleType
+    //     ]);
+    // }
+
+    public function exportPDF()
     {
-        // Ambil data yang ingin diekspor, contoh: data dari model Event
-        $events = \App\Models\Event::all();
+        // Ambil data dari model Event
+        $events = Event::all();
     
-        // Buat objek PHPExcel
-        $objPHPExcel = new PHPExcel();
+        // Mulai membuat dokumen PDF
+        $dompdf = new Dompdf();
+        $dompdf->setOptions(new Options(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true]));
     
-        // Atur properti dokumen (optional)
-        $objPHPExcel->getProperties()
-            ->setCreator("Your Name")
-            ->setTitle("Export Data Event")
-            ->setDescription("Excel file generated using PHPExcel.");
+        // Mulai menulis konten ke dalam dokumen PDF
+        $html = '<html><head><title>Export Data Event</title>';
+        $html .= '<style>
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                    }
+                    th, td {
+                        border: 1px solid black;
+                        padding: 8px;
+                        text-align: left;
+                    }
+                    img {
+                        width: 100px;
+                        height: auto;
+                    }
+                  </style>';
+        $html .= '</head><body>';
+        $html .= '<h1>Export Data Event</h1>';
+        $html .= '<table>';
+        $html .= '<thead><tr>';
+        $html .= '<th>ID</th><th>CCTV ID</th><th>Waktu</th><th>Lokasi</th><th>Class</th><th>Gambar</th>';
+        $html .= '</tr></thead><tbody>';
     
-        // Mulai menulis data ke dalam sheet
-        $objPHPExcel->setActiveSheetIndex(0);
-        $sheet = $objPHPExcel->getActiveSheet();
-        $sheet->setCellValue('A1', 'ID');
-        $sheet->setCellValue('B1', 'CCTV ID');
-        $sheet->setCellValue('C1', 'Waktu');
-        $sheet->setCellValue('D1', 'Lokasi');
-        $sheet->setCellValue('E1', 'Class');
-        $sheet->setCellValue('F1', 'Gambar');
-    
-        // Isi data dari database ke dalam sheet
-        $row = 2;
         foreach ($events as $event) {
-            $sheet->setCellValue('A' . $row, $event->id);
-            $sheet->setCellValue('B' . $row, $event->cctv_id);
-            $sheet->setCellValue('C' . $row, $event->waktu);
-            $sheet->setCellValue('D' . $row, $event->lokasi);
-            $sheet->setCellValue('E' . $row, $event->class);
-            $sheet->setCellValue('F' . $row, $event->gambar);
-            $row++;
+            $html .= '<tr>';
+            $html .= '<td>' . $event->event_id . '</td>';
+            $html .= '<td>' . $event->cctv_id . '</td>';
+            $html .= '<td>' . $event->event_waktu . '</td>';
+            $html .= '<td>' . $event->event_lokasi . '</td>';
+            $html .= '<td>' . $event->event_class . '</td>';
+            $html .= '<td><img src="' . url($event->event_gambar) . '"></td>';
+            $html .= '</tr>';
         }
     
-        // Set header untuk response HTTP
-        $headers = [
-            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-            'Content-Disposition' => 'attachment;filename="events.xlsx"',
-            'Cache-Control' => 'max-age=0',
-        ];
+        $html .= '</tbody></table></body></html>';
     
-        // Buat response untuk file Excel
-        $writer = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-        ob_start();
-        $writer->save('php://output');
-        $content = ob_get_clean();
+        $dompdf->loadHtml($html);
     
-        $response = Response::make($content, 200, $headers);
+        // Render PDF (optional settings)
+        $dompdf->setPaper('A4', 'landscape');
     
-        // Return response untuk didownload
-        return $response;
+        // Render the HTML as PDF
+        $dompdf->render();
+    
+        // Output the generated PDF to Browser
+        $dompdf->stream('events.pdf', [
+            'Attachment' => true
+        ]);
     }
-    
-}
-    
 
 
 
@@ -349,9 +377,9 @@ class EventController extends Controller
     //     $csvExporter->build($events, ['event_id', 'cctv_id', 'event_waktu', 'event_lokasi', 'event_class', 'event_gambar'])->download();
     // }
 
-    // public function showEvents()
-    // {
-    //     $events = Event::all();
-    //     return view('show1', compact('events'));
-    // }
-
+    public function showEvents()
+    {
+        $events = Event::all();
+        return view('show1', compact('events'));
+    }
+}

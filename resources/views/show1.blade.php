@@ -17,7 +17,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($events as $event)
+            @foreach($events->reverse() as $index => $event)
                 <tr>
                     <td>{{ $event->event_id }}</td>
                     <td>{{ $event->cctv_id }}</td>
@@ -29,6 +29,6 @@
             @endforeach
         </tbody>
     </table>
-    <a href="{{ url('events/export/excel') }}">Download Excel</a>
+    <a href="{{ url('events/export/pdf') }}">Download PDF</a>
 </body>
 </html>
