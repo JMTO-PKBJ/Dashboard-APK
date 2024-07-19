@@ -18,6 +18,9 @@ use Maatwebsite\Excel\Facades\Excel;
 use PHPExcel;
 use PHPExcel_IOFactory;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Mpdf\Mpdf;
+use Barryvdh\DomPDF\Facade as PDF;
+
 
 class EventController extends Controller
 {
@@ -37,6 +40,12 @@ class EventController extends Controller
         }
     
         return response()->json($event);
+    }
+
+    public function showEvents()
+    {
+        $events=Event::all();
+        return view('show1', compact('events'));
     }
     
 
@@ -127,7 +136,6 @@ class EventController extends Controller
         $startDate = $validatedData['start_date'];
         $endDate = $validatedData['end_date'];
 
-        // CCTV Event Terbanyak
         $mostFrequentLocation = Event::select('event_lokasi', DB::raw('count(*) as total'))
             ->whereDate('event_waktu', '>=', $startDate)
             ->whereDate('event_waktu', '<=', $endDate)
@@ -135,7 +143,6 @@ class EventController extends Controller
             ->orderBy('total', 'desc')
             ->first();
 
-        // Jumlah Event Tertinggi
         $highestEventCount = Event::select(DB::raw('count(*) as total'))
             ->whereDate('event_waktu', '>=', $startDate)
             ->whereDate('event_waktu', '<=', $endDate)
@@ -143,7 +150,6 @@ class EventController extends Controller
             ->orderBy('total', 'desc')
             ->first();
 
-        // Jenis Kendaraan Terbanyak
         $mostFrequentVehicleType = Event::select('event_class', DB::raw('count(*) as total'))
             ->whereDate('event_waktu', '>=', $startDate)
             ->whereDate('event_waktu', '<=', $endDate)
@@ -168,7 +174,6 @@ class EventController extends Controller
         $startDate = $validatedData['start_date'];
         $endDate = $validatedData['end_date'];
 
-        // Get the top 4 event locations
         $eventLocations = Event::select('event_lokasi', DB::raw('count(*) as total'))
             ->whereDate('event_waktu', '>=', $startDate)
             ->whereDate('event_waktu', '<=', $endDate)
@@ -193,7 +198,6 @@ class EventController extends Controller
         $startDate = $validatedData['start_date'];
         $endDate = $validatedData['end_date'];
 
-        // Get event classes and their totals
         $eventClasses = Event::select('event_class', DB::raw('count(*) as total'))
             ->whereDate('event_waktu', '>=', $startDate)
             ->whereDate('event_waktu', '<=', $endDate)
@@ -208,7 +212,6 @@ class EventController extends Controller
     
     public function getCctvRuas()
     {
-        // Ambil semua cctv_ruas yang tersedia
         $cctvRuas = Cctv::distinct()->pluck('cctv_ruas');
 
         return response()->json($cctvRuas);
@@ -218,7 +221,6 @@ class EventController extends Controller
     {
         $ruas = $request->get('ruas');
 
-        // Ambil event_lokasi berdasarkan cctv_ruas yang dipilih
         $locations = Event::whereHas('cctv', function ($query) use ($ruas) {
             $query->where('cctv_ruas', $ruas);
         })->distinct()->pluck('event_lokasi');
@@ -253,133 +255,76 @@ class EventController extends Controller
 
         return response()->json($events);
     }
-    
 
+    public function exportPDF(Request $request)
+{
+    // Ambil parameter dari request
+    $ruas = $request->input('ruas');
+    $location = $request->input('location');
+    $startDate = $request->input('start_date');
+    $endDate = $request->input('end_date');
 
-    // public function getData(Request $request)
-    // {
-    //     $startDate = $request->query('start_date');
-    //     $endDate = $request->query('end_date');
+    // Validasi parameter jika diperlukan
+    $query = Event::whereHas('cctv', function ($query) use ($ruas) {
+        $query->where('cctv_ruas', $ruas);
+    })
+    ->where('event_lokasi', $location);
 
-    //     $data = DB::table('event_waktu')
-    //         ->whereBetween('event_waktu', [$startDate, $endDate])
-    //         ->select(
-    //             DB::raw('COUNT(*) as highestEventCount'),
-    //             DB::raw('MAX(event_lokasi) as mostFrequentLocation'),
-    //             DB::raw('MAX(event_jenis_kendaraan) as mostFrequentVehicleType')
-    //         )
-    //         ->first();
-
-    //     return response()->json([
-    //         'mostFrequentLocation' => $data->mostFrequentLocation,
-    //         'highestEventCount' => $data->highestEventCount,
-    //         'mostFrequentVehicleType' => $data->mostFrequentVehicleType
-    //     ]);
-    // }
-
-    public function exportPDF()
-    {
-        // Ambil data dari model Event
-        $events = Event::all();
-    
-        // Mulai membuat dokumen PDF
-        $dompdf = new Dompdf();
-        $dompdf->setOptions(new Options(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true]));
-    
-        // Mulai menulis konten ke dalam dokumen PDF
-        $html = '<html><head><title>Export Data Event</title>';
-        $html .= '<style>
-                    table {
-                        width: 100%;
-                        border-collapse: collapse;
-                    }
-                    th, td {
-                        border: 1px solid black;
-                        padding: 8px;
-                        text-align: left;
-                    }
-                    img {
-                        width: 100px;
-                        height: auto;
-                    }
-                  </style>';
-        $html .= '</head><body>';
-        $html .= '<h1>Export Data Event</h1>';
-        $html .= '<table>';
-        $html .= '<thead><tr>';
-        $html .= '<th>ID</th><th>CCTV ID</th><th>Waktu</th><th>Lokasi</th><th>Class</th><th>Gambar</th>';
-        $html .= '</tr></thead><tbody>';
-    
-        foreach ($events as $event) {
-            $html .= '<tr>';
-            $html .= '<td>' . $event->event_id . '</td>';
-            $html .= '<td>' . $event->cctv_id . '</td>';
-            $html .= '<td>' . $event->event_waktu . '</td>';
-            $html .= '<td>' . $event->event_lokasi . '</td>';
-            $html .= '<td>' . $event->event_class . '</td>';
-            $html .= '<td><img src="' . url($event->event_gambar) . '"></td>';
-            $html .= '</tr>';
-        }
-    
-        $html .= '</tbody></table></body></html>';
-    
-        $dompdf->loadHtml($html);
-    
-        // Render PDF (optional settings)
-        $dompdf->setPaper('A4', 'landscape');
-    
-        // Render the HTML as PDF
-        $dompdf->render();
-    
-        // Output the generated PDF to Browser
-        $dompdf->stream('events.pdf', [
-            'Attachment' => true
-        ]);
+    if ($startDate && $endDate) {
+        $query->whereBetween('event_waktu', [$startDate, $endDate]);
     }
 
+    $events = $query->get();
 
+    // Generasi PDF
+    $dompdf = new Dompdf();
+    $dompdf->setOptions(new Options(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true]));
 
-//     public function exportCSV()
-// {
-//     $events = Event::all();
+    $html = '<html><head><title>Export Data Event</title>';
+    $html .= '<style>
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+                th, td {
+                    border: 1px solid black;
+                    padding: 8px;
+                    text-align: left;
+                }
+                img {
+                    width: 100px;
+                    height: auto;
+                }
+            </style>';
+    $html .= '</head><body>';
+    $html .= '<h1>Export Data Event</h1>';
+    $html .= '<table>';
+    $html .= '<thead><tr>';
+    $html .= '<th>No</th><th>Event ID</th><th>Waktu</th><th>Lokasi</th><th>Class</th><th>Gambar</th>';
+    $html .= '</tr></thead><tbody>';
 
-//     return Excel::download(new EventsExport($events), 'events.csv');
-// }
+    // Inisialisasi nomor baris
+    $counter = 1;
 
-    // public function exportCSV()
-    // {
-    //     $events = Event::all();
-    //     $csvExporter = new Export();
-    //     $csvExporter->beforeEach(function ($event) {
-    //         $event->event_gambar = url($event->event_gambar);
-    //     });
-
-    //     $csvExporter->build($events, [
-    //         'event_id',
-    //         'cctv_id',
-    //         'event_waktu',
-    //         'event_lokasi',
-    //         'event_class',
-    //         'event_gambar'
-    //     ])->download('events.csv');
-    // }
-    // public function exportCSV()
-    // {
-    //     return Excel::download(new EventsExport, 'events.xlsx');
-    // }
-
-
-
-    // public function exportCSV()
-    // {
-    //     $events = Event::all();
-    //     $csvExporter = new Export();
-    //     $csvExporter->build($events, ['event_id', 'cctv_id', 'event_waktu', 'event_lokasi', 'event_class', 'event_gambar'])->download();
-    // }
-
-    public function showEvents()
-    {
-        $events = Event::all();
-        return view('show1', compact('events'));
+    foreach ($events as $event) {
+        $html .= '<tr>';
+        $html .= '<td>' . $counter++ . '</td>'; // Tampilkan nomor baris dan tambahkan 1 untuk baris berikutnya
+        $html .= '<td>' . $event->event_id . '</td>';
+        $html .= '<td>' . $event->event_waktu . '</td>';
+        $html .= '<td>' . $event->event_lokasi . '</td>';
+        $html .= '<td>' . $event->event_class . '</td>';
+        $html .= '<td><img src="' . url($event->event_gambar) . '"></td>';
+        $html .= '</tr>';
     }
+
+    $html .= '</tbody></table></body></html>';
+
+    $dompdf->loadHtml($html);
+    $dompdf->setPaper('A4', 'landscape');
+    $dompdf->render();
+    $dompdf->stream('events.pdf', ['Attachment' => true]);
+}
+
+
+    
 }

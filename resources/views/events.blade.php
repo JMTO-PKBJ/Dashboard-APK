@@ -42,13 +42,24 @@
                     </svg>
                     <span class="ms-1">Cari</span>
                 </a>
-                <a class="eventBtn d-flex justify-content-center align-items-center" style="background-color: #FECB05" href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
-                        <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/>
-                        <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1"/>
-                    </svg>
-                    <span class="ms-2">Export</span>
-                </a>
+                <form method="GET" action="{{ route('exportPDF') }}" class="d-inline" >
+                    <input type="hidden" name="ruas" id="ruasHidden" value="">
+                    <input type="hidden" name="location" id="locationHidden" value="">
+                    <input type="hidden" name="start_date" id="startDateHidden" value="">
+                    <input type="hidden" name="end_date" id="endDateHidden" value="">
+                
+                    <button type="submit" class="eventBtn export d-flex justify-content-center align-items-center" style="background-color: #FECB05; border: none;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+                            <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/>
+                            <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1"/>
+                        </svg>
+                        <span class="ms-2">Export</span>
+                    </button>
+                </form>
+                
+                
+                
+                
             </div>
         </div>
 
@@ -97,6 +108,23 @@
 </div>
 @endforeach
 
+
+<script>
+    $('.eventBtn.export').on('click', function() {
+    var ruas = $('#ruasDropdownButton span:first-child').text();
+    var location = $('#cctvDropdownButton span:first-child').text();
+    var dateRange = $('#datePickerInput').val().split(' - ');
+    var start = dateRange[0];
+    var end = dateRange[1];
+
+    $('#ruasHidden').val(ruas);
+    $('#locationHidden').val(location);
+    $('#startDateHidden').val(start);
+    $('#endDateHidden').val(end);
+});
+
+
+</script>
 <script>
     $(document).ready(function() {
         $.ajax({

@@ -44,6 +44,9 @@ Route::get('/addUser', function () {
     return view('addUser');
 });
 
+// Route::get('/coba', function () {
+//     return view('coba');
+// });
 Route::get('/test', function () {
     return view('test');
     // return response()->json(['message' => 'Hello, world!']);
@@ -91,8 +94,11 @@ Route::get('/show3', function () {
     return view('show3');
 });
 
+Route::get('/export-pdf', [EventController::class, 'exportPDF'])->name('exportPDF');
 
-Route::get('events/export/pdf', [EventController::class, 'exportPDF']);
+// Route::get('events/export/pdf', [EventController::class, 'exportPDF'])->name('exportPDF');
+
+// Route::get('events/export/pdf', [EventController::class, 'exportPDF']);
 Route::get('events/export/csv', [EventController::class, 'exportCSV']);
 Route::get('events/show', [EventController::class, 'showEvents']);
 Route::get('/events/search', [EventController::class, 'searchByDateRange']);
