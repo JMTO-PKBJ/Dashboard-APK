@@ -1,6 +1,6 @@
 @extends('master')
-
 @section('content')
+
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h1 class="h3 mb-0" style="font-size: 25px; color:#0E1040; font-weight:700">Tambah CCTV</h1>
@@ -45,7 +45,6 @@
         </div>
     </div>
 
-    <!-- CCTV Table -->
     <div class="card shadow mb-4 mt-4">
         <div class="card-header py-3">
             <h1 class="h3 mb-0" style="font-size: 25px; color:#0E1040; font-weight:700">Daftar CCTV</h1>
@@ -57,7 +56,7 @@
                         <th>No</th>
                         <th>Ruas</th>
                         <th>Lokasi</th>
-                        <th>CCTV</th>
+                        <th>Link CCTV</th>
 
                     </tr>
                 </thead>
@@ -92,26 +91,24 @@
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="viewCCTVLabel-{{ $cctv->id }}" style="font-size: 25px; color:#0E1040; font-weight:700">CCTV {{ $cctv->cctv_lokasi }}</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h1 class="modal-title fs-5" id="viewCCTVLabel-{{ $cctv->id }}" style="font-size: 25px; color: #0E1040; font-weight: 700;">CCTV {{ $cctv->cctv_lokasi }}</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-12 d-flex justify-content-center">
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <iframe id="iframe_{{ $cctv->id }}" class="embed-responsive-item" src="{{ $cctv->cctv_video }}" allowfullscreen></iframe>
-                            </div>
-                        </div>
+                    <div class="d-flex justify-content-center">
+                        <video id="cctv-video-{{ $cctv->id }}" class="video-js vjs-default-skin w-100 video-addCCTV" controls preload="auto" autoplay muted>
+                            <source src="{{ $cctv->cctv_video }}" type="application/x-mpegURL">
+                            Your browser does not support the video tag.
+                        </video>  
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                 </div>
             </div>
         </div>
     </div>
     @endforeach
 
+
+    
     <script>
         function toggleCustomInput(selectElement, customInputId) {
             var customInput = document.getElementById(customInputId);
@@ -152,7 +149,6 @@
 
             return true; 
         }
-        
     </script>
 
     @push('scripts')
@@ -163,4 +159,5 @@
         });
     </script>
     @endpush
+    
 @endsection

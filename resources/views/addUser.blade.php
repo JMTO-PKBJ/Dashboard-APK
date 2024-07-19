@@ -37,27 +37,29 @@
                             </div>
                         </div>
                     </div>
-    
+
+                    {{-- <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#" onclick="setRole('Admin')">Admin</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setRole('Monitoring')">Monitoring</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setRole('Supervisor')">Supervisor</a></li>
+                            </ul> --}}
+                            
+                    
                     <div class="role p-3">
-                        Role
+                        Role 
                         <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="roleDropdownButton">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="roleDropdownButton" >
                                 Pilih role
                             </button>
-                            <ul class="dropdown-menu" aria-labelledby="roleDropdownButton">
-                                <li><a class="dropdown-item" href="#" onclick="setRole(1)">Admin</a></li>
-                                <li><a class="dropdown-item" href="#" onclick="setRole(2)">Supervisor</a></li>
-                                <li><a class="dropdown-item" href="#" onclick="setRole(3)">Operator</a></li>
-                            </ul>
+                            <select class="dropdown-menu" name="role_id" id="role_id">
+                                <option value="1">Admin</option>
+                                <option value="2">Supervisor</option>
+                                <option value="3">Operator</option>
+                            </select>
+        
+                            
                         </div>
                     </div>
-                    
-                    <script>
-                        function setRole(roleId) {
-                            document.getElementById('role_id').value = roleId;
-                        }
-                    </script>
-                    
                     
                     <div class="btnAdd p-3 d-flex justify-content-center">
                         <a href="#" class="login-button w-100 my-2" style="font-weight: 400;" data-bs-toggle='modal' data-bs-target='#addUser'>Tambah User</a>
@@ -96,19 +98,17 @@
 
     </div>
     <script>
-        function togglePasswordVisibility() {
-        var passwordInput = document.getElementById('password');
-        var icon = document.querySelector('.password-toggle i');
-
-        if (passwordInput.type === 'password') {
-            passwordInput.type = 'text';
-            icon.classList.remove('fa-eye');
-            icon.classList.add('fa-eye-slash');
-        } else {
-            passwordInput.type = 'password';
-            icon.classList.remove('fa-eye-slash');
-            icon.classList.add('fa-eye');
+        function setRole(role) {
+        document.getElementById('roleDropdownButton').textContent = role;
+        // Update nilai di elemen <select> jika diperlukan
+        var select = document.getElementById('role_id');
+        var options = select.options;
+        for (var i = 0; i < options.length; i++) {
+            if (options[i].text === role) {
+            select.value = options[i].value;
+            break;
+            }
         }
-    }
+        }
     </script>
 @stop

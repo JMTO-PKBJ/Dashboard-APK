@@ -201,12 +201,7 @@
     cursor: pointer;
 }
 
-/* .daterangepicker, .tanggal {
-    z-index: 999999 !important;
-} */
-
 #datePickerInput{
-    /* width: auto; */
     white-space: nowrap; 
     overflow: hidden; 
     text-overflow: ellipsis;
@@ -215,7 +210,6 @@
 #datePickerChart {
     border: none;
     background-color: transparent;
-    /* padding: 8px 12px; */
     font-size: 18px;
     color:#0E1040;
     text-decoration: none;

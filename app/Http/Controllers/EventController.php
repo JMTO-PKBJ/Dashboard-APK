@@ -289,7 +289,7 @@ class EventController extends Controller
                         text-align: left;
                     }
                     img {
-                        width: 500px;
+                        width: 450px;
                         height: auto;
                     }
                 </style>';
