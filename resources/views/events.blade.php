@@ -16,7 +16,6 @@
                         <span class="dropdown-toggle-icon"></span>
                     </button>
                     <ul class="dropdown-menu" id="ruasDropdownMenu">
-                        <!-- Tambahkan skrip JavaScript untuk memanggil getCctvRuas() -->
                     </ul>
                 </div>
             </div>
@@ -29,7 +28,6 @@
                         <span class="dropdown-toggle-icon"></span>
                     </button>
                     <ul class="dropdown-menu" id="cctvDropdownMenu">
-                        <!-- Opsi akan dimuat dengan JavaScript -->
                     </ul>
                 </div>
             </div>
@@ -75,14 +73,12 @@
                     </tr>
                 </tfoot>
                 <tbody>
-                    <!-- Data akan dimuat dengan JavaScript -->
                 </tbody>
             </table>
         </div>
     </div>
 </div>
 
-<!-- Modal for viewing CCTV event -->
 @foreach($events as $event)
 <div class="modal fade" id="viewCCTV-{{ $event->event_id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="viewCCTVLabel-{{ $event->event_id }}" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
@@ -103,7 +99,6 @@
 
 <script>
     $(document).ready(function() {
-        // Populate ruas dropdown
         $.ajax({
             url: '{{ route("getCctvRuas") }}',
             method: 'GET',
@@ -116,14 +111,12 @@
             }
         });
 
-        // Handle ruas selection
         $(document).on('click', '.ruas-item', function(e) {
             e.preventDefault();
             var ruas = $(this).data('ruas');
             $('#ruasDropdownButton span:first-child').text(ruas);
             $('#cctvDropdownButton').prop('disabled', false);
 
-            // Populate cctv dropdown based on selected ruas
             $.ajax({
                 url: '{{ route("getCctvLocations") }}',
                 method: 'GET',
@@ -138,77 +131,12 @@
             });
         });
 
-        // Handle cctv location selection
         $(document).on('click', '.cctv-item', function(e) {
             e.preventDefault();
             var location = $(this).data('location');
             $('#cctvDropdownButton span:first-child').text(location);
-
-            // Fetch and display events based on ruas and location
-            var ruas = $('#ruasDropdownButton span:first-child').text();
-            $.ajax({
-                url: '{{ route("getData") }}',
-                method: 'GET',
-                data: { ruas: ruas, location: location },
-                success: function(response) {
-                    var tableBody = $('#dataTable tbody');
-                    tableBody.empty();
-                    $.each(response, function(index, event) {
-                        tableBody.append('<tr>' +
-                            '<td>' + (index + 1) + '</td>' +
-                            '<td>' + 'CCTV ' + event.event_lokasi + '</td>' +
-                            '<td>' + event.event_class + '</td>' +
-                            '<td>' + event.event_waktu + '</td>' +
-                            '<td>' +
-                            '<a href="#" class="viewCCTV" data-bs-toggle="modal" data-bs-target="#viewCCTV-' + event.event_id + '" data-id="' + event.event_id + '">' +
-                            '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="icon-border bi bi-eye" viewBox="0 0 16 16">' +
-                            '<path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>' +
-                            '<path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>' +
-                            '</svg>' +
-                            '</a>' +
-                            '</td>' +
-                            '</tr>');
-                    });
-                }
-            });
-
         });
 
-        // Handle search button click
-        $('.eventBtn.cari').on('click', function(e) {
-            e.preventDefault();
-            // Fetch and display events based on ruas, location, and date range (if applicable)
-            var ruas = $('#ruasDropdownButton span:first-child').text();
-            var location = $('#cctvDropdownButton span:first-child').text();
-            var date = $('#datePickerInput').val();
-            $.ajax({
-                url: '{{ route("getData") }}',
-                method: 'GET',
-                data: { ruas: ruas, location: location, date: date },
-                success: function(response) {
-                    var tableBody = $('#dataTable tbody');
-                    tableBody.empty();
-                    $.each(response, function(index, event) {
-                        tableBody.append('<tr>' +
-                            '<td>' + (index + 1) + '</td>' +
-                            '<td>' + 'CCTV ' + event.event_lokasi + '</td>' +
-                            '<td>' + event.event_class + '</td>' +
-                            '<td>' + event.event_waktu + '</td>' +
-                            '<td>' +
-                            '<a href="#" class="viewCCTV" data-bs-toggle="modal" data-bs-target="#viewCCTV-' + event.event_id + '" data-id="' + event.event_id + '">' +
-                            '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="icon-border bi bi-eye" viewBox="0 0 16 16">' +
-                            '<path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>' +
-                            '<path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>' +
-                            '</svg>' +
-                            '</a>' +
-                            '</td>' +
-                            '</tr>');
-                    });
-                }
-            });
-        });
-
-        // Initialize date picker
         $('#datePickerInput').daterangepicker({
             opens: 'center',
             showDropdowns: true,
@@ -231,21 +159,82 @@
                 'Bulan Ini': [moment().startOf('month'), moment().endOf('month')],
                 'Bulan Lalu': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
             },
-            startDate: moment().subtract(29, 'days'),
-            endDate: moment()
+            startDate: moment().startOf('day').format('YYYY-MM-DD 00:00:00'),
+            endDate: moment().endOf('day').format('YYYY-MM-DD 23:59:59')
         }, function(start, end, label) {
             $('#datePickerInput').val(start.format('YYYY-MM-DD HH:mm:ss') + ' - ' + end.format('YYYY-MM-DD HH:mm:ss'));
         });
 
-        $('#datePickerInput').val(moment().subtract(29, 'days').format('YYYY-MM-DD HH:mm:ss') + ' - ' + moment().format('YYYY-MM-DD HH:mm:ss'));
+        $('#datePickerInput').val(moment().startOf('day').format('YYYY-MM-DD 00:00:00') + ' - ' + moment().endOf('day').format('YYYY-MM-DD 23:59:59'));
 
-        // Handle click on "View" icon to open modal
+        $('.eventBtn.cari').on('click', function(e) {
+            e.preventDefault();
+            var ruas = $('#ruasDropdownButton span:first-child').text();
+            var location = $('#cctvDropdownButton span:first-child').text();
+            var dateRange = $('#datePickerInput').val().split(' - ');
+            var start = dateRange[0];
+            var end = dateRange[1];
+
+            $.ajax({
+                url: '{{ route("getData") }}',
+                method: 'GET',
+                data: {
+                    ruas: ruas,
+                    location: location,
+                    start_date: start,
+                    end_date: end
+                },
+                success: function(response) {
+                    var tableBody = $('#dataTable tbody');
+                    tableBody.empty();
+                    $.each(response, function(index, event) {
+                        tableBody.append('<tr>' +
+                            '<td>' + (index + 1) + '</td>' +
+                            '<td>' + 'CCTV ' + event.event_lokasi + '</td>' +
+                            '<td>' + event.event_class + '</td>' +
+                            '<td>' + event.event_waktu + '</td>' +
+                            '<td>' +
+                            '<a href="#" class="viewCCTV" data-bs-toggle="modal" data-bs-target="#viewCCTV-' + event.event_id + '" data-id="' + event.event_id + '">' +
+                            '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="icon-border bi bi-eye" viewBox="0 0 16 16">' +
+                            '<path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>' +
+                            '<path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>' +
+                            '</svg>' +
+                            '</a>' +
+                            '</td>' +
+                            '</tr>');
+                    });
+                }
+            });
+        });
+
         $(document).on('click', '.viewCCTV', function(e) {
             e.preventDefault();
             var eventId = $(this).data('id');
             $('#viewCCTV-' + eventId).modal('show');
         });
     });
+
+    document.addEventListener('DOMContentLoaded', function() {
+            var labels = document.getElementsByTagName('label');
+            for (var i = 0; i < labels.length; i++) {
+                if (labels[i].textContent.trim() === 'Search:') {
+                    labels[i].style.display = 'none';
+                    break;
+                }
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var labels = document.querySelectorAll('label[for^="search"]');
+            var inputs = document.querySelectorAll('input[type="search"].form-control.form-control-sm');
+
+            for (var i = 0; i < labels.length; i++) {
+                labels[i].style.display = 'none';
+            }
+            for (var j = 0; j < inputs.length; j++) {
+                inputs[j].style.display = 'none';
+            }
+        });
 </script>
 
 @endsection
