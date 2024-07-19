@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top " style="position: fixed; top: 0; width: calc(100% - 224px); z-index: 1000; left: 224px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);">
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top" style="position: fixed; top: 0; width: calc(100% - 224px); z-index: 1000; left: 224px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);">
 
     <!-- Sidebar Toggle (Topbar) -->
     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -13,7 +13,11 @@
         <!-- Nav Item - User Information -->
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline" style="font-size: 16px; color:#0E1040">Username</span>
+                <span class="mr-2 d-none d-lg-inline" style="font-size: 16px; color:#0E1040">
+                    @auth <!-- Hanya tampilkan jika user sudah login -->
+                        {{ auth()->user()->username }}
+                    @endauth
+                </span>
                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
             </a>
             <!-- Dropdown - User Information -->

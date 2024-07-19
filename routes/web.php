@@ -36,9 +36,9 @@ Route::get('/register', function () {
     return view('register');
 });
 
-Route::get('/users', function () {
-    return view('users');
-});
+// Route::get('/users', function () {
+//     return view('users');
+// });
 
 Route::get('/addUser', function () {
     return view('addUser');
@@ -74,9 +74,27 @@ Route::middleware(['auth'])->group(function () {
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('events/export/excel', [EventController::class, 'exportExcel']);
+
+// Route::get('/cctv/{id}', [CctvController::class, 'showPage'])->name('cctv.showPage');
+// Route::get('/cctv/{lokasi}', [CctvController::class, 'showByLocation'])->name('cctv.showByLocation');
+Route::get('cctv/{id}/show', [App\Http\Controllers\CctvController::class, 'showPage']);
+// Route::get('cctv/all', [App\Http\Controllers\CctvController::class, 'showAll']);
+
+
+Route::get('cctv/all', [CctvController::class, 'showAll']);
+// Rute untuk menampilkan form tambah CCTV
+Route::get('/cctv/create', [CctvController::class, 'create'])->name('cctv.create');
+
+// Rute untuk menyimpan data CCTV
+Route::post('/cctv/store', [CctvController::class, 'store'])->name('cctv.store');
+Route::get('/show3', function () {
+    return view('show3');
+});
+
+
+Route::get('events/export/pdf', [EventController::class, 'exportPDF']);
 Route::get('events/export/csv', [EventController::class, 'exportCSV']);
-Route::get('events/show', [EventController::class, 'show1']);
+Route::get('events/show', [EventController::class, 'showEvents']);
 Route::get('/events/search', [EventController::class, 'searchByDateRange']);
 Route::view('/search', 'search');
 
@@ -86,11 +104,14 @@ Route::view('/search-frequent-location', 'search_frequent_location');
 
 // Route::get('/dashboard', [EventController::class, 'getDashboardData']);
 
-
+// Route::get('/show1', function () {
+//     return view('show1');
+// });
 // Route to display the users list page
-Route::get('/show-users', [UserController::class, 'showAll'])->name('show.users');
+Route::get('/users', [UserController::class, 'showAll'])->name('show.users');
 // Route to download users CSV
 Route::get('users/export/csv', [UserController::class, 'exportUsersCsv'])->name('users.export.csv');
+Route::post('/register', [UserController::class, 'register']);
 
 
 

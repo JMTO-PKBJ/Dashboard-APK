@@ -8,25 +8,59 @@ use Illuminate\Support\Facades\Validator;
 
 class CctvController extends Controller
 {
-    public function index()
-    {
-        return Cctv::all();
+    // public function index()
+    // {
+    //     return Cctv::all();
+    // }
+    // public function index()
+    // {
+    //     $cctvRuas = Cctv::select('cctv_ruas')->distinct()->get();
+    //     $cctvLokasi = Cctv::select('cctv_lokasi')->distinct()->get();
+    //     return view('cctv.create', compact('cctvRuas', 'cctvLokasi'));
+    // }
+
+    // public function store(Request $request)
+    // {
+    //     $validator = Validator::make($request->all(), [
+    //         'cctv_ruas' => 'required|string',
+    //         'cctv_lokasi' => 'required|string',
+    //         'cctv_video' => 'required|string|url',
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return response()->json(['error' => $validator->errors()], 400);
+    //     }
+
+    //     $data = $request->all();
+    //     $data['roles_id'] = 1; // Set roles_id to 1 (admin)
+    //     $data['cctv_status'] = 'on'; // Set cctv_status to 'on'
+
+    //     $cctv = Cctv::create($data);
+
+    //     return response()->json($cctv, 201);
+    // }
+
+    public function create()
+{
+    $cctvRuas = Cctv::pluck('cctv_ruas')->unique();
+    $cctvLokasi = Cctv::pluck('cctv_lokasi')->unique();
+    $cctvs = Cctv::all(); // Mengambil semua CCTV yang ada
+
+    return view('show3', compact('cctvRuas', 'cctvLokasi', 'cctvs'));
+}
+
+public function store(Request $request){
+    $validator = Validator::make($request->all(), [
+        'cctv_ruas' => 'required|string',
+        'roles_id' => 'required|integer|in:1',
+        'cctv_lokasi' => 'required|string',
+        'cctv_video' => 'required|url',
+    ]);
+
+    if ($validator->fails()) {
+        return redirect()->back()->withErrors($validator)->withInput();
     }
-
-    public function store(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'cctv_ruas' => 'required|string',
-            // 'roles_id' => 'required|exists:users,id',
-            'cctv_lokasi' => 'required|string',
-            'cctv_video' => 'required|string',
-            'cctv_status' => 'required|string|in:on,off',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 400);
-        }
-
+    
         $cctv = Cctv::create([
             'cctv_ruas' => $request->cctv_ruas,
             'roles_id' => 1, // auth()->user()->role

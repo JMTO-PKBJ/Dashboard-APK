@@ -34,17 +34,24 @@ class UserController extends Controller
             'role_id' => $request->role_id,
         ]);
 
-        $token = JWTAuth::fromUser($user);
-        $user->load('role');
-        return response()->json([
-            'user' => [
-                'id' => $user->id,
-                'username' => $user->username,
-                'role' => self::ROLES[$user->role_id],
-                'created_at' => $user->created_at,
-            ],
-            'remember_token' => $token,
-        ], 201);
+        // $token = JWTAuth::fromUser($user);
+        // $user->load('role');
+        // return response()->json([
+        //     'user' => [
+        //         'id' => $user->id,
+        //         'username' => $user->username,
+        //         'role' => self::ROLES[$user->role_id],
+        //         'created_at' => $user->created_at,
+        //     ],
+        //     'remember_token' => $token,
+        // ], 201);
+        if ($user) {
+            // Jika berhasil, arahkan ke halaman users
+            return redirect('/users')->with('success', 'User berhasil ditambahkan');
+        } else {
+            // Jika gagal, arahkan kembali ke halaman tambah user
+            return redirect('/adduser')->with('error', 'Gagal menambahkan user');
+        }
     }
 
     public function login(Request $request)
@@ -136,11 +143,17 @@ class UserController extends Controller
         }
 
         $user->save();
-
-        return response()->json([
-            'message' => 'User updated successfully',
-            'user' => new UserResource($user),
-        ], 200);
+        if ($user) {
+            // Jika berhasil, arahkan ke halaman users
+            return redirect('/users')->with('success', 'User berhasil dihapus');
+        } else {
+            // Jika gagal, arahkan kembali ke halaman tambah user
+            return redirect('/users')->with('error', 'Gagal menghapus user');
+        }
+        // return response()->json([
+        //     'message' => 'User updated successfully',
+        //     'user' => new UserResource($user),
+        // ], 200);
     }
 
     public function destroy($id)
@@ -148,7 +161,13 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
 
-        return response()->json(['message' => 'User deleted successfully'], 200);
+        if ($user) {
+            // Jika berhasil, arahkan ke halaman users
+            return redirect('/users')->with('success', 'User berhasil dihapus');
+        } else {
+            // Jika gagal, arahkan kembali ke halaman tambah user
+            return redirect('/users')->with('error', 'Gagal menghapus user');
+        }
     }
 
     public function showAll()
@@ -161,7 +180,7 @@ class UserController extends Controller
                 'role' => self::ROLES[$user->role_id],
             ];
         });
-        return view('show2', compact('users'));
+        return view('users', compact('users'));
     
     }
 

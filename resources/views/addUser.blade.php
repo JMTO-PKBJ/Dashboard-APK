@@ -17,7 +17,8 @@
                 </div> --}}
 
                 <div class="p-3">
-
+                    <form action="{{ url('/register') }}" method="POST">
+                        @csrf
                     <div class="username p-3">
                         Username 
                         <div class="input-group">
@@ -43,14 +44,19 @@
                             <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="roleDropdownButton" >
                                 Pilih role
                             </button>
-                            <ul class="dropdown-menu">
+                            <select class="dropdown-menu" name="role_id" id="role_id">
+                                <option value="1">Admin</option>
+                                <option value="2">Supervisor</option>
+                                <option value="3">Operator</option>
+                            </select>
+        
+                            {{-- <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#" onclick="setRole('Admin')">Admin</a></li>
                                 <li><a class="dropdown-item" href="#" onclick="setRole('Monitoring')">Monitoring</a></li>
                                 <li><a class="dropdown-item" href="#" onclick="setRole('Supervisor')">Supervisor</a></li>
-                            </ul>
+                            </ul> --}}
                         </div>
                     </div>
-                    
                     <div class="btnAdd p-3 d-flex justify-content-center">
                         <a href="#" class="login-button w-100 my-2" style="font-weight: 400;" data-bs-toggle='modal' data-bs-target='#addUser'>Tambah User</a>
                     </div>
@@ -67,12 +73,12 @@
                             </div>
                             <div class="modal-footer d-flex justify-content-center">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-                            <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close" style="background-color: #0E1040; color: #ffffff">Add</button>
+                            <button type="submit" class="btn" data-bs-dismiss="modal" aria-label="Close" style="background-color: #0E1040; color: #ffffff">Add</button>
                             </div>
                         </div>
                         </div>
                     </div>
-                    
+                </form>
                 </div>
 
                 <div class="my-2">

@@ -5,7 +5,7 @@
             <h1 class="h3 mb-0" style="font-size: 25px; color:#0E1040; font-weight:700">Tambah CCTV </h1>
         </div>
 
-        <div class="card-body">
+        {{-- <div class="card-body">
             <div class="d-flex">
                 <div class="col-sm-3 ruas p-0">
                     Ruas
@@ -20,8 +20,21 @@
                             <li><a class="dropdown-item" href="#" onclick="setDropdownValue('ruasDropdownButton', 'Jagorawi')">Jagorawi</a></li>
                         </ul>
                     </div>
-                </div>
+                </div> --}}
 
+                <div class="card-body">
+                    <form action="{{ route('cctv.store') }}" method="POST">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="cctvRuas" class="form-label">Ruas</label>
+                            <input list="ruasOptions" class="form-control" name="cctv_ruas" id="cctvRuas" placeholder="Masukkan atau pilih ruas">
+                            <datalist id="ruasOptions">
+                                @foreach($cctvRuas as $ruas)
+                                    <option value="{{ $ruas->cctv_ruas }}">{{ $ruas->cctv_ruas }}</option>
+                                @endforeach
+                            </datalist>
+                        </div>
+                    </form>
                 <div class="col-sm-3 lokasi p-0">
                     Lokasi CCTV
                     <div class="dropdown w-75 p-2">
@@ -38,7 +51,7 @@
                 </div>
                 
                 <div class="col-sm-3 cctv p-0">
-                    Nama CCTV
+                    Link CCTV
                     <div class="input-group p-2">
                         <input class="form-control text-field w-100" style="border-radius: 7px" type="cctvName" name="cctvName" id="cctvName" placeholder="Enter CCTV Name">
                     </div>
