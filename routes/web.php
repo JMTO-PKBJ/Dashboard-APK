@@ -128,8 +128,8 @@ Route::group([
     ], function(){
     // Route code here ..
     Route::get('/', 'showAll');
-    Route::get('/create', 'showAdd')->name('.create');
-    Route::post('/store', 'store');
+    Route::get('/create', 'create')->name('.create');
+    Route::post('/store', 'store')->name('.store');
     Route::get('/{id}/show', 'showPage')->name(".show");
     Route::get('/{lokasi}/location', 'showByLocation')->name('.location');
 });

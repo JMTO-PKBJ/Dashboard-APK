@@ -1,281 +1,129 @@
 @extends('master')
+
 @section('content')
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h1 class="h3 mb-0" style="font-size: 25px; color:#0E1040; font-weight:700">Tambah CCTV </h1>
+    <div class="container mt-5">
+        <!-- Add CCTV Form -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h1 class="h3 mb-0" style="font-size: 25px; color:#0E1040; font-weight:700">Tambah CCTV</h1>
+            </div>
+            <div class="card-body">
+                <form action="{{ route('cctv.store') }}" method="POST" onsubmit="return handleFormSubmit()">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="cctvRuas" class="form-label">Ruas</label>
+                        <div class="input-group">
+                            <select class="form-select" name="cctv_ruas" id="cctvRuas" onchange="toggleCustomInput(this, 'cctvRuasCustom')">
+                                <option value="" selected>Pilih ruas</option>
+                                @foreach($cctvRuas as $ruas)
+                                    <option value="{{ $ruas }}">{{ $ruas }}</option>
+                                @endforeach
+                                <option value="custom">Lainnya...</option>
+                            </select>
+                            <input type="text" class="form-control custom-input" id="cctvRuasCustom" name="cctv_ruas_custom" placeholder="Masukkan ruas lain">
+                        </div>
+                    </div>
+                    <input type="hidden" name="roles_id" value="1">
+                    <div class="mb-3">
+                        <label for="cctvLokasi" class="form-label">Lokasi CCTV</label>
+                        <div class="input-group">
+                            <select class="form-select" name="cctv_lokasi" id="cctvLokasi" onchange="toggleCustomInput(this, 'cctvLokasiCustom')">
+                                <option value="" selected>Pilih lokasi CCTV</option>
+                                @foreach($cctvLokasi as $lokasi)
+                                    <option value="{{ $lokasi }}">{{ $lokasi }}</option>
+                                @endforeach
+                                <option value="custom">Lainnya...</option>
+                            </select>
+                            <input type="text" class="form-control custom-input" id="cctvLokasiCustom" name="cctv_lokasi_custom" placeholder="Masukkan lokasi lain">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cctvVideo" class="form-label">Link CCTV</label>
+                        <input type="url" class="form-control" name="cctv_video" id="cctvVideo" placeholder="Masukkan link CCTV (format .m3u8)" required>
+                    </div>
+                    <input type="hidden" name="cctv_status" value="on">
+                    <button type="submit" class="btn btn-primary">Tambah CCTV</button>
+                </form>
+            </div>
         </div>
 
-        {{-- <div class="card-body">
-            <div class="d-flex">
-                <div class="col-sm-3 ruas p-0">
-                    Ruas
-                    <div class="dropdown w-75 p-2">
-                        <button class="btn btn-outline-secondary dropdown-toggle w-100 d-flex justify-content-between align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="ruasDropdownButton">
-                            <span>Pilih Ruas</span>
-                            <span class="dropdown-toggle-icon"></span>
-                        </button>
-                        <ul class="dropdown-menu" id="ruasDropdownMenu">
-                            <li><a class="dropdown-item" href="#" onclick="setDropdownValue('ruasDropdownButton', 'Dalam Kota')">Dalam Kota</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="setDropdownValue('ruasDropdownButton', 'Jakarta-Tangerang')">Jakarta-Tangerang</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="setDropdownValue('ruasDropdownButton', 'Jagorawi')">Jagorawi</a></li>
-                        </ul>
-                    </div>
-                </div> --}}
-
-                <div class="card-body">
-                    <form action="{{ route('cctv.store') }}" method="POST">
-                        @csrf
-                        <div class="mb-3">
-                            <label for="cctvRuas" class="form-label">Ruas</label>
-                            <input list="ruasOptions" class="form-control" name="cctv_ruas" id="cctvRuas" placeholder="Masukkan atau pilih ruas">
-                            <datalist id="ruasOptions">
-                                @foreach($cctvRuas as $ruas)
-                                    <option value="{{ $ruas->cctv_ruas }}">{{ $ruas->cctv_ruas }}</option>
-                                @endforeach
-                            </datalist>
-                        </div>
-                    </form>
-                <div class="col-sm-3 lokasi p-0">
-                    Lokasi CCTV
-                    <div class="dropdown w-75 p-2">
-                        <button class="btn btn-outline-secondary dropdown-toggle w-100 d-flex justify-content-between align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="lokasiDropdownButton">
-                            <span>Pilih Lokasi CCTV</span>
-                            <span class="dropdown-toggle-icon"></span>
-                        </button>
-                        <ul class="dropdown-menu" id="lokasiDropdownMenu">
-                            <li><a class="dropdown-item" href="#" onclick="setDropdownValue('lokasiDropdownButton', 'Cawang Uki')">Cawang Uki</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="setDropdownValue('lokasiDropdownButton', 'Kuningan')">Kuningan</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="setDropdownValue('lokasiDropdownButton', 'Pancoran')">Pancoran</a></li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="col-sm-3 cctv p-0">
-                    Link CCTV
-                    <div class="input-group p-2">
-                        <input class="form-control text-field w-100" style="border-radius: 7px" type="cctvName" name="cctvName" id="cctvName" placeholder="Enter CCTV Name">
-                    </div>
-                </div>
-                
-                <div class="col-sm-3 ruas d-flex justify-content-center p-4">
-                    <a class="addBtn d-flex justify-content-center align-items-center" style="background-color: #6484E1" data-bs-toggle="modal" data-bs-target='#cctvModal'>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
-                            <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10"/>
-                            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-                        </svg>
-                        <span class="ms-2">
-                            Tambah CCTV
-                        </span>
-                    </a>
-                </div>
-
-                {{-- Confirmation Modal --}}
-                <div class="modal fade" id="cctvModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header d-flex justify-content-center">
-                                <h1 class="modal-title fs-5" id="confirmAddCCTVLabel" style="font-weight: 700; color:black">Add CCTV</h1>
-                            </div>
-                            <form  id="form_insert">
-                                <div class="modal-body">
-                                    <div class="col-12">
-                                        Ruas
-                                        <div class="input-group">
-                                            <input class="form-control text-field" style="border-radius: 7px" type="text" name="cctv_ruas" id="ruas" placeholder="Enter Ruas">
-                                        </div>
-                                    </div>
-                                    <div class="col-12 mt-4">
-                                        Location
-                                        <div class="input-group">
-                                            <input class="form-control text-field" style="border-radius: 7px" type="text" name="cctv_lokasi" id="location" placeholder="Enter Location">
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-12 mt-4">
-                                        <label for="Status">Example select</label>
-                                        <select name="cctv_status" style="border-radius: 7px" class="form-control text-field" id="status">
-                                          <option value="on">ON</option>
-                                          <option value="off">OFF</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-12 mt-4">
-                                        Video
-                                        <div class="input-group">
-                                            <input class="form-control text-field" style="border-radius: 7px" type="text" name="cctv_video" id="video" placeholder="https://www.youtube.com">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer d-flex justify-content-center">
-                                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal">Back</button>
-                                    <button type="submit" class="btn btn-simpan" style="background-color: #0E1040; color: #ffffff" id="submit">Accept</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
+        <!-- CCTV Table -->
+        <div class="card shadow mb-4 mt-4">
+            <div class="card-header py-3">
+                <h2 class="h5 mb-0" style="font-size: 20px; color:#0E1040; font-weight:700">Daftar CCTV</h2>
             </div>
-
             <div class="table-responsive my-2">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id = "dataTable">
                     <thead>
                         <tr>
-                            <th>No</th>
+                            <th>ID</th>
                             <th>Ruas</th>
-                            <th>CCTV</th>
-                            <th>Create At</th>
-                            <th>Live CCTV</th>
+                            <th>Lokasi</th>
+                            <th>Link CCTV</th>
+
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th>No</th>
-                            <th>Ruas</th>
-                            <th>CCTV</th>
-                            <th>Create At</th>
-                            <th>Live CCTV</th>
-                        </tr>
-                    </tfoot>
                     <tbody>
                         @forelse($cctvs as $cctv)
                             <tr>
                                 <td>{{ $cctv->id }}</td>
                                 <td>{{ $cctv->cctv_ruas }}</td>
-                                <td>CCTV {{ $cctv->cctv_lokasi }}</td>
-                                <td>{{ $cctv->created_at }}</td>
-                                <td>
-                                    <a href="#" class="viewCCTV" data-bs-toggle="modal" data-bs-target="#viewCCTV-{{ $cctv->id }}" data-id="{{ $cctv->id }}">
-                                        <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='icon-border bi bi-eye' viewBox='0 0 16 16'>
-                                            <path d='M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z'/>
-                                            <path d='M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0'/>
-                                        </svg>
-                                    </a>
-                                </td>
+                                <td>{{ $cctv->cctv_lokasi }}</td>
+                                <td><a href="{{ $cctv->cctv_video }}" target="_blank">Lihat Video</a></td>
+
                             </tr>
                         @empty
-                        <tr>
-                            <td class="text-center" colspan="5">Data Empty</td>
-                        </tr>
+                            <tr>
+                                <td colspan="5" class="text-center">Tidak ada data CCTV</td>
+                            </tr>
                         @endforelse
                     </tbody>
                 </table>
-
-                {{-- Modal Tampil CCTV --}}
-                @foreach($cctvs as $cctv)
-                    <div class="modal fade" id="viewCCTV-{{ $cctv->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="viewCCTVLabel-{{ $cctv->id }}" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-xl">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="viewCCTVLabel-{{ $cctv->id }}" style="font-size: 25px; color: #0E1040; font-weight: 700;">CCTV {{ $cctv->cctv_lokasi }}</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="d-flex justify-content-center">
-                                        <video id="cctv-video-{{ $cctv->id }}" class="video-js vjs-default-skin w-100 video-addCCTV" controls preload="auto" autoplay muted>
-                                            <source src="{{ $cctv->cctv_video }}" type="application/x-mpegURL">
-                                            Your browser does not support the video tag.
-                                        </video>  
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-                {{-- End Modal Tampil CCTV --}}
-
             </div>
-            
-
         </div>
     </div>
 @endsection
 
 @push('scripts')
-{{-- Video CCTV --}}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        @foreach($cctvs as $cctv)
-            var player = videojs('cctv-video-{{ $cctv->id }}');
-            player.muted(true);  
-            player.play();       
-        @endforeach
-    });
-</script>
+    function toggleCustomInput(selectElement, customInputId) {
+        var selectedValue = selectElement.value;
+        var customInput = document.getElementById(customInputId);
 
-{{-- No Search --}}
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var labels = document.getElementsByTagName('label');
-        for (var i = 0; i < labels.length; i++) {
-            if (labels[i].textContent.trim() === 'Search:') {
-                labels[i].style.display = 'none';
-                break;
-            }
+        if (selectedValue === 'custom') {
+            customInput.style.display = 'block'; // Show custom input
+            customInput.focus(); // Focus on the custom input
+        } else {
+            customInput.style.display = 'none'; // Hide custom input
+            customInput.value = ''; // Clear the custom input value
         }
-    });
-
-    document.addEventListener('DOMContentLoaded', function() {
-        var labels = document.querySelectorAll('label[for^="search"]');
-        var inputs = document.querySelectorAll('input[type="search"].form-control.form-control-sm');
-
-        for (var i = 0; i < labels.length; i++) {
-            labels[i].style.display = 'none';
-        }
-        for (var j = 0; j < inputs.length; j++) {
-            inputs[j].style.display = 'none';
-        }
-    });
-</script>
-
-<script>
-    var modalCctv = $('#cctvModal');
-    var loading = function () {
-        $('.btn-simpan').attr('disabled', 'disabled')
-        $('.btn-simpan').text('Saving data...')
     }
 
-    var loadingDone = function (response) {
-        $('.btn-simpan').removeAttr('disabled')
-        $('.btn-simpan').text('Accept')
+    function handleFormSubmit() {
+        var cctvRuasSelect = document.getElementById('cctvRuas');
+        var cctvRuasCustom = document.getElementById('cctvRuasCustom');
+        var cctvLokasiSelect = document.getElementById('cctvLokasi');
+        var cctvLokasiCustom = document.getElementById('cctvLokasiCustom');
+
+        // If 'custom' is selected, replace the value with custom input value
+        if (cctvRuasSelect.value === 'custom') {
+            cctvRuasSelect.name = ''; // Clear the original select name
+            cctvRuasCustom.name = 'cctv_ruas'; // Set the name to be sent
+        } else {
+            cctvRuasSelect.name = 'cctv_ruas'; // Set the name to be sent
+            cctvRuasCustom.name = ''; // Clear the custom input name
+        }
+
+        if (cctvLokasiSelect.value === 'custom') {
+            cctvLokasiSelect.name = ''; // Clear the original select name
+            cctvLokasiCustom.name = 'cctv_lokasi'; // Set the name to be sent
+        } else {
+            cctvLokasiSelect.name = 'cctv_lokasi'; // Set the name to be sent
+            cctvLokasiCustom.name = ''; // Clear the custom input name
+        }
+
+        return true; // Allow form submission
     }
-
-    var resetForm = function () {
-        $('[name="cctv_ruas"]').val('');
-        $('[name="cctv_lokasi"]').val('');
-        $('[name="cctv_video"]').val('');
-    }
-
-    // Request (insert data)
-    $("#form_insert").submit(function (e) {
-        
-        e.preventDefault();
-        var sendData = $("#form_insert").serialize();
-
-        $.ajax({
-            headers: {
-                "X-CSRF-TOKEN": "{{ csrf_token() }}",
-            },
-            url: "/cctv/store",
-            method: "POST",
-            data: sendData,
-            dataType: 'json',
-            beforeSend: function () {
-                loading()
-            },
-            success: function (response) {
-                loadingDone()
-                if (response.status == 201) {
-                    done(response)
-                    modalCctv.modal('hide');
-                } else {
-                    modalCctv.modal('hide');
-                }
-                resetForm()
-            },
-            error: function (response) {
-                loadingDone()
-                modalCctv.modal('hide');
-            }
-        });
-    });
 </script>
 @endpush

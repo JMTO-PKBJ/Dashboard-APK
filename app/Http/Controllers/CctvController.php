@@ -46,7 +46,7 @@ class CctvController extends Controller
     $cctvLokasi = Cctv::pluck('cctv_lokasi')->unique();
     $cctvs = Cctv::all(); // Mengambil semua CCTV yang ada
 
-    return view('show3', compact('cctvRuas', 'cctvLokasi', 'cctvs'));
+    return view('addCCTV', compact('cctvRuas', 'cctvLokasi', 'cctvs'));
 }
 
 public function store(Request $request){
