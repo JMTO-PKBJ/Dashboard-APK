@@ -14,9 +14,9 @@ class CreateCctvTable extends Migration
         Schema::create('cctv', function (Blueprint $table) {
             $table->id(); // Menggunakan id sebagai primary key
             $table->string('cctv_ruas');
-            $table->foreignId('roles_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('roles_id');
             $table->string('cctv_lokasi');
-            $table->timestamp('cctv_waktu')->useCurrent();
+            // $table->timestamp('cctv_waktu')->useCurrent();
             $table->string('cctv_video');
             $table->string('cctv_status');
             $table->timestamps();

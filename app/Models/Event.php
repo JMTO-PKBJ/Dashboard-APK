@@ -10,15 +10,8 @@ class Event extends Model
     use HasFactory;
 
     protected $table = 'event';
-    protected $primaryKey = 'event_id';
 
-    protected $fillable = [
-        'cctv_id',
-        'event_waktu',
-        'event_lokasi',
-        'event_class',
-        'event_gambar',
-    ];
+    protected $guarded = ['id'];
 
     public function cctv()
     {

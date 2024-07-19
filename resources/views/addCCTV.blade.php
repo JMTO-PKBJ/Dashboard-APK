@@ -45,7 +45,7 @@
                 </div>
                 
                 <div class="col-sm-3 ruas d-flex justify-content-center p-4">
-                    <a class="addBtn d-flex justify-content-center align-items-center" style="background-color: #6484E1" data-bs-toggle="modal" data-bs-target='#confirmAddCCTV'>
+                    <a class="addBtn d-flex justify-content-center align-items-center" style="background-color: #6484E1" data-bs-toggle="modal" data-bs-target='#cctvModal'>
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
                             <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10"/>
                             <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
@@ -57,19 +57,45 @@
                 </div>
 
                 {{-- Confirmation Modal --}}
-                <div class="modal fade" id="confirmAddCCTV" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="confirmAddCCTVLabel" aria-hidden="true">
+                <div class="modal fade" id="cctvModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
-                        <div class="modal-header d-flex justify-content-center">
-                            <h1 class="modal-title fs-5" id="confirmAddCCTVLabel" style="font-weight: 700; color:black">Add CCTV</h1>
-                        </div>
-                        <div class="modal-body d-flex justify-content-center">
-                            Are you sure want to add this CCTV?
-                        </div>
-                        <div class="modal-footer d-flex justify-content-center">
-                            <button class="btn btn-secondary" data-bs-target="#editUser" data-bs-toggle="modal">Back</button>
-                            <button type="button" class="btn" style="background-color: #0E1040; color: #ffffff" data-bs-dismiss="modal" aria-label="Close">Accept</button>
-                        </div>
+                            <div class="modal-header d-flex justify-content-center">
+                                <h1 class="modal-title fs-5" id="confirmAddCCTVLabel" style="font-weight: 700; color:black">Add CCTV</h1>
+                            </div>
+                            <form  id="form_insert">
+                                <div class="modal-body">
+                                    <div class="col-12">
+                                        Ruas
+                                        <div class="input-group">
+                                            <input class="form-control text-field" style="border-radius: 7px" type="text" name="cctv_ruas" id="ruas" placeholder="Enter Ruas">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mt-4">
+                                        Location
+                                        <div class="input-group">
+                                            <input class="form-control text-field" style="border-radius: 7px" type="text" name="cctv_lokasi" id="location" placeholder="Enter Location">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-12 mt-4">
+                                        <label for="Status">Example select</label>
+                                        <select name="cctv_status" style="border-radius: 7px" class="form-control text-field" id="status">
+                                          <option value="on">ON</option>
+                                          <option value="off">OFF</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 mt-4">
+                                        Video
+                                        <div class="input-group">
+                                            <input class="form-control text-field" style="border-radius: 7px" type="text" name="cctv_video" id="video" placeholder="https://www.youtube.com">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer d-flex justify-content-center">
+                                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal">Back</button>
+                                    <button type="submit" class="btn btn-simpan" style="background-color: #0E1040; color: #ffffff" id="submit">Accept</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -97,7 +123,7 @@
                         </tr>
                     </tfoot>
                     <tbody>
-                        @foreach($cctvs as $cctv)
+                        @forelse($cctvs as $cctv)
                             <tr>
                                 <td>{{ $cctv->id }}</td>
                                 <td>{{ $cctv->cctv_ruas }}</td>
@@ -112,8 +138,11 @@
                                     </a>
                                 </td>
                             </tr>
-                        @endforeach
-
+                        @empty
+                        <tr>
+                            <td class="text-center" colspan="5">Data Empty</td>
+                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
 
@@ -145,40 +174,95 @@
 
         </div>
     </div>
+@endsection
 
-    {{-- Video CCTV --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            @foreach($cctvs as $cctv)
-                var player = videojs('cctv-video-{{ $cctv->id }}');
-                player.muted(true);  
-                player.play();       
-            @endforeach
-        });
-    </script>
+@push('scripts')
+{{-- Video CCTV --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        @foreach($cctvs as $cctv)
+            var player = videojs('cctv-video-{{ $cctv->id }}');
+            player.muted(true);  
+            player.play();       
+        @endforeach
+    });
+</script>
 
-    {{-- No Search --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var labels = document.getElementsByTagName('label');
-            for (var i = 0; i < labels.length; i++) {
-                if (labels[i].textContent.trim() === 'Search:') {
-                    labels[i].style.display = 'none';
-                    break;
-                }
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            var labels = document.querySelectorAll('label[for^="search"]');
-            var inputs = document.querySelectorAll('input[type="search"].form-control.form-control-sm');
-
-            for (var i = 0; i < labels.length; i++) {
+{{-- No Search --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var labels = document.getElementsByTagName('label');
+        for (var i = 0; i < labels.length; i++) {
+            if (labels[i].textContent.trim() === 'Search:') {
                 labels[i].style.display = 'none';
+                break;
             }
-            for (var j = 0; j < inputs.length; j++) {
-                inputs[j].style.display = 'none';
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var labels = document.querySelectorAll('label[for^="search"]');
+        var inputs = document.querySelectorAll('input[type="search"].form-control.form-control-sm');
+
+        for (var i = 0; i < labels.length; i++) {
+            labels[i].style.display = 'none';
+        }
+        for (var j = 0; j < inputs.length; j++) {
+            inputs[j].style.display = 'none';
+        }
+    });
+</script>
+
+<script>
+    var modalCctv = $('#cctvModal');
+    var loading = function () {
+        $('.btn-simpan').attr('disabled', 'disabled')
+        $('.btn-simpan').text('Saving data...')
+    }
+
+    var loadingDone = function (response) {
+        $('.btn-simpan').removeAttr('disabled')
+        $('.btn-simpan').text('Accept')
+    }
+
+    var resetForm = function () {
+        $('[name="cctv_ruas"]').val('');
+        $('[name="cctv_lokasi"]').val('');
+        $('[name="cctv_video"]').val('');
+    }
+
+    // Request (insert data)
+    $("#form_insert").submit(function (e) {
+        
+        e.preventDefault();
+        var sendData = $("#form_insert").serialize();
+
+        $.ajax({
+            headers: {
+                "X-CSRF-TOKEN": "{{ csrf_token() }}",
+            },
+            url: "/cctv/store",
+            method: "POST",
+            data: sendData,
+            dataType: 'json',
+            beforeSend: function () {
+                loading()
+            },
+            success: function (response) {
+                loadingDone()
+                if (response.status == 201) {
+                    done(response)
+                    modalCctv.modal('hide');
+                } else {
+                    modalCctv.modal('hide');
+                }
+                resetForm()
+            },
+            error: function (response) {
+                loadingDone()
+                modalCctv.modal('hide');
             }
         });
-    </script>
-@stop
+    });
+</script>
+@endpush

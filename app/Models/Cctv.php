@@ -13,14 +13,7 @@ class Cctv extends Model
 
     // protected $primaryKey = 'cctv_id';
 
-    protected $fillable = [
-        'cctv_ruas',
-        'roles_id',
-        'cctv_lokasi',
-        'cctv_waktu',
-        'cctv_video',
-        'cctv_status',
-    ];
+    protected $guarded = ['id'];
 
     protected $casts = [
         'cctv_waktu' => 'datetime',
@@ -31,6 +24,7 @@ class Cctv extends Model
     {
         return $this->belongsTo(User::class, 'roles_id');
     }
+
     public function events()
     {
         return $this->hasMany(Event::class);

@@ -23,9 +23,7 @@ Route::group(['prefix' => 'api'], function () {
     Route::get('/event/class/data', [EventController::class, 'getEventClassData'])->name('event.class.data');
 });
 
-Route::get('/viewCCTV', [CctvController::class, 'showAll']);
 
-Route::get('/addCCTV', [CctvController::class, 'showAdd']);
 
 Route::get('/events', [EventController::class, 'show1']);
 
@@ -77,17 +75,6 @@ Route::middleware(['auth'])->group(function () {
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-
-// Route::get('/cctv/{id}', [CctvController::class, 'showPage'])->name('cctv.showPage');
-// Route::get('/cctv/{lokasi}', [CctvController::class, 'showByLocation'])->name('cctv.showByLocation');
-Route::get('cctv/{id}/show', [App\Http\Controllers\CctvController::class, 'showPage']);
-// Route::get('cctv/all', [App\Http\Controllers\CctvController::class, 'showAll']);
-
-
-Route::get('cctv/all', [CctvController::class, 'showAll']);
-
-
-
 Route::get('events/export/excel', [EventController::class, 'exportExcel']);
 Route::get('events/export/csv', [EventController::class, 'exportCSV']);
 Route::get('events/show', [EventController::class, 'show1']);
@@ -107,3 +94,22 @@ Route::get('/show-users', [UserController::class, 'showAll'])->name('show.users'
 Route::get('users/export/csv', [UserController::class, 'exportUsersCsv'])->name('users.export.csv');
 
 
+
+
+
+// Im code here
+
+// Route group CCTV
+Route::group([
+        'namespace' => 'App\Http\Controllers',
+        'controller' => CctvController::class,
+        'prefix' => "cctv",
+        'as' => 'cctv'
+    ], function(){
+    // Route code here ..
+    Route::get('/', 'showAll');
+    Route::get('/create', 'showAdd')->name('.create');
+    Route::post('/store', 'store');
+    Route::get('/{id}/show', 'showPage')->name(".show");
+    Route::get('/{lokasi}/location', 'showByLocation')->name('.location');
+});

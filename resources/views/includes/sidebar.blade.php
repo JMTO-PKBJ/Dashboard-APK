@@ -30,8 +30,8 @@
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 aboutCCTV collapse-inner rounded">
-                <a class="collapse-item" href="{{ url('viewCCTV') }}">Lihat CCTV</a>
-                <a class="collapse-item" href="{{ url('addCCTV') }}">Tambah CCTV</a>
+                <a class="collapse-item" href="{{ route('cctv') }}">Lihat CCTV</a>
+                <a class="collapse-item" href="{{ route('cctv.create') }}">Tambah CCTV</a>
             </div>
         </div>
         <a class="nav-link" href="{{ url('events') }}">

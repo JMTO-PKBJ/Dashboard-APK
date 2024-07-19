@@ -17,7 +17,7 @@ class CctvController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'cctv_ruas' => 'required|string',
-            'roles_id' => 'required|exists:users,id',
+            // 'roles_id' => 'required|exists:users,id',
             'cctv_lokasi' => 'required|string',
             'cctv_video' => 'required|string',
             'cctv_status' => 'required|string|in:on,off',
@@ -27,7 +27,13 @@ class CctvController extends Controller
             return response()->json(['error' => $validator->errors()], 400);
         }
 
-        $cctv = Cctv::create($request->all());
+        $cctv = Cctv::create([
+            'cctv_ruas' => $request->cctv_ruas,
+            'roles_id' => 1, // auth()->user()->role
+            'cctv_lokasi' => $request->cctv_lokasi,
+            'cctv_video' => $request->cctv_video,
+            'cctv_status' => $request->cctv_status
+        ]);
 
         return response()->json($cctv, 201);
     }
@@ -98,6 +104,7 @@ class CctvController extends Controller
 
         return view('show', compact('cctv'));
     }
+
     public function showAll()
     {
         $cctvs = Cctv::all();
@@ -109,7 +116,4 @@ class CctvController extends Controller
         $cctvs = Cctv::all();
         return view('addCCTV', compact('cctvs'));
     }
-
-
-
 }

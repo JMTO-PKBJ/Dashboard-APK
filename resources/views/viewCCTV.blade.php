@@ -13,8 +13,7 @@
 
         <div class="container mt-3">
             <div class="row" id="imageContainer">
-                {{-- Menampilkan CCTV --}}
-                    @foreach($cctvs as $cctv)
+                @foreach($cctvs as $cctv)
                     <div class="col-6 cctv d-flex flex-column">
                         <div class="card view-cctv" style="border: none;">
                             <div class="card-header p-0">
@@ -28,7 +27,7 @@
                             </div>
                         </div>
                     </div>
-                    @endforeach
+                @endforeach
             </div>
 
         </div>
