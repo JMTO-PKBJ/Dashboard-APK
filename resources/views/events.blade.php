@@ -252,17 +252,17 @@
             }
         });
 
-        document.addEventListener('DOMContentLoaded', function() {
-            var labels = document.querySelectorAll('label[for^="search"]');
-            var inputs = document.querySelectorAll('input[type="search"].form-control.form-control-sm');
+    document.addEventListener('DOMContentLoaded', function() {
+        var labels = document.querySelectorAll('label[for^="search"]');
+        var inputs = document.querySelectorAll('input[type="search"].form-control.form-control-sm');
 
-            for (var i = 0; i < labels.length; i++) {
-                labels[i].style.display = 'none';
-            }
-            for (var j = 0; j < inputs.length; j++) {
-                inputs[j].style.display = 'none';
-            }
-        });
+        for (var i = 0; i < labels.length; i++) {
+            labels[i].style.display = 'none';
+        }
+        for (var j = 0; j < inputs.length; j++) {
+            inputs[j].style.display = 'none';
+        }
+    });
 </script>
 
 @endsection

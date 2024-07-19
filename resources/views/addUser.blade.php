@@ -39,24 +39,26 @@
                     </div>
     
                     <div class="role p-3">
-                        Role 
+                        Role
                         <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="roleDropdownButton" >
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="roleDropdownButton">
                                 Pilih role
                             </button>
-                            <select class="dropdown-menu" name="role_id" id="role_id">
-                                <option value="1">Admin</option>
-                                <option value="2">Supervisor</option>
-                                <option value="3">Operator</option>
-                            </select>
-        
-                            {{-- <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#" onclick="setRole('Admin')">Admin</a></li>
-                                <li><a class="dropdown-item" href="#" onclick="setRole('Monitoring')">Monitoring</a></li>
-                                <li><a class="dropdown-item" href="#" onclick="setRole('Supervisor')">Supervisor</a></li>
-                            </ul> --}}
+                            <ul class="dropdown-menu" aria-labelledby="roleDropdownButton">
+                                <li><a class="dropdown-item" href="#" onclick="setRole(1)">Admin</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setRole(2)">Supervisor</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="setRole(3)">Operator</a></li>
+                            </ul>
                         </div>
                     </div>
+                    
+                    <script>
+                        function setRole(roleId) {
+                            document.getElementById('role_id').value = roleId;
+                        }
+                    </script>
+                    
+                    
                     <div class="btnAdd p-3 d-flex justify-content-center">
                         <a href="#" class="login-button w-100 my-2" style="font-weight: 400;" data-bs-toggle='modal' data-bs-target='#addUser'>Tambah User</a>
                     </div>
@@ -93,4 +95,20 @@
         </div>
 
     </div>
+    <script>
+        function togglePasswordVisibility() {
+        var passwordInput = document.getElementById('password');
+        var icon = document.querySelector('.password-toggle i');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
+    </script>
 @stop

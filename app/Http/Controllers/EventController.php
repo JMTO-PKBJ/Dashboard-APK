@@ -257,73 +257,69 @@ class EventController extends Controller
     }
 
     public function exportPDF(Request $request)
-{
-    // Ambil parameter dari request
-    $ruas = $request->input('ruas');
-    $location = $request->input('location');
-    $startDate = $request->input('start_date');
-    $endDate = $request->input('end_date');
+    {
+        $ruas = $request->input('ruas');
+        $location = $request->input('location');
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
 
-    // Validasi parameter jika diperlukan
-    $query = Event::whereHas('cctv', function ($query) use ($ruas) {
-        $query->where('cctv_ruas', $ruas);
-    })
-    ->where('event_lokasi', $location);
+        $query = Event::whereHas('cctv', function ($query) use ($ruas) {
+            $query->where('cctv_ruas', $ruas);
+        })
+        ->where('event_lokasi', $location);
 
-    if ($startDate && $endDate) {
-        $query->whereBetween('event_waktu', [$startDate, $endDate]);
+        if ($startDate && $endDate) {
+            $query->whereBetween('event_waktu', [$startDate, $endDate]);
+        }
+
+        $events = $query->get();
+
+        $dompdf = new Dompdf();
+        $dompdf->setOptions(new Options(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true]));
+
+        $html = '<html><head><title>Export Data Event</title>';
+        $html .= '<style>
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                    }
+                    th, td {
+                        border: 1px solid black;
+                        padding: 8px;
+                        text-align: left;
+                    }
+                    img {
+                        width: 500px;
+                        height: auto;
+                    }
+                </style>';
+        $html .= '</head><body>';
+        $html .= '<h1>Export Data Event</h1>';
+        $html .= '<table>';
+        $html .= '<thead><tr>';
+        $html .= '<th>ID</th><th>Event ID</th><th>Waktu</th><th>Lokasi</th><th>Class</th><th>Gambar</th>';
+        $html .= '</tr></thead><tbody>';
+
+        $counter = 1;
+
+        foreach ($events as $event) {
+            $html .= '<tr>';
+            $html .= '<td>' . $counter++ . '</td>'; 
+            $html .= '<td>' . $event->event_id . '</td>';
+            $html .= '<td>' . $event->event_waktu . '</td>';
+            $html .= '<td>' . $event->event_lokasi . '</td>';
+            $html .= '<td>' . $event->event_class . '</td>';
+            $html .= '<td><img src="' . url($event->event_gambar) . '"></td>';
+            $html .= '</tr>';
+        }
+
+        $html .= '</tbody></table></body></html>';
+
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
+        $dompdf->stream('events.pdf', ['Attachment' => true]);
     }
-
-    $events = $query->get();
-
-    // Generasi PDF
-    $dompdf = new Dompdf();
-    $dompdf->setOptions(new Options(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true]));
-
-    $html = '<html><head><title>Export Data Event</title>';
-    $html .= '<style>
-                table {
-                    width: 100%;
-                    border-collapse: collapse;
-                }
-                th, td {
-                    border: 1px solid black;
-                    padding: 8px;
-                    text-align: left;
-                }
-                img {
-                    width: 100px;
-                    height: auto;
-                }
-            </style>';
-    $html .= '</head><body>';
-    $html .= '<h1>Export Data Event</h1>';
-    $html .= '<table>';
-    $html .= '<thead><tr>';
-    $html .= '<th>No</th><th>Event ID</th><th>Waktu</th><th>Lokasi</th><th>Class</th><th>Gambar</th>';
-    $html .= '</tr></thead><tbody>';
-
-    // Inisialisasi nomor baris
-    $counter = 1;
-
-    foreach ($events as $event) {
-        $html .= '<tr>';
-        $html .= '<td>' . $counter++ . '</td>'; // Tampilkan nomor baris dan tambahkan 1 untuk baris berikutnya
-        $html .= '<td>' . $event->event_id . '</td>';
-        $html .= '<td>' . $event->event_waktu . '</td>';
-        $html .= '<td>' . $event->event_lokasi . '</td>';
-        $html .= '<td>' . $event->event_class . '</td>';
-        $html .= '<td><img src="' . url($event->event_gambar) . '"></td>';
-        $html .= '</tr>';
-    }
-
-    $html .= '</tbody></table></body></html>';
-
-    $dompdf->loadHtml($html);
-    $dompdf->setPaper('A4', 'landscape');
-    $dompdf->render();
-    $dompdf->stream('events.pdf', ['Attachment' => true]);
-}
 
 
     

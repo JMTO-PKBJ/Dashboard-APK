@@ -31,6 +31,10 @@
     {{-- Video CCTV --}}
     <link href="https://vjs.zencdn.net/7.2.3/video-js.css" rel="stylesheet">
 
+    <link href="{{ asset('datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('datatables/dataTables.bootstrap4.min.js') }}"></script>
+    
     
 </head>
 <body id="page-top">
