@@ -23,7 +23,7 @@ class UserController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'username' => 'required|string|max:255|unique:users',
+            'username' => 'required|string|max:255',
             'password' => 'required|string',
             'role_id' => 'required|integer|exists:roles,id',
         ]);
@@ -123,8 +123,8 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
-            'username' => 'string|max:255|unique:users,username,' . $user->id,
-            'password' => 'string|min:8|nullable',
+            'username' => 'string|max:255,username,' . $user->id,
+            'password' => 'string|nullable',
             'role_id' => 'integer|exists:roles,id',
         ]);
 

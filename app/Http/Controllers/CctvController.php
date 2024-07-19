@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\Validator;
 
 class CctvController extends Controller
 {
-    // public function index()
-    // {
-    //     return Cctv::all();
-    // }
+    public function index()
+    {
+        return Cctv::all();
+    }
     // public function index()
     // {
     //     $cctvRuas = Cctv::select('cctv_ruas')->distinct()->get();
@@ -69,7 +69,8 @@ public function store(Request $request){
             'cctv_status' => $request->cctv_status
         ]);
 
-        return response()->json($cctv, 201);
+        // return response()->json($cctv, 201);
+        return redirect()->route('cctv.create')->with('success', 'CCTV added successfully.');
     }
 
     public function show($id)

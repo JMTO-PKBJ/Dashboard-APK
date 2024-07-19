@@ -155,6 +155,52 @@
                             </div>
                         </div>
                     </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- Confirm Modal --}}
+<div class="modal fade" id="confirmModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-center">
+                <h1 class="modal-title fs-5" id="confirmModalLabel" style="font-weight: 700; color:black">Edit User</h1>
+            </div>
+            <div class="modal-body d-flex justify-content-center">
+                Are you sure want to edit this user?
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-secondary" data-bs-target="#editUser" data-bs-toggle="modal">Back</button>
+                <button type="submit" class="btn" style="background-color: #0E1040; color: #ffffff" data-bs-dismiss="modal" aria-label="Close" onclick="document.querySelector('#editUser form').submit();">Accept</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+
+{{-- Delete Modal --}}
+<div class="modal fade" id="delete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-center">
+                <h1 class="modal-title fs-5" id="deleteLabel" style="font-weight: 700; color:black">Delete Account</h1>
+            </div>
+            <div class="modal-body d-flex justify-content-center">
+                Are you sure want to delete this user?
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                <form action="{{ url('api/users/' . $user['id']) }}" method="POST" style="display:inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
                 </div>

@@ -57,6 +57,6 @@
             @endforeach
         </tbody>
     </table>
-    <a href="{{ url('users/export/csv') }}">Download CSV Users</a>
+    <a href="{{ url('users/export/pdf') }}">Download CSV Users</a>
 </body>
 </html>
