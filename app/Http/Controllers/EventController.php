@@ -72,13 +72,6 @@ class EventController extends Controller
 
         return response()->json($event);
     }
-    // public function destroy($id)
-    // {
-    //     $event = Event::findOrFail($id);
-    //     $event->delete();
-
-    //     return response()->json(['message' => 'User deleted successfully'], 200);
-    // }
 
     public function destroy($event_id)
     {
@@ -101,74 +94,25 @@ class EventController extends Controller
     }
 
     public function searchByDateRange(Request $request)
-{
-    try {
-        $validatedData = $request->validate([
-            'start_date' => 'required|date_format:Y-m-d',
-            'end_date' => 'required|date_format:Y-m-d',
-        ]);
+    {
+        try {
+            $validatedData = $request->validate([
+                'start_date' => 'required|date_format:Y-m-d',
+                'end_date' => 'required|date_format:Y-m-d',
+            ]);
 
-        $startDate = $validatedData['start_date'];
-        $endDate = $validatedData['end_date'];
+            $startDate = $validatedData['start_date'];
+            $endDate = $validatedData['end_date'];
 
-        $events = Event::whereDate('event_waktu', '>=', $startDate)
-                        ->whereDate('event_waktu', '<=', $endDate)
-                        ->get();
+            $events = Event::whereDate('event_waktu', '>=', $startDate)
+                            ->whereDate('event_waktu', '<=', $endDate)
+                            ->get();
 
-        return response()->json($events);
-    } catch (\Exception $e) {
-        return response()->json(['error' => $e->getMessage()], 500);
+            return response()->json($events);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
-}
-
-
-
-    // public function getMostFrequentEventLocation(Request $request)
-    // {
-    //     $validatedData = $request->validate([
-    //         'start_date' => 'required|date_format:Y-m-d',
-    //         'end_date' => 'required|date_format:Y-m-d',
-    //     ]);
-    
-    //     $startDate = $validatedData['start_date'];
-    //     $endDate = $validatedData['end_date'];
-    
-    //     // Get the most frequent location
-    //     $mostFrequentLocation = Event::select('cctv_id', DB::raw('count(*) as total'))
-    //         ->whereDate('event_waktu', '>=', $startDate)
-    //         ->whereDate('event_waktu', '<=', $endDate)
-    //         ->groupBy('cctv_id')
-    //         ->orderBy('total', 'desc')
-    //         ->first();
-    
-    //     // Get the most frequent event class
-    //     $mostFrequentEventClass = Event::select('event_class', DB::raw('count(*) as total'))
-    //         ->whereDate('event_waktu', '>=', $startDate)
-    //         ->whereDate('event_waktu', '<=', $endDate)
-    //         ->groupBy('event_class')
-    //         ->orderBy('total', 'desc')
-    //         ->first();
-    
-    //     // Get the total number of events in the date range
-    //     $totalEvents = Event::whereDate('event_waktu', '>=', $startDate)
-    //         ->whereDate('event_waktu', '<=', $endDate)
-    //         ->count();
-    
-    //     if ($mostFrequentLocation) {
-    //         $cctv = Cctv::find($mostFrequentLocation->cctv_id);
-    
-    //         return response()->json([
-    //             'cctv_id' => $cctv->id,
-    //             'location' => $cctv->cctv_lokasi,  // Assuming the field name is 'lokasi'
-    //             'total_events' => $mostFrequentLocation->total,
-    //             'most_frequent_event_class' => $mostFrequentEventClass ? $mostFrequentEventClass->event_class : null,
-    //             'total_events_for_class' => $mostFrequentEventClass ? $mostFrequentEventClass->total : null,
-    //             'total_events_in_range' => $totalEvents,
-    //         ]);
-    //     }
-    
-    //     return response()->json(['message' => 'No events found'], 404);
-    // }
 
     public function getDashboardData(Request $request)
     {
@@ -210,7 +154,6 @@ class EventController extends Controller
             'mostFrequentVehicleType' => $mostFrequentVehicleType ? $mostFrequentVehicleType->event_class : null,
         ]);
     }
-    
 
     public function getEventLocationData(Request $request)
     {
@@ -279,55 +222,35 @@ class EventController extends Controller
 
         return response()->json($locations);
     }
-    
 
     public function getData(Request $request)
     {
-        // Validate incoming request if necessary
         $request->validate([
             'ruas' => 'required|string',
             'location' => 'required|string',
+            'start_date' => 'nullable|date_format:Y-m-d H:i:s',
+            'end_date' => 'nullable|date_format:Y-m-d H:i:s',
         ]);
 
-        // Retrieve events based on ruas and location
         $ruas = $request->input('ruas');
         $location = $request->input('location');
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
 
-        // Example query to retrieve events, adjust as per your application
-        $events = Event::whereHas('cctv', function ($query) use ($ruas) {
+        $query = Event::whereHas('cctv', function ($query) use ($ruas) {
             $query->where('cctv_ruas', $ruas);
         })
-        ->where('event_lokasi', $location)
-        ->get();
+        ->where('event_lokasi', $location);
 
-        // Return JSON response
+        if ($startDate && $endDate) {
+            $query->whereBetween('event_waktu', [$startDate, $endDate]);
+        }
+
+        $events = $query->get();
+
         return response()->json($events);
     }
-
-
     
-
-    // public function getData(Request $request)
-    // {
-    //     $startDate = $request->query('start_date');
-    //     $endDate = $request->query('end_date');
-
-    //     $data = DB::table('event_waktu')
-    //         ->whereBetween('event_waktu', [$startDate, $endDate])
-    //         ->select(
-    //             DB::raw('COUNT(*) as highestEventCount'),
-    //             DB::raw('MAX(event_lokasi) as mostFrequentLocation'),
-    //             DB::raw('MAX(event_jenis_kendaraan) as mostFrequentVehicleType')
-    //         )
-    //         ->first();
-
-    //     return response()->json([
-    //         'mostFrequentLocation' => $data->mostFrequentLocation,
-    //         'highestEventCount' => $data->highestEventCount,
-    //         'mostFrequentVehicleType' => $data->mostFrequentVehicleType
-    //     ]);
-    // }
-
     public function exportExcel()
     {
         // Ambil data yang ingin diekspor, contoh: data dari model Event

@@ -34,7 +34,6 @@ Route::get('/getCctvLocations', [EventController::class, 'getCctvLocations'])->n
 Route::get('/getData', [EventController::class, 'getData'])->name('getData');
 
 
-
 Route::get('/register', function () {
     return view('register');
 });
