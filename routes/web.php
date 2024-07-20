@@ -14,9 +14,12 @@ use Illuminate\Support\Facades\Auth;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('login');
 });
 
+Route::get('/show2', function () {
+    return view('show2');
+});
 Route::group(['prefix' => 'api'], function () {
     Route::get('/dashboard-data', [EventController::class, 'getDashboardData'])->name('dashboard.data');
     Route::get('/event-location-data', [EventController::class, 'getEventLocationData'])->name('event.location.data');
@@ -36,17 +39,10 @@ Route::get('/register', function () {
     return view('register');
 });
 
-// Route::get('/users', function () {
-//     return view('users');
-// });
-
 Route::get('/addUser', function () {
     return view('addUser');
 });
 
-// Route::get('/coba', function () {
-//     return view('coba');
-// });
 Route::get('/test', function () {
     return view('test');
     // return response()->json(['message' => 'Hello, world!']);
@@ -78,10 +74,8 @@ Route::middleware(['auth'])->group(function () {
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
-// Route::get('/cctv/{id}', [CctvController::class, 'showPage'])->name('cctv.showPage');
-// Route::get('/cctv/{lokasi}', [CctvController::class, 'showByLocation'])->name('cctv.showByLocation');
 Route::get('cctv/{id}/show', [App\Http\Controllers\CctvController::class, 'showPage']);
-// Route::get('cctv/all', [App\Http\Controllers\CctvController::class, 'showAll']);
+
 
 
 Route::get('cctv/all', [CctvController::class, 'showAll']);
@@ -90,15 +84,9 @@ Route::get('/cctv/create', [CctvController::class, 'create'])->name('cctv.create
 
 // Rute untuk menyimpan data CCTV
 Route::post('/cctv/store', [CctvController::class, 'store'])->name('cctv.store');
-Route::get('/show3', function () {
-    return view('show3');
-});
 
+// event
 Route::get('/export-pdf', [EventController::class, 'exportPDF'])->name('exportPDF');
-
-// Route::get('events/export/pdf', [EventController::class, 'exportPDF'])->name('exportPDF');
-
-// Route::get('events/export/pdf', [EventController::class, 'exportPDF']);
 Route::get('events/export/csv', [EventController::class, 'exportCSV']);
 Route::get('events/show', [EventController::class, 'showEvents']);
 Route::get('/events/search', [EventController::class, 'searchByDateRange']);
@@ -108,14 +96,8 @@ Route::view('/search', 'search');
 Route::get('/events/most-frequent-location', [EventController::class, 'getMostFrequentEventLocation']);
 Route::view('/search-frequent-location', 'search_frequent_location');
 
-// Route::get('/dashboard', [EventController::class, 'getDashboardData']);
 
-// Route::get('/show1', function () {
-//     return view('show1');
-// });
-// Route to display the users list page
 Route::get('/users', [UserController::class, 'showAll'])->name('show.users');
-// Route to download users CSV
 Route::get('users/export/csv', [UserController::class, 'exportUsersCsv'])->name('users.export.csv');
 Route::post('/register', [UserController::class, 'register']);
 

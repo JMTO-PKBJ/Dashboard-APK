@@ -41,18 +41,13 @@ Route::put('cctv/{id}', [CctvController::class, 'update']);
 Route::delete('cctv/{id}', [CctvController::class, 'destroy']);
 Route::get('cctv/location/{lokasi}', [CctvController::class, 'showByLocation']);
 
-// Route::post('/cctv', CctvController::class, 'store');
-// Route::get('/cctv/{lokasi}', [CctvController::class, 'showByLocation'])->name('cctv.showByLocation');
-
-
-// Route::apiResource('/events', CctvController::class);
 Route::get('/events', [EventController::class, 'index']);
-// Route::get('/events/{event_id}', [EventController::class, 'show']);
+
 Route::get('/events/{event_id}', [EventController::class, 'show']);
 Route::post('/events', [EventController::class, 'store']);
 Route::put('/events/{id}', [EventController::class, 'update']);
 Route::delete('/events/{event_id}', [EventController::class, 'destroy']);
-// Route::get('events/export/csv', [EventController::class, 'exportCSV']);
+
 Route::get('events/export/csv', [EventController::class, 'exportCSV']);
 Route::get('events/show', [EventController::class, 'showEvents']);
 Route::get('/events/search', [EventController::class, 'searchByDateRange']);
