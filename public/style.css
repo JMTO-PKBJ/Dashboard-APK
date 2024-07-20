@@ -241,3 +241,66 @@
     border: none;
 }
 
+.custom-select-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%; 
+}
+
+.custom-select {
+    display: none; 
+}
+
+.selected-role {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    background-color: #fff;
+    cursor: pointer;
+    position: relative; 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f8f9fa; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+.selected-role:hover {
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); 
+}
+
+.selected-role::after {
+    content: '▼'; 
+    font-size: 12px;
+    color: #0E1040; 
+    margin-left: 8px; 
+    pointer-events: none; 
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%; 
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 0 0 7px 7px;
+    z-index: 1000;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-menu.show {
+    display: block;
+}
+
+.dropdown-item {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background-color: #f1f1f1;
+}
+
+
