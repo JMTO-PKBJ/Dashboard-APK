@@ -204,4 +204,8 @@ class UserController extends Controller
         ]);
     }
 
+    public function showAddUserForm()
+    {
+        return view('addUser');
+    }
 }
