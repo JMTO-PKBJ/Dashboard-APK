@@ -31,9 +31,9 @@ public function login(Request $request)
             case 1: // Admin
                 return redirect()->route('admin.dashboard');
             case 2: // Supervisor
-                return redirect()->intended('/testlog');
+                return redirect()->route('supervisor.dashboard');
             case 3: // Supervisor
-                return redirect()->intended('/testlog');
+                return redirect()->route('operator.dashboard');
             default:
                 return redirect()->intended('/testlog');
         }

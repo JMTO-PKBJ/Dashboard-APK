@@ -3,7 +3,7 @@
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h1 class="h3 mb-0" style="font-size: 25px; color:#0E1040; font-weight:700">Admin Event</h1>
+            <h1 class="h3 mb-0" style="font-size: 25px; color:#0E1040; font-weight:700">Event</h1>
         </div>
         <div class="card-body">
             <div class="d-flex">
@@ -109,6 +109,10 @@
     @endforeach
 
     <script>
+        $(document).ready(function() {
+            $('#dataTable').DataTable({
+            });
+        });
         $('.eventBtn.export').on('click', function() {
             var ruas = $('#ruasDropdownButton span:first-child').text();
             var location = $('#cctvDropdownButton span:first-child').text();
@@ -263,6 +267,19 @@
                     inputs[j].style.display = 'none';
                 }
             });
+            (document).ready(function() {
+            $('#dataTable').DataTable({
+            });
+        });
     </script>
+
+    {{-- @push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#dataTable').DataTable({
+            });
+        });
+    </script>
+    @endpush --}}
 
 @endsection

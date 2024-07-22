@@ -8,7 +8,7 @@
             </div>
 
             <div class="p-3">
-                <form action="{{ url('/register') }}" method="POST">
+                <form action="{{ route('admin.user.register') }}" method="POST">
                     @csrf
                 <div class="username p-3">
                     Username 

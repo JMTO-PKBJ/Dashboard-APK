@@ -1,9 +1,9 @@
-@extends('master')
+@extends('layouts.OPERATOR.master')
 @section('content')
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h1 class="h3 mb-0" style="font-size: 25px; color:#0E1040; font-weight:700">Data Event</h1>
+            <h1 class="h3 mb-0" style="font-size: 25px; color:#0E1040; font-weight:700">Event</h1>
         </div>
         <div class="card-body">
             <div class="d-flex">
@@ -42,7 +42,7 @@
                         </svg>
                         <span class="ms-1">Cari</span>
                     </a>
-                    <form method="GET" action="{{ route('exportPDF') }}" class="d-inline" >
+                    <form method="GET" action="{{ route('operator.exportPDF') }}" class="d-inline" >
                         <input type="hidden" name="ruas" id="ruasHidden" value="">
                         <input type="hidden" name="location" id="locationHidden" value="">
                         <input type="hidden" name="start_date" id="startDateHidden" value="">
@@ -109,6 +109,10 @@
     @endforeach
 
     <script>
+        $(document).ready(function() {
+            $('#dataTable').DataTable({
+            });
+        });
         $('.eventBtn.export').on('click', function() {
             var ruas = $('#ruasDropdownButton span:first-child').text();
             var location = $('#cctvDropdownButton span:first-child').text();
@@ -124,7 +128,7 @@
         
         $(document).ready(function() {
             $.ajax({
-                url: '{{ route("getCctvRuas") }}',
+                url: '{{ route("operator.getCctvRuas") }}',
                 method: 'GET',
                 success: function(response) {
                     var ruasDropdown = $('#ruasDropdownMenu');
@@ -142,7 +146,7 @@
                 $('#cctvDropdownButton').prop('disabled', false);
 
                 $.ajax({
-                    url: '{{ route("getCctvLocations") }}',
+                    url: '{{ route("operator.getCctvLocations") }}',
                     method: 'GET',
                     data: { ruas: ruas },
                     success: function(response) {
@@ -204,7 +208,7 @@
                 var end = dateRange[1];
 
                 $.ajax({
-                    url: '{{ route("getData") }}',
+                    url: '{{ route("operator.getData") }}',
                     method: 'GET',
                     data: {
                         ruas: ruas,
@@ -263,6 +267,19 @@
                     inputs[j].style.display = 'none';
                 }
             });
+            (document).ready(function() {
+            $('#dataTable').DataTable({
+            });
+        });
     </script>
+
+    {{-- @push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#dataTable').DataTable({
+            });
+        });
+    </script>
+    @endpush --}}
 
 @endsection

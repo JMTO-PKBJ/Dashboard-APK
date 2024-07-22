@@ -17,9 +17,9 @@ class RedirectIfAuthenticated
                     case 1: // admin
                         return redirect('/admin/dashboard');
                     case 2: // supervisor
-                        return redirect('/testlog');
+                        return redirect('/supervisor/dashboard');
                     case 3: // operator
-                        return redirect('/testlog');
+                        return redirect('/operator/dashboard');
                     default:
                         return redirect('/');
                 }
