@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layouts.ADMIN.master')
 @section('content')
 
     <div class="card shadow mb-4">
@@ -42,7 +42,7 @@
                         </svg>
                         <span class="ms-1">Cari</span>
                     </a>
-                    <form method="GET" action="{{ route('exportPDF') }}" class="d-inline" >
+                    <form method="GET" action="{{ route('admin.exportPDF') }}" class="d-inline" >
                         <input type="hidden" name="ruas" id="ruasHidden" value="">
                         <input type="hidden" name="location" id="locationHidden" value="">
                         <input type="hidden" name="start_date" id="startDateHidden" value="">
@@ -124,7 +124,7 @@
         
         $(document).ready(function() {
             $.ajax({
-                url: '{{ route("getCctvRuas") }}',
+                url: '{{ route("admin.getCctvRuas") }}',
                 method: 'GET',
                 success: function(response) {
                     var ruasDropdown = $('#ruasDropdownMenu');
@@ -142,7 +142,7 @@
                 $('#cctvDropdownButton').prop('disabled', false);
 
                 $.ajax({
-                    url: '{{ route("getCctvLocations") }}',
+                    url: '{{ route("admin.getCctvLocations") }}',
                     method: 'GET',
                     data: { ruas: ruas },
                     success: function(response) {
@@ -204,7 +204,7 @@
                 var end = dateRange[1];
 
                 $.ajax({
-                    url: '{{ route("getData") }}',
+                    url: '{{ route("admin.getData") }}',
                     method: 'GET',
                     data: {
                         ruas: ruas,

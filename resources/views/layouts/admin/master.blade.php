@@ -43,7 +43,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        @include('includes.sidebar')
+        @include('layouts.ADMIN.Includes.sidebar')
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -53,7 +53,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                @include('includes.topbar')
+                @include('layouts.ADMIN.Includes.topbar')
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->

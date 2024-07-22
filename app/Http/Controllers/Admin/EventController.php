@@ -1,26 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+use App\Models\Cctv;
 use App\Models\Event;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
-use Laracsv\Export;
-use App\Exports\EventsExport;
-use App\Http\Controllers\EventsExport as ControllersEventsExport;
-use App\Models\Cctv;
+use Illuminate\Support\Facades\DB;
 use Dompdf\Dompdf;
 use Dompdf\Options;
-use Illuminate\Support\Facades\DB;
-use League\Csv\CannotInsertRecord;
-use League\Csv\Writer;
-use Maatwebsite\Excel\Facades\Excel;
-use PHPExcel;
-use PHPExcel_IOFactory;
-use Symfony\Component\HttpFoundation\StreamedResponse;
-use Mpdf\Mpdf;
-use Barryvdh\DomPDF\Facade as PDF;
-
 
 class EventController extends Controller
 {
@@ -40,12 +28,6 @@ class EventController extends Controller
         }
     
         return response()->json($event);
-    }
-
-    public function showEvents()
-    {
-        $events=Event::all();
-        return view('show1', compact('events'));
     }
     
 
@@ -274,7 +256,7 @@ class EventController extends Controller
 
         $events = $query->get();
 
-        $dompdf = new Dompdf();
+        $dompdf = new PdfDompdf();
         $dompdf->setOptions(new Options(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true]));
 
         $html = '<html><head><title>Export Data Event</title>';
@@ -320,7 +302,4 @@ class EventController extends Controller
         $dompdf->render();
         $dompdf->stream('events.pdf', ['Attachment' => true]);
     }
-
-
-    
 }

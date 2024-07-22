@@ -4,7 +4,6 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CctvController;
 use App\Http\Controllers\EventController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\OperatorMiddleware;
@@ -17,26 +16,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-
-
-// Dashboard
-Route::group(['prefix' => 'api'], function () {
-    Route::get('/dashboard-data', [EventController::class, 'getDashboardData'])->name('dashboard.data');
-    Route::get('/event-location-data', [EventController::class, 'getEventLocationData'])->name('event.location.data');
-    Route::get('/event/class/data', [EventController::class, 'getEventClassData'])->name('event.class.data');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/testlog', function () {
+        return view('testlog'); 
+    });
 });
 
-// Event
-Route::get('events', [EventController::class, 'show1']);
-Route::get('/getCctvRuas', [EventController::class, 'getCctvRuas'])->name('getCctvRuas');
-Route::get('/getCctvLocations', [EventController::class, 'getCctvLocations'])->name('getCctvLocations');
-Route::get('/getData', [EventController::class, 'getData'])->name('getData');
-Route::get('/export-pdf', [EventController::class, 'exportPDF'])->name('exportPDF');
+// Logout
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+// Im code here
 
-
-
+// Route group CCTV
+// Im code here
 
 // Login
 Route::middleware(['redirect'])->group(function () {
@@ -44,48 +36,61 @@ Route::middleware(['redirect'])->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
 });
 
-Route::middleware(['auth' ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard'); 
+
+// ROUTE AKSES ROLE : ADMIN
+Route::middleware(['auth','admin'])->group(function(){
+    Route::prefix('/admin')->group(function(){
+
+        Route::get('/dashboard', function () {
+            return view('layouts.ADMIN.dashboard'); 
+        })->name('admin.dashboard');
+
+        // CCTV
+        // Route group CCTV
+        Route::group([
+            'namespace' => 'App\Http\Controllers\Admin',
+            'controller' => CctvController::class,
+            'prefix' => "/cctv",
+            'as' => 'admin.'
+        ], function(){
+            // Route code here ..
+            Route::get('/', 'showAll')->name('cctv');
+            Route::get('/create', 'create')->name('cctv.create');
+            Route::post('/store', 'store')->name('cctv.store');
+            Route::get('/{id}/show', 'showPage')->name("cctv.show");
+            Route::get('/{lokasi}/location', 'showByLocation')->name('cctv.location');
+        });
+
+        Route::group([
+            'namespace' => 'App\Http\Controllers\Admin',
+            'controller' => UserController::class,
+            'as' => 'admin.'
+        ], function(){
+            // addUser
+            Route::get('/addUser', [UserController::class, 'showAddUserForm'])->name('users');
+            Route::get('/users', [UserController::class, 'showAll'])->name('show.users');
+            Route::post('/register', [UserController::class, 'register'])->name('user.register');
+        });
+       
+        Route::group([
+            'namespace' => 'App\Http\Controllers\Admin',
+            'controller' => EventController::class,
+            'as' => 'admin.'
+        ], function(){
+            // Event
+            Route::get('events', [EventController::class, 'show1'])->name('events');
+            Route::get('/getCctvRuas', [EventController::class, 'getCctvRuas'])->name('getCctvRuas');
+            Route::get('/getCctvLocations', [EventController::class, 'getCctvLocations'])->name('getCctvLocations');
+            Route::get('/getData', [EventController::class, 'getData'])->name('getData');
+            Route::get('/export-pdf', [EventController::class, 'exportPDF'])->name('exportPDF');
+        });
+
+        // Dashboard
+        Route::group(['prefix' => 'api'], function () {
+            Route::get('/dashboard-data', [EventController::class, 'getDashboardData'])->name('dashboard.data');
+            Route::get('/event-location-data', [EventController::class, 'getEventLocationData'])->name('event.location.data');
+            Route::get('/event/class/data', [EventController::class, 'getEventClassData'])->name('event.class.data');
+        });
     });
-});
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/testlog', function () {
-        return view('testlog'); 
-    });
-});
-
-
-// Logout
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-
-
-
-// addUser
-Route::get('/addUser', [UserController::class, 'showAddUserForm']);
-Route::get('/users', [UserController::class, 'showAll'])->name('show.users');
-Route::post('/register', [UserController::class, 'register']);
-
-
-
-
-
-// Im code here
-
-// Route group CCTV
-Route::group([
-        'namespace' => 'App\Http\Controllers',
-        'controller' => CctvController::class,
-        'prefix' => "cctv",
-        'as' => 'cctv'
-    ], function(){
-    // Route code here ..
-    Route::get('/', 'showAll');
-    Route::get('/create', 'create')->name('.create');
-    Route::post('/store', 'store')->name('.store');
-    Route::get('/{id}/show', 'showPage')->name(".show");
-    Route::get('/{lokasi}/location', 'showByLocation')->name('.location');
 });
 

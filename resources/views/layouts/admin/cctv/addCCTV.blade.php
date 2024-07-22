@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layouts.ADMIN.master')
 @section('content')
 
     <div class="card shadow mb-4">
@@ -6,7 +6,7 @@
             <h1 class="h3 mb-0" style="font-size: 25px; color:#0E1040; font-weight:700">Tambah CCTV</h1>
         </div>
         <div class="card-body">
-            <form action="{{ route('cctv.store') }}" method="POST" onsubmit="return handleFormSubmit()">
+            <form action="{{ route('admin.cctv.store') }}" method="POST" onsubmit="return handleFormSubmit()">
                 @csrf
                 <div class="mb-3">
                     <label for="cctvRuas" class="form-label">Ruas</label>

@@ -47,10 +47,10 @@ class UserController extends Controller
         // ], 201);
         if ($user) {
             // Jika berhasil, arahkan ke halaman users
-            return redirect('/users')->with('success', 'User berhasil ditambahkan');
+            return redirect('/admin/users')->with('success', 'User berhasil ditambahkan');
         } else {
             // Jika gagal, arahkan kembali ke halaman tambah user
-            return redirect('/adduser')->with('error', 'Gagal menambahkan user');
+            return redirect('/admin/adduser')->with('error', 'Gagal menambahkan user');
         }
     }
 
@@ -145,10 +145,10 @@ class UserController extends Controller
         $user->save();
         if ($user) {
             // Jika berhasil, arahkan ke halaman users
-            return redirect('/users')->with('success', 'User berhasil dihapus');
+            return redirect('/admin/users')->with('success', 'User berhasil dihapus');
         } else {
             // Jika gagal, arahkan kembali ke halaman tambah user
-            return redirect('/users')->with('error', 'Gagal menghapus user');
+            return redirect('/admin/users')->with('error', 'Gagal menghapus user');
         }
         // return response()->json([
         //     'message' => 'User updated successfully',
@@ -163,10 +163,10 @@ class UserController extends Controller
 
         if ($user) {
             // Jika berhasil, arahkan ke halaman users
-            return redirect('/users')->with('success', 'User berhasil dihapus');
+            return redirect('/admin/users')->with('success', 'User berhasil dihapus');
         } else {
             // Jika gagal, arahkan kembali ke halaman tambah user
-            return redirect('/users')->with('error', 'Gagal menghapus user');
+            return redirect('/admin/users')->with('error', 'Gagal menghapus user');
         }
     }
 
@@ -180,7 +180,7 @@ class UserController extends Controller
                 'role' => self::ROLES[$user->role_id],
             ];
         });
-        return view('users', compact('users'));
+        return view('layouts.ADMIN.User.users', compact('users'));
     
     }
 
@@ -206,6 +206,6 @@ class UserController extends Controller
 
     public function showAddUserForm()
     {
-        return view('addUser');
+        return view('layouts.ADMIN.User.addUser');
     }
 }
