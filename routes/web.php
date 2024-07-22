@@ -1,44 +1,15 @@
 <?php
 
-use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
-use App\Http\Middleware\AdminMiddleware;
-use App\Http\Middleware\OperatorMiddleware;
-use App\Http\Middleware\RedirectIfAuthenticated;
-use App\Http\Middleware\SupervisorMiddleware;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Api\UserController;
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/testlog', function () {
-        return view('testlog'); 
-    });
-});
-
-// Logout
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-// Im code here
-
-// Route group CCTV
-// Im code here
-
-// Login
-Route::middleware(['redirect'])->group(function () {
-    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [AuthController::class, 'login']);
-});
-
+Route::redirect('/', '/login');
 
 // ROUTE AKSES ROLE : ADMIN
-Route::middleware(['auth','admin'])->group(function(){
+Route::middleware(['admin'])->group(function(){
     Route::prefix('/admin')->group(function(){
 
         Route::get('/dashboard', function () {
@@ -92,5 +63,26 @@ Route::middleware(['auth','admin'])->group(function(){
             Route::get('/event/class/data', [EventController::class, 'getEventClassData'])->name('event.class.data');
         });
     });
+
 });
 
+Route::middleware(['supervisor'])->group(function(){
+    Route::prefix('/supervisor')->group(function(){
+        // route supervisor
+    });
+});
+
+Route::middleware(['operator'])->group(function(){
+    Route::prefix('/operator')->group(function(){
+        // route supervisor
+    });
+});
+
+// Login
+Route::middleware(['redirect'])->group(function () {
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+});
+
+// Logout
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');

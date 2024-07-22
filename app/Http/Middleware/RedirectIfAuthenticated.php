@@ -15,7 +15,7 @@ class RedirectIfAuthenticated
             if (Auth::guard($guard)->check()) {
                 switch (Auth::user()->role_id) {
                     case 1: // admin
-                        return redirect('/dashboard');
+                        return redirect('/admin/dashboard');
                     case 2: // supervisor
                         return redirect('/testlog');
                     case 3: // operator

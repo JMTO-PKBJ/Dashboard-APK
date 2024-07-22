@@ -9,7 +9,7 @@ class AuthController extends Controller
 {
     public function showLoginForm()
     {
-        return view('login'); // Adjust the path as needed
+        return view('layouts.auth.login'); // Adjust the path as needed
     }
 
 // Method to handle login
@@ -29,7 +29,7 @@ public function login(Request $request)
         // Check user role and redirect accordingly
         switch ($user->role_id) {
             case 1: // Admin
-                return redirect()->intended('/dashboard');
+                return redirect()->route('admin.dashboard');
             case 2: // Supervisor
                 return redirect()->intended('/testlog');
             case 3: // Supervisor
