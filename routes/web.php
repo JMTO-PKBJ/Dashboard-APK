@@ -8,6 +8,8 @@ use App\Http\Controllers\Api\UserController;
 
 Route::redirect('/', '/login');
 
+Route::middleware(['revalidate','auth'])->group(function(){
+
 // ROUTE AKSES ROLE : ADMIN
 Route::middleware(['admin'])->group(function(){
     Route::prefix('/admin')->group(function(){
@@ -153,6 +155,9 @@ Route::middleware(['operator'])->group(function(){
     });
 });
 
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});
+
 // Login
 Route::middleware(['redirect'])->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -160,4 +165,4 @@ Route::middleware(['redirect'])->group(function () {
 });
 
 // Logout
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+// Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
