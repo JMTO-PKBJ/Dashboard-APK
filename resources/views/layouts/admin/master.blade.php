@@ -109,7 +109,10 @@
     {{-- Video CCTV --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.10.2/video.min.js"></script>
     <script src="https://vjs.zencdn.net/7.2.3/video.js"></script>
-    
+    <script src="{{ asset("js/demo/chart-area-demo.js") }}"></script>
+    <script src="{{ asset("js/demo/chart-pie-demo.js") }}"></script>
+    <script src="{{ asset("main.js") }}"></script>
+
     @stack('scripts')
 </body>
 </html>

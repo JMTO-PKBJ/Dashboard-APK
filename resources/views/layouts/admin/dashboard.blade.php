@@ -160,7 +160,7 @@
     
             function fetchDashboardData(startDate, endDate) {
                 $.ajax({
-                    url: '{{ route("dashboard.data") }}',
+                    url: '{{ route("admin.dashboard.data") }}',
                     type: 'GET',
                     data: {
                         start_date: startDate,
@@ -176,7 +176,7 @@
     
             function fetchLineChartData(startDate, endDate) {
                 $.ajax({
-                    url: '{{ route("event.location.data") }}',
+                    url: '{{ route("admin.event.location.data") }}',
                     type: 'GET',
                     data: {
                         start_date: startDate,
@@ -196,7 +196,7 @@
     
             function fetchPieChartData(startDate, endDate) {
                 $.ajax({
-                    url: '{{ route("event.class.data") }}',
+                    url: '{{ route("admin.event.class.data") }}',
                     type: 'GET',
                     data: {
                         start_date: startDate,

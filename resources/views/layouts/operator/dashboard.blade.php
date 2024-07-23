@@ -1,6 +1,5 @@
 @extends('layouts.OPERATOR.master')
 @section('content')
-
     <div class="container-fluid">
 
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -155,7 +154,7 @@
     
             function fetchDashboardData(startDate, endDate) {
                 $.ajax({
-                    url: '{{ route("dashboard.data") }}',
+                    url: '{{ route("operator.dashboard.data") }}',
                     type: 'GET',
                     data: {
                         start_date: startDate,
@@ -172,7 +171,7 @@
     
             function fetchLineChartData(startDate, endDate) {
                 $.ajax({
-                    url: '{{ route("event.location.data") }}',
+                    url: '{{ route("operator.event.location.data") }}',
                     type: 'GET',
                     data: {
                         start_date: startDate,
@@ -192,7 +191,7 @@
     
             function fetchPieChartData(startDate, endDate) {
                 $.ajax({
-                    url: '{{ route("event.class.data") }}',
+                    url: '{{ route("operator.event.class.data") }}',
                     type: 'GET',
                     data: {
                         start_date: startDate,
@@ -211,5 +210,4 @@
             }
         });
     </script>
-    
 @stop
