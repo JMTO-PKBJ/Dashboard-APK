@@ -267,9 +267,7 @@
                     inputs[j].style.display = 'none';
                 }
             });
-            (document).ready(function() {
-            $('#dataTable').DataTable({
-            });
+            
         });
     </script>
 

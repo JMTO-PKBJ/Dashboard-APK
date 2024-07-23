@@ -88,7 +88,7 @@
                                     <div class="newPass p-3">
                                         New Password
                                         <div class="input-group">
-                                            <input class="form-control text-field" style="border-radius: 7px" type="password" name="password" id="password-{{ $user['id'] }}" placeholder="Enter your new password">
+                                            <input class="form-control text-field" style="border-radius: 7px" type="password" name="password" id="password-{{ $user['id'] }}"  placeholder="Enter your new password" >
                                             <div class="input-group-append">
                                                 <span class="input-group-text password-toggle" onclick="togglePasswordVisibility()" style="border-radius: 0 7px 7px 0; cursor: pointer;">
                                                     <i class="fas fa-eye"></i>

@@ -166,6 +166,7 @@
                         $('#highestEventCount').text(data.highestEventCount || 'N/A');
                         $('#mostFrequentVehicleType').text(data.mostFrequentVehicleType || 'N/A');
                     }
+                    
                 });
             }
     

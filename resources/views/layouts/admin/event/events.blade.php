@@ -109,10 +109,6 @@
     @endforeach
 
     <script>
-        $(document).ready(function() {
-            $('#dataTable').DataTable({
-            });
-        });
         $('.eventBtn.export').on('click', function() {
             var ruas = $('#ruasDropdownButton span:first-child').text();
             var location = $('#cctvDropdownButton span:first-child').text();
@@ -267,19 +263,15 @@
                     inputs[j].style.display = 'none';
                 }
             });
-            (document).ready(function() {
-            $('#dataTable').DataTable({
-            });
-        });
     </script>
 
-    {{-- @push('scripts')
+    @push('scripts')
     <script>
         $(document).ready(function() {
             $('#dataTable').DataTable({
             });
         });
     </script>
-    @endpush --}}
+    @endpush
 
 @endsection

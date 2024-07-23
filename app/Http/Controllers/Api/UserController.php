@@ -121,6 +121,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
+        
 
         $validator = Validator::make($request->all(), [
             'username' => 'string|max:255|unique:users,username,' . $user->id,
@@ -135,7 +136,7 @@ class UserController extends Controller
         if ($request->has('username')) {
             $user->username = $request->username;
         }
-        if ($request->has('password')) {
+        if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
         }
         if ($request->has('role_id')) {

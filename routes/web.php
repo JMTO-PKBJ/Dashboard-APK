@@ -128,10 +128,7 @@ Route::middleware(['operator'])->group(function(){
         ], function(){
             // Route code here ..
             Route::get('/', 'showAll')->name('cctv');
-            Route::get('/create', 'create')->name('cctv.create');
-            Route::post('/store', 'store')->name('cctv.store');
-            Route::get('/{id}/show', 'showPage')->name("cctv.show");
-            Route::get('/{lokasi}/location', 'showByLocation')->name('cctv.location');
+            
         });
     
         Route::group([

@@ -56,7 +56,7 @@
                         <th>No</th>
                         <th>Ruas</th>
                         <th>Lokasi</th>
-                        <th>Link CCTV</th>
+                        <th>Video CCTV</th>
 
                     </tr>
                 </thead>

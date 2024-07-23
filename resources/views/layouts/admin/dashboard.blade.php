@@ -110,7 +110,12 @@
         </div>
 
     </div>
-    
+    @if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+
     <script>
         $(document).ready(function() {
             $('#datePickerChart').daterangepicker({
