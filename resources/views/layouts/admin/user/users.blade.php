@@ -179,11 +179,6 @@
     </div>
     
     <script>
-        $(document).ready(function() {
-            $('#dataTable').DataTable({
-            });
-        });
-        
         document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.custom-select-wrapper').forEach(function(selectWrapper) {
         var selectedRole = selectWrapper.querySelector('.selected-role');

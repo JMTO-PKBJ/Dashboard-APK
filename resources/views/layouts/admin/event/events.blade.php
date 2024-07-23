@@ -265,13 +265,4 @@
             });
     </script>
 
-    @push('scripts')
-    <script>
-        $(document).ready(function() {
-            $('#dataTable').DataTable({
-            });
-        });
-    </script>
-    @endpush
-
 @endsection

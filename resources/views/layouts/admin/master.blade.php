@@ -31,10 +31,10 @@
     {{-- Video CCTV --}}
     <link href="https://vjs.zencdn.net/7.2.3/video-js.css" rel="stylesheet">
 
-    <link href="{{ asset('datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
-    <script src="{{ asset('datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('datatables/dataTables.bootstrap4.min.js') }}"></script>
-    
+    <link href="{{ asset('admin/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('admin/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('admin/datatables/dataTables.bootstrap4.min.js') }}"></script>
+
     
 </head>
 <body id="page-top">
@@ -109,9 +109,9 @@
     {{-- Video CCTV --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.10.2/video.min.js"></script>
     <script src="https://vjs.zencdn.net/7.2.3/video.js"></script>
-    <script src="{{ asset("js/demo/chart-area-demo.js") }}"></script>
-    <script src="{{ asset("js/demo/chart-pie-demo.js") }}"></script>
-    <script src="{{ asset("main.js") }}"></script>
+
+    <script src="{{ asset('admin/js/demo/chart-area-demo.js') }}"></script>
+    <script src="{{ asset('admin/js/demo/chart-pie-demo.js') }}"></script>
 
     @stack('scripts')
 </body>

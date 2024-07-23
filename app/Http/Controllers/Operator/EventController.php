@@ -256,7 +256,7 @@ class EventController extends Controller
 
         $events = $query->get();
 
-        $dompdf = new PdfDompdf();
+        $dompdf = new Dompdf();
         $dompdf->setOptions(new Options(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true]));
 
         $html = '<html><head><title>Export Data Event</title>';

@@ -109,10 +109,6 @@
     @endforeach
 
     <script>
-        $(document).ready(function() {
-            $('#dataTable').DataTable({
-            });
-        });
         $('.eventBtn.export').on('click', function() {
             var ruas = $('#ruasDropdownButton span:first-child').text();
             var location = $('#cctvDropdownButton span:first-child').text();
@@ -272,14 +268,5 @@
             });
         });
     </script>
-
-    {{-- @push('scripts')
-    <script>
-        $(document).ready(function() {
-            $('#dataTable').DataTable({
-            });
-        });
-    </script>
-    @endpush --}}
 
 @endsection

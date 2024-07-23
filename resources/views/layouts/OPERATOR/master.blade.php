@@ -31,9 +31,9 @@
     {{-- Video CCTV --}}
     <link href="https://vjs.zencdn.net/7.2.3/video-js.css" rel="stylesheet">
 
-    <link href="{{ asset('datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
-    <script src="{{ asset('datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('datatables/dataTables.bootstrap4.min.js') }}"></script>
+    <link href="{{ asset('operator/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('operator/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('operator/datatables/dataTables.bootstrap4.min.js') }}"></script>
     
     
 </head>
@@ -110,8 +110,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.10.2/video.min.js"></script>
     <script src="https://vjs.zencdn.net/7.2.3/video.js"></script>
 
-    <script src="{{ asset("main.js") }}"></script>
-    
+    <script src="{{ asset('operator/js/demo/chart-area-demo.js') }}"></script>
+    <script src="{{ asset('operator/js/demo/chart-pie-demo.js') }}"></script>
+
     @stack('scripts')
 </body>
 </html>

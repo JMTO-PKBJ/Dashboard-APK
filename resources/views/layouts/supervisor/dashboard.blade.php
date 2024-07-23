@@ -111,6 +111,7 @@
 
     </div>
     
+
     <script>
         $(document).ready(function() {
             $('#datePickerChart').daterangepicker({
@@ -210,5 +211,6 @@
             }
         });
     </script>
+    
     
 @stop
