@@ -7,9 +7,9 @@ var ctx = document.getElementById("myPieChart");
 var myPieChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
-        labels: [], // Labels will be populated dynamically
+        labels: [], 
         datasets: [{
-            data: [], // Data will be populated dynamically
+            data: [], 
             backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
             hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
             hoverBorderColor: "rgba(234, 236, 244, 1)",
@@ -31,7 +31,6 @@ var myPieChart = new Chart(ctx, {
             display: false
         },
         cutoutPercentage: 80,
-        // Custom tooltips to show data on hover
         plugins: {
             tooltip: {
                 callbacks: {
@@ -46,7 +45,6 @@ var myPieChart = new Chart(ctx, {
                 }
             }
         },
-        // Custom legend to show legend items dynamically
         animation: {
             onComplete: function() {
                 var legends = document.getElementById('legend-container');
@@ -88,7 +86,7 @@ function getIconClassByColor(backgroundColor) {
         case '#36b9cc':
             return 'fas fa-circle text-info';
         default:
-            return 'fas fa-circle'; // Default icon class
+            return 'fas fa-circle'; 
     }
 }
     
