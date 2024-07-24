@@ -34,22 +34,9 @@ class UserController extends Controller
             'role_id' => $request->role_id,
         ]);
 
-        // $token = JWTAuth::fromUser($user);
-        // $user->load('role');
-        // return response()->json([
-        //     'user' => [
-        //         'id' => $user->id,
-        //         'username' => $user->username,
-        //         'role' => self::ROLES[$user->role_id],
-        //         'created_at' => $user->created_at,
-        //     ],
-        //     'remember_token' => $token,
-        // ], 201);
         if ($user) {
-            // Jika berhasil, arahkan ke halaman users
             return redirect('/admin/users')->with('success', 'User berhasil ditambahkan');
         } else {
-            // Jika gagal, arahkan kembali ke halaman tambah user
             return redirect('/admin/adduser')->with('error', 'Gagal menambahkan user');
         }
     }
@@ -86,15 +73,6 @@ class UserController extends Controller
 
     public function refreshToken()
     {
-        // try {
-        //     $newToken = JWTAuth::refresh(JWTAuth::getToken());
-        //     return response()->json([
-        //         'remember_token' => $newToken
-        //     ]);
-        // } catch (\Exception $e) {
-        //     return response()->json(['error' => 'Failed to refresh token'], 500);
-        // }
-        
             $token = JWTAuth::getToken();
             $newToken = JWTAuth::refresh($token);
     
@@ -145,16 +123,10 @@ class UserController extends Controller
 
         $user->save();
         if ($user) {
-            // Jika berhasil, arahkan ke halaman users
             return redirect('/admin/users')->with('success', 'User berhasil dihapus');
         } else {
-            // Jika gagal, arahkan kembali ke halaman tambah user
             return redirect('/admin/users')->with('error', 'Gagal menghapus user');
         }
-        // return response()->json([
-        //     'message' => 'User updated successfully',
-        //     'user' => new UserResource($user),
-        // ], 200);
     }
 
     public function destroy($id)
@@ -163,10 +135,8 @@ class UserController extends Controller
         $user->delete();
 
         if ($user) {
-            // Jika berhasil, arahkan ke halaman users
             return redirect('/admin/users')->with('success', 'User berhasil dihapus');
         } else {
-            // Jika gagal, arahkan kembali ke halaman tambah user
             return redirect('/admin/users')->with('error', 'Gagal menghapus user');
         }
     }
@@ -192,7 +162,6 @@ class UserController extends Controller
         $index = 1;
     
         foreach ($users as $user) {
-            // Assuming self::ROLES is defined somewhere in your controller or class
             $role = self::ROLES[$user->role_id];
             $csvData .= "{$index},{$user->username},{$role}\n";
             $index++;

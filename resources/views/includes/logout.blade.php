@@ -11,11 +11,9 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                {{-- <a href="{{ url('login') }}" class="btn btn-danger">Logout</a> --}}
                 <button class="btn btn-danger" type="submit">Logout</button>
             </form>
             </div>
         </div>
     </div>
 </div>
-{{-- <script src="{{ asset('js/main.js') }}"></script> --}}

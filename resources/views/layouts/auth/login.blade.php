@@ -19,17 +19,16 @@
 
             <div class="col-xl-10 col-lg-12 col-md-9 my-5"> 
 
-                {{-- <div class="card o-hidden border-0 shadow-lg my-5"> --}}
-                    <div class="border border-black login-cont d-flex my-5" style="border-radius: 20px">
-                        <div class="col-xl-6 image-container p-0">
-                            <img src="{{ asset('images/jalantol_login.png') }}" alt="Login Image">
-                        </div>
-                        <div class="col-xl-6 text-container d-flex flex-column">
-                            <img class="my-4" style="width: 35%" src="{{ asset('images/jasamarga_icon.png') }}" alt="">
-                            <h1 style="font-size: 18px; font-style: italic; font-weight:400; color:#000000;">Login</h1>
+                <div class="border border-black login-cont d-flex my-5" style="border-radius: 20px">
+                    <div class="col-xl-6 image-container p-0">
+                        <img src="{{ asset('images/jalantol_login.png') }}" alt="Login Image">
+                    </div>
+                    <div class="col-xl-6 text-container d-flex flex-column">
+                        <img class="my-4" style="width: 35%" src="{{ asset('images/jasamarga_icon.png') }}" alt="">
+                        <h1 style="font-size: 18px; font-style: italic; font-weight:400; color:#000000;">Login</h1>
 
-                            <form class="row my-2 d-flex flex-column justify-content-center align-items-center" method="POST" action="{{ route('login') }}"">
-                                @csrf
+                        <form class="row my-2 d-flex flex-column justify-content-center align-items-center" method="POST" action="{{ route('login') }}"">
+                            @csrf
                             <div>
                                 <div class="my-2">
                                     <p class="m-0" style="font-size: 13px">Username</p>
@@ -51,11 +50,11 @@
                                 </div>
                             </div>
                             <button class="login-button w-100 my-2" style="font-weight: 400;" type="submit">Login</button>
-                            {{-- <a href="{{ url('dashboard') }}" class="login-button w-75 my-2" style="font-weight: 400;">Login</a> --}}
                         </form>
                         <p>© 2024 Deteksi Bahu Tol JMTO| V 1.0.0</p>
                     </div>
                 </div>
+                
             </div>
         </div>
     </div>

@@ -39,8 +39,8 @@
             @endforeach
         });
     </script>
+
     <script>
-        // Layout CCTV
         document.addEventListener("DOMContentLoaded", function() {
             changeLayout(2); 
         });
@@ -100,7 +100,6 @@
                     <rect x="13" y="19" width="4" height="4" fill="none" stroke="currentColor" stroke-width="1.5" rx="1" ry="1" />
                     <rect x="19" y="19" width="4" height="4" fill="none" stroke="currentColor" stroke-width="1.5" rx="1" ry="1" />
                 </svg>`;
-            }
-        }
+        }}
     </script>
 @stop

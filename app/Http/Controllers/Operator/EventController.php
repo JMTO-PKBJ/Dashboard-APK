@@ -274,8 +274,25 @@ class EventController extends Controller
                         width: 450px;
                         height: auto;
                     }
+                    h1, p, img {
+                        text-align: center;
+                    }
+                    .image-container {
+                        text-align: center;
+                    }
+                    .jmto-image {
+                        width: 200px;
+                        height: 200px;
+                    }
                 </style>';
         $html .= '</head><body>';
+        $imagePath = public_path('images/jasamarga_icon.png');
+        $imageData = base64_encode(file_get_contents($imagePath));
+        $imageSrc = 'data:image/png;base64,' . $imageData;
+        $html .= '<div class="image-container">';
+        $html .= '<img src="' . $imageSrc . '" class="jmto-image">';
+        $html .= '</div>';
+
         $html .= '<h1>Export Data Event</h1>';
         $html .= '<table>';
         $html .= '<thead><tr>';
@@ -295,7 +312,9 @@ class EventController extends Controller
             $html .= '</tr>';
         }
 
-        $html .= '</tbody></table></body></html>';
+        $html .= '</tbody></table>';
+        $html .= '<p><i>Dicetak pada: ' . date('d-m-Y H:i:s') . '<i></p>';
+        $html .= '</body></html>';
 
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'landscape');

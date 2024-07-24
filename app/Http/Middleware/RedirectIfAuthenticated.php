@@ -14,11 +14,11 @@ class RedirectIfAuthenticated
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
                 switch (Auth::user()->role_id) {
-                    case 1: // admin
+                    case 1: 
                         return redirect('/admin/dashboard');
-                    case 2: // supervisor
+                    case 2: 
                         return redirect('/supervisor/dashboard');
-                    case 3: // operator
+                    case 3: 
                         return redirect('/operator/dashboard');
                     default:
                         return redirect('/');

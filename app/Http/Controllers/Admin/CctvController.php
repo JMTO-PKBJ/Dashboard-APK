@@ -18,7 +18,7 @@ class CctvController extends Controller
 {
     $cctvRuas = Cctv::pluck('cctv_ruas')->unique();
     $cctvLokasi = Cctv::pluck('cctv_lokasi')->unique();
-    $cctvs = Cctv::all(); // Mengambil semua CCTV yang ada
+    $cctvs = Cctv::all(); 
 
     return view('layouts.ADMIN.Cctv.addCCTV', compact('cctvRuas', 'cctvLokasi', 'cctvs'));
 }
@@ -37,13 +37,12 @@ public function store(Request $request){
     
         $cctv = Cctv::create([
             'cctv_ruas' => $request->cctv_ruas,
-            'roles_id' => 1, // auth()->user()->role
+            'roles_id' => 1, 
             'cctv_lokasi' => $request->cctv_lokasi,
             'cctv_video' => $request->cctv_video,
             'cctv_status' => $request->cctv_status
         ]);
 
-        // return response()->json($cctv, 201);
         return redirect()->route('admin.cctv.create')->with('success', 'CCTV added successfully.');
     }
 

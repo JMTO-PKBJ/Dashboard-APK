@@ -22,13 +22,11 @@ Route::post('/register', [UserController::class, 'register']);
 });
 Route::put('/users/{id}', [UserController::class, 'update']);
 Route::delete('/users/{id}', [UserController::class, 'destroy']);
+
 // Protected routes
 Route::middleware(['auth:api'])->group(function () {
     Route::middleware([AdminMiddleware::class])->group(function () {
         Route::get('/users', [UserController::class, 'index']);
-        // Route::put('/users/{id}', [UserController::class, 'update']);
-        // Route::delete('/users/{id}', [UserController::class, 'destroy']);
-        
     });
     Route::post('/logout', [UserController::class, 'logout']);
 });

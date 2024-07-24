@@ -87,11 +87,6 @@
     </div>
     <!-- End of Page Wrapper -->
 
-    <!-- Scroll to Top Button-->
-    {{-- <a id="scrollToTop" class="scroll-to-top rounded d-flex justify-content-center align-items-center" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a> --}}
-
     <!-- Logout Modal-->
     @include('includes.logout')
 

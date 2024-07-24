@@ -126,7 +126,7 @@
                 link.addEventListener('click', function() {
                     var cctvId = link.getAttribute('data-id');
                     var iframe = document.getElementById('iframe_' + cctvId);
-                    iframe.src = iframe.src; // Refresh iframe source
+                    iframe.src = iframe.src; 
                 });
             });
         });
