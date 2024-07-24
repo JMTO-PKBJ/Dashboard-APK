@@ -8,7 +8,6 @@ return [
     'routeMiddleware' => [
         // ...
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        // 'admin' => \App\Http\Middleware\AdminMiddleware::class,
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
         'supervisor' => \App\Http\Middleware\SupervisorMiddleware::class,
         'operator' => \App\Http\Middleware\OperatorMiddleware::class,
