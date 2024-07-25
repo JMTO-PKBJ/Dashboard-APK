@@ -151,7 +151,7 @@ class UserController extends Controller
                 'role' => self::ROLES[$user->role_id],
             ];
         });
-        return view('layouts.ADMIN.User.users', compact('users'));
+        return view('layouts.admin.User.users', compact('users'));
     
     }
 
@@ -176,6 +176,6 @@ class UserController extends Controller
 
     public function showAddUserForm()
     {
-        return view('layouts.ADMIN.User.addUser');
+        return view('layouts.admin.User.addUser');
     }
 }

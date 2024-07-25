@@ -84,7 +84,7 @@ class EventController extends Controller
     public function show1()
     {
         $events = Event::all();
-        return view('layouts.SUPERVISOR.Event.events', compact('events'));
+        return view('layouts.supervisor.Event.events', compact('events'));
     }
 
     public function searchByDateRange(Request $request)

@@ -8,7 +8,7 @@ Route::middleware(['revalidate','auth'])->group(function(){
     Route::middleware(['operator'])->group(function(){
         Route::prefix('operator')->group(function(){
             Route::get('/dashboard', function () {
-                return view('layouts.OPERATOR.dashboard'); 
+                return view('layouts.operator.dashboard'); 
             })->name('operator.dashboard');
 
             Route::group([

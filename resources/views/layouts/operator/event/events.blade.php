@@ -1,4 +1,4 @@
-@extends('layouts.OPERATOR.master')
+@extends('layouts.operator.master')
 @section('content')
 
     <div class="card shadow mb-4">

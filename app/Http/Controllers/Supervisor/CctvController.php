@@ -20,7 +20,7 @@ class CctvController extends Controller
     $cctvLokasi = Cctv::pluck('cctv_lokasi')->unique();
     $cctvs = Cctv::all(); 
 
-    return view('layouts.SUPERVISOR.Cctv.addCCTV', compact('cctvRuas', 'cctvLokasi', 'cctvs'));
+    return view('layouts.supervisor.Cctv.addCCTV', compact('cctvRuas', 'cctvLokasi', 'cctvs'));
 }
 
 public function store(Request $request){
@@ -116,12 +116,12 @@ public function store(Request $request){
     public function showAll()
     {
         $cctvs = Cctv::all();
-        return view('layouts.SUPERVISOR.Cctv.viewCCTV', compact('cctvs'));
+        return view('layouts.supervisor.Cctv.viewCCTV', compact('cctvs'));
     }
 
     public function showAdd()
     {
         $cctvs = Cctv::all();
-        return view('layouts.SUPERVISOR.Cctv.addCCTV', compact('cctvs'));
+        return view('layouts.supervisor.Cctv.addCCTV', compact('cctvs'));
     }
 }

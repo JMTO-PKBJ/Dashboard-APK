@@ -1,4 +1,4 @@
-@extends('layouts.SUPERVISOR.master')
+@extends('layouts.supervisor.master')
 @section('content')
 
     <div class="container-fluid">

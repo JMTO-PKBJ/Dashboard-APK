@@ -11,7 +11,7 @@ Route::middleware(['revalidate','auth'])->group(function(){
         Route::prefix('admin')->group(function(){
 
             Route::get('/dashboard', function () {
-                return view('layouts.ADMIN.dashboard'); 
+                return view('layouts.admin.dashboard'); 
             })->name('admin.dashboard');
 
             Route::group([
