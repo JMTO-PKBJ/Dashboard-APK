@@ -134,13 +134,13 @@ class Cpdf
     private $gstates = [];
 
     /**
-     * @var array|null Current color for fill operations, defaults to inactive value,
+     * @var array Current color for fill operations, defaults to inactive value,
      * all three components should be between 0 and 1 inclusive when active
      */
     public $currentColor = null;
 
     /**
-     * @var array|null Current color for stroke operations (lines etc.)
+     * @var array Current color for stroke operations (lines etc.)
      */
     public $currentStrokeColor = null;
 
@@ -155,12 +155,12 @@ class Cpdf
     public $currentLineStyle = '';
 
     /**
-     * @var array|null Current line transparency (partial graphics state)
+     * @var array Current line transparency (partial graphics state)
      */
     public $currentLineTransparency = ["mode" => "Normal", "opacity" => 1.0];
 
     /**
-     * @var array|null Current fill transparency (partial graphics state)
+     * array Current fill transparency (partial graphics state)
      */
     public $currentFillTransparency = ["mode" => "Normal", "opacity" => 1.0];
 
@@ -3323,7 +3323,7 @@ EOT;
 
         $cache_name = "$metrics_name.json";
         $this->addMessage("metrics: $metrics_name, cache: $cache_name");
-
+        
         if (file_exists($fontcache . '/' . $cache_name)) {
             $this->addMessage("openFont: json metrics file exists $fontcache/$cache_name");
             $cached_font_info = json_decode(file_get_contents($fontcache . '/' . $cache_name), true);
@@ -3693,8 +3693,6 @@ EOT;
     }
 
     /**
-     * sets the color for fill operations
-     *
      * @param string $fillRule
      */
     function setFillRule($fillRule)
@@ -3757,12 +3755,12 @@ EOT;
      * ColorDogde, ColorBurn, HardLight, SoftLight, Difference,
      * Exclusion
      *
-     * @param string $mode    The blend mode to use
+     * @param string $mode    the blend mode to use
      * @param float  $opacity 0.0 fully transparent, 1.0 fully opaque
      */
-    public function setLineTransparency(string $mode, float $opacity): void
+    function setLineTransparency($mode, $opacity)
     {
-        static $blendModes = [
+        static $blend_modes = [
             "Normal",
             "Multiply",
             "Screen",
@@ -3777,24 +3775,27 @@ EOT;
             "Exclusion"
         ];
 
-        if (!in_array($mode, $blendModes, true)) {
+        if (!in_array($mode, $blend_modes)) {
             $mode = "Normal";
         }
 
-        $newState = [
-            "mode"    => $mode,
-            "opacity" => $opacity
-        ];
+        if (is_null($this->currentLineTransparency)) {
+            $this->currentLineTransparency = [];
+        }
 
-        if ($newState === $this->currentLineTransparency) {
+        if ($mode === (key_exists('mode', $this->currentLineTransparency) ?
+            $this->currentLineTransparency['mode'] : '') &&
+            $opacity === (key_exists('opacity', $this->currentLineTransparency) ?
+            $this->currentLineTransparency["opacity"] : '')) {
             return;
         }
 
-        $this->currentLineTransparency = $newState;
+        $this->currentLineTransparency["mode"] = $mode;
+        $this->currentLineTransparency["opacity"] = $opacity;
 
         $options = [
             "BM" => "/$mode",
-            "CA" => $opacity
+            "CA" => (float)$opacity
         ];
 
         $this->setGraphicsState($options);
@@ -3809,12 +3810,12 @@ EOT;
      * ColorDogde, ColorBurn, HardLight, SoftLight, Difference,
      * Exclusion
      *
-     * @param string $mode    The blend mode to use
+     * @param string $mode    the blend mode to use
      * @param float  $opacity 0.0 fully transparent, 1.0 fully opaque
      */
-    public function setFillTransparency(string $mode, float $opacity): void
+    function setFillTransparency($mode, $opacity)
     {
-        static $blendModes = [
+        static $blend_modes = [
             "Normal",
             "Multiply",
             "Screen",
@@ -3829,24 +3830,27 @@ EOT;
             "Exclusion"
         ];
 
-        if (!in_array($mode, $blendModes, true)) {
+        if (!in_array($mode, $blend_modes)) {
             $mode = "Normal";
         }
 
-        $newState = [
-            "mode"    => $mode,
-            "opacity" => $opacity
-        ];
+        if (is_null($this->currentFillTransparency)) {
+            $this->currentFillTransparency = [];
+        }
 
-        if ($newState === $this->currentFillTransparency) {
+        if ($mode === (key_exists('mode', $this->currentFillTransparency) ?
+            $this->currentFillTransparency['mode'] : '') &&
+            $opacity === (key_exists('opacity', $this->currentFillTransparency) ?
+            $this->currentFillTransparency["opacity"] : '')) {
             return;
         }
 
-        $this->currentFillTransparency = $newState;
+        $this->currentFillTransparency["mode"] = $mode;
+        $this->currentFillTransparency["opacity"] = $opacity;
 
         $options = [
             "BM" => "/$mode",
-            "ca" => $opacity,
+            "ca" => (float)$opacity,
         ];
 
         $this->setGraphicsState($options);
@@ -4148,10 +4152,6 @@ EOT;
             $string .= ' [ ' . implode(' ', $dash) . " ] $phase d";
         }
 
-        if ($string === $this->currentLineStyle) {
-            return;
-        }
-
         $this->currentLineStyle = $string;
         $this->addContent("\n$string");
     }
@@ -4423,6 +4423,9 @@ EOT;
      */
     function save()
     {
+        // we must reset the color cache or it will keep bad colors after clipping
+        $this->currentColor = null;
+        $this->currentStrokeColor = null;
         $this->addContent("\nq");
     }
 
@@ -4431,13 +4434,9 @@ EOT;
      */
     function restore()
     {
-        // Reset color and transparency caches, as any changes to the graphics
-        // state since saving will be discarded
+        // we must reset the color cache or it will keep bad colors after clipping
         $this->currentColor = null;
         $this->currentStrokeColor = null;
-        $this->currentLineStyle = '';
-        $this->currentLineTransparency = null;
-        $this->currentFillTransparency = null;
         $this->addContent("\nQ");
     }
 
@@ -4689,7 +4688,7 @@ EOT;
         }
 
         // if there is a line style set, then put this in too
-        if ($this->currentLineStyle !== '') {
+        if (mb_strlen($this->currentLineStyle, '8bit')) {
             $this->addContent("\n$this->currentLineStyle");
         }
 
@@ -5014,7 +5013,7 @@ EOT;
         }
 
         if (!isset($this->stringSubsets[$font])) {
-            $base_subset = "\u{fffd}\u{fffe}\u{ffff}"; // fffd => replacement character, fffe/ffff => not a character
+            $base_subset = "\u{fffd}\u{fffe}\u{ffff}";
             $this->stringSubsets[$font] = $this->utf8toCodePointsArray($base_subset);
         }
 
@@ -5166,8 +5165,7 @@ EOT;
             $this->selectFont($this->defaultFont);
         }
 
-        // remove non-printable characters since they have no width
-        $text = preg_replace('/[\x00-\x1F\x7F]/u', '', $text);
+        $text = str_replace(["\r", "\n"], "", $text);
 
         // hmm, this is where it all starts to get tricky - use the font information to
         // calculate the width of each character, add them up and convert to user units
@@ -5189,19 +5187,14 @@ EOT;
 
                 if (isset($current_font['C'][$char])) {
                     $char_width = $current_font['C'][$char];
-                } elseif (isset($current_font['C'][0xFFFD])) {
-                    // fffd => replacement character
-                    $char_width = $current_font['C'][0xFFFD];
-                } else {
-                    $char_width = $current_font['C'][0x0020];
-                }
 
-                // add the character width
-                $w += $char_width;
+                    // add the character width
+                    $w += $char_width;
 
-                // add additional padding for space
-                if (isset($current_font['codeToName'][$char]) && $current_font['codeToName'][$char] === 'space') {  // Space
-                    $w += $wordSpacing * $space_scale;
+                    // add additional padding for space
+                    if (isset($current_font['codeToName'][$char]) && $current_font['codeToName'][$char] === 'space') {  // Space
+                        $w += $wordSpacing * $space_scale;
+                    }
                 }
             }
 
@@ -5229,19 +5222,14 @@ EOT;
 
                 if (isset($current_font['C'][$char])) {
                     $char_width = $current_font['C'][$char];
-                } elseif (isset($current_font['C'][0xFFFD])) {
-                    // fffd => replacement character
-                    $char_width = $current_font['C'][0xFFFD];
-                } else {
-                    $char_width = $current_font['C'][0x0020];
-                }
 
-                // add the character width
-                $w += $char_width;
+                    // add the character width
+                    $w += $char_width;
 
-                // add additional padding for space
-                if (isset($current_font['codeToName'][$char]) && $current_font['codeToName'][$char] === 'space') {  // Space
-                    $w += $wordSpacing * $space_scale;
+                    // add additional padding for space
+                    if (isset($current_font['codeToName'][$char]) && $current_font['codeToName'][$char] === 'space') {  // Space
+                        $w += $wordSpacing * $space_scale;
+                    }
                 }
             }
 
@@ -5718,10 +5706,8 @@ EOT;
                 }
             }
 
-            $imagick = new \Imagick();
-            $imagick->setRegistry('temporary-path', $this->tmp);
-            $imagick->setFormat('PNG');
-            $imagick->readImage($file);
+            $imagick = new \Imagick($file);
+            $imagick->setFormat('png');
 
             // Get opacity channel (negative of alpha channel)
             if ($imagick->getImageAlphaChannel()) {
@@ -5731,14 +5717,7 @@ EOT;
                 if (\Imagick::getVersion()['versionNumber'] < 1800) {
                     $alpha_channel->negateImage(true);
                 }
-
-                try {
-                    $alpha_channel->writeImage($tempfile_alpha);
-                } catch (\ImagickException $th) {
-                    // Backwards compatible retry attempt in case the IMagick policy is still configured in lowercase
-                    $alpha_channel->setFormat('png');
-                    $alpha_channel->writeImage($tempfile_alpha);
-                }
+                $alpha_channel->writeImage($tempfile_alpha);
 
                 // Cast to 8bit+palette
                 $imgalpha_ = @imagecreatefrompng($tempfile_alpha);
@@ -5751,7 +5730,6 @@ EOT;
 
             // Make opaque image
             $color_channels = new \Imagick();
-            $color_channels->setRegistry('temporary-path', $this->tmp);
             $color_channels->newImage($wpx, $hpx, "#FFFFFF", "png");
             $color_channels->compositeImage($imagick, \Imagick::COMPOSITE_COPYRED, 0, 0);
             $color_channels->compositeImage($imagick, \Imagick::COMPOSITE_COPYGREEN, 0, 0);
@@ -5909,7 +5887,8 @@ EOT;
     }
 
     /**
-     * add an SVG image into the document from a file
+     * add a PNG image into the document, from a file
+     * this should work with remote files
      *
      * @param $file
      * @param $x
