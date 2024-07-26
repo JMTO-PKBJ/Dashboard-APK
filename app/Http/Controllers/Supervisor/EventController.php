@@ -3,25 +3,25 @@
 namespace App\Http\Controllers\Supervisor;
 
 use App\Http\Controllers\Controller;
-use App\Models\Cctv;
-use App\Models\Event;
+use App\Models\cctv;
+use App\Models\event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
-class EventController extends Controller
+class eventController extends Controller
 {
     public function index()
     {
-        $events = Event::all();
+        $events = event::all();
         return response()->json($events);
         
     }
 
     public function show($event_id)
     {
-        $event = Event::find($event_id);
+        $event = event::find($event_id);
     
         if (!$event) {
             return response()->json(['message' => 'Event not found'], 404);
@@ -41,7 +41,7 @@ class EventController extends Controller
             'event_gambar' => 'required|string|max:255',
         ]);
 
-        $event = Event::create($validatedData);
+        $event = event::create($validatedData);
 
         return response()->json($event, 201);
     }
@@ -56,7 +56,7 @@ class EventController extends Controller
             'event_gambar' => 'sometimes|required|string|max:255',
         ]);
 
-        $event = Event::find($id);
+        $event = event::find($id);
 
         if (!$event) {
             return response()->json(['message' => 'Event not found'], 404);
@@ -69,7 +69,7 @@ class EventController extends Controller
 
     public function destroy($event_id)
     {
-        $event = Event::findOrFail($event_id);
+        $event = event::findOrFail($event_id);
     
         if (!$event) {
             return response()->json(['message' => 'Event not found'], 404);
@@ -83,8 +83,8 @@ class EventController extends Controller
 
     public function show1()
     {
-        $events = Event::all();
-        return view('layouts.supervisor.Event.events', compact('events'));
+        $events = event::all();
+        return view('layouts.supervisor.event.events', compact('events'));
     }
 
     public function searchByDateRange(Request $request)
@@ -98,7 +98,7 @@ class EventController extends Controller
             $startDate = $validatedData['start_date'];
             $endDate = $validatedData['end_date'];
 
-            $events = Event::whereDate('event_waktu', '>=', $startDate)
+            $events = event::whereDate('event_waktu', '>=', $startDate)
                             ->whereDate('event_waktu', '<=', $endDate)
                             ->get();
 
@@ -118,21 +118,21 @@ class EventController extends Controller
         $startDate = $validatedData['start_date'];
         $endDate = $validatedData['end_date'];
 
-        $mostFrequentLocation = Event::select('event_lokasi', DB::raw('count(*) as total'))
+        $mostFrequentLocation = event::select('event_lokasi', DB::raw('count(*) as total'))
             ->whereDate('event_waktu', '>=', $startDate)
             ->whereDate('event_waktu', '<=', $endDate)
             ->groupBy('event_lokasi')
             ->orderBy('total', 'desc')
             ->first();
 
-        $highestEventCount = Event::select(DB::raw('count(*) as total'))
+        $highestEventCount = event::select(DB::raw('count(*) as total'))
             ->whereDate('event_waktu', '>=', $startDate)
             ->whereDate('event_waktu', '<=', $endDate)
             ->groupBy('event_lokasi')
             ->orderBy('total', 'desc')
             ->first();
 
-        $mostFrequentVehicleType = Event::select('event_class', DB::raw('count(*) as total'))
+        $mostFrequentVehicleType = event::select('event_class', DB::raw('count(*) as total'))
             ->whereDate('event_waktu', '>=', $startDate)
             ->whereDate('event_waktu', '<=', $endDate)
             ->groupBy('event_class')
@@ -156,7 +156,7 @@ class EventController extends Controller
         $startDate = $validatedData['start_date'];
         $endDate = $validatedData['end_date'];
 
-        $eventLocations = Event::select('event_lokasi', DB::raw('count(*) as total'))
+        $eventLocations = event::select('event_lokasi', DB::raw('count(*) as total'))
             ->whereDate('event_waktu', '>=', $startDate)
             ->whereDate('event_waktu', '<=', $endDate)
             ->groupBy('event_lokasi')
@@ -180,7 +180,7 @@ class EventController extends Controller
         $startDate = $validatedData['start_date'];
         $endDate = $validatedData['end_date'];
 
-        $eventClasses = Event::select('event_class', DB::raw('count(*) as total'))
+        $eventClasses = event::select('event_class', DB::raw('count(*) as total'))
             ->whereDate('event_waktu', '>=', $startDate)
             ->whereDate('event_waktu', '<=', $endDate)
             ->groupBy('event_class')
@@ -203,7 +203,7 @@ class EventController extends Controller
     {
         $ruas = $request->get('ruas');
 
-        $locations = Event::whereHas('cctv', function ($query) use ($ruas) {
+        $locations = event::whereHas('cctv', function ($query) use ($ruas) {
             $query->where('cctv_ruas', $ruas);
         })->distinct()->pluck('event_lokasi');
 
@@ -224,7 +224,7 @@ class EventController extends Controller
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
 
-        $query = Event::whereHas('cctv', function ($query) use ($ruas) {
+        $query = event::whereHas('cctv', function ($query) use ($ruas) {
             $query->where('cctv_ruas', $ruas);
         })
         ->where('event_lokasi', $location);
@@ -245,7 +245,7 @@ class EventController extends Controller
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
 
-        $query = Event::whereHas('cctv', function ($query) use ($ruas) {
+        $query = event::whereHas('cctv', function ($query) use ($ruas) {
             $query->where('cctv_ruas', $ruas);
         })
         ->where('event_lokasi', $location);

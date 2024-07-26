@@ -3,25 +3,25 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Cctv;
+use App\Models\cctv;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
-class CctvController extends Controller
+class cctvController extends Controller
 {
     public function index()
     {
-        return Cctv::all();
+        return cctv::all();
     }
 
     public function create()
-{
-    $cctvRuas = Cctv::pluck('cctv_ruas')->unique();
-    $cctvLokasi = Cctv::pluck('cctv_lokasi')->unique();
-    $cctvs = Cctv::all(); 
+    {
+        $cctvRuas = cctv::pluck('cctv_ruas')->unique();
+        $cctvLokasi = cctv::pluck('cctv_lokasi')->unique();
+        $cctvs = cctv::all(); 
 
-    return view('layouts.admin.Cctv.addCCTV', compact('cctvRuas', 'cctvLokasi', 'cctvs'));
-}
+        return view('layouts.admin.cctv.addCCTV', compact('cctvRuas', 'cctvLokasi', 'cctvs'));
+    }
 
 public function store(Request $request){
     $validator = Validator::make($request->all(), [
@@ -35,7 +35,7 @@ public function store(Request $request){
         return redirect()->back()->withErrors($validator)->withInput();
     }
     
-        $cctv = Cctv::create([
+        $cctv = cctv::create([
             'cctv_ruas' => $request->cctv_ruas,
             'roles_id' => 1, 
             'cctv_lokasi' => $request->cctv_lokasi,
@@ -48,7 +48,7 @@ public function store(Request $request){
 
     public function show($id)
     {
-        $cctv = Cctv::find($id);
+        $cctv = cctv::find($id);
 
         if (!$cctv) {
             return response()->json(['error' => 'Cctv not found'], 404);
@@ -59,7 +59,7 @@ public function store(Request $request){
 
     public function update(Request $request, $id)
     {
-        $cctv = Cctv::find($id);
+        $cctv = cctv::find($id);
 
         if (!$cctv) {
             return response()->json(['error' => 'Cctv not found'], 404);
@@ -84,7 +84,7 @@ public function store(Request $request){
 
     public function destroy($id)
     {
-        $cctv = Cctv::find($id);
+        $cctv = cctv::find($id);
 
         if (!$cctv) {
             return response()->json(['error' => 'Cctv not found'], 404);
@@ -97,14 +97,14 @@ public function store(Request $request){
 
     public function showByLocation($lokasi)
     {
-        $cctvs = Cctv::where('cctv_lokasi', $lokasi)->get();
+        $cctvs = cctv::where('cctv_lokasi', $lokasi)->get();
 
         return response()->json($cctvs);
     }
 
     public function showPage($id)
     {
-        $cctv = Cctv::find($id);
+        $cctv = cctv::find($id);
 
         if (!$cctv) {
             abort(404);
@@ -115,13 +115,13 @@ public function store(Request $request){
 
     public function showAll()
     {
-        $cctvs = Cctv::all();
-        return view('layouts.admin.Cctv.viewCCTV', compact('cctvs'));
+        $cctvs = cctv::all();
+        return view('layouts.admin.cctv.viewCCTV', compact('cctvs'));
     }
 
     public function showAdd()
     {
-        $cctvs = Cctv::all();
-        return view('layouts.admin.Cctv.addCCTV', compact('cctvs'));
+        $cctvs = cctv::all();
+        return view('layouts.admin.cctv.addCCTV', compact('cctvs'));
     }
 }

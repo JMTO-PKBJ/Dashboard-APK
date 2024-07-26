@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\User;
+use App\Models\user;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -28,7 +28,7 @@ class UserController extends Controller
             'role_id' => 'required|integer|exists:roles,id',
         ]);
 
-        $user = User::create([
+        $user = user::create([
             'username' => $request->username,
             'password' => Hash::make($request->password),
             'role_id' => $request->role_id,
@@ -84,7 +84,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::latest()->get();
+        $users = user::latest()->get();
         $users = $users->map(function ($user) {
             return [
                 'id' => $user->id,
@@ -98,7 +98,7 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
+        $user = user::findOrFail($id);
         
 
         $validator = Validator::make($request->all(), [
@@ -131,7 +131,7 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
+        $user = user::findOrFail($id);
         $user->delete();
 
         if ($user) {
@@ -143,7 +143,7 @@ class UserController extends Controller
 
     public function showAll()
     {
-        $users = User::latest()->get();
+        $users = user::latest()->get();
         $users = $users->map(function ($user) {
             return [
                 'id' => $user->id,
@@ -157,7 +157,7 @@ class UserController extends Controller
 
     public function exportUsersCsv()
     {
-        $users = User::all();
+        $users = user::all();
         $csvData = "No,Username,Role\n";
         $index = 1;
     
