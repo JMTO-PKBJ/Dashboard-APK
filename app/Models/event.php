@@ -15,6 +15,6 @@ class event extends Model
 
     public function cctv()
     {
-        return $this->belongsTo(CCTV::class, 'cctv_id');
+        return $this->belongsTo(cctv::class, 'cctv_id');
     }
 }
