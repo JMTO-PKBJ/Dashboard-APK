@@ -27,7 +27,7 @@
                         <img class="my-4" style="width: 35%" src="{{ asset('images/jasamarga_icon.png') }}" alt="">
                         <h1 style="font-size: 18px; font-style: italic; font-weight:400; color:#000000;">Login</h1>
 
-                        <form class="row my-2 d-flex flex-column justify-content-center align-items-center" method="POST" action="{{ route('login') }}"">
+                        <form class="row my-2 d-flex flex-column justify-content-center align-items-center" method="POST" action="{{ route('login') }}">
                             @csrf
                             <div>
                                 <div class="my-2">
