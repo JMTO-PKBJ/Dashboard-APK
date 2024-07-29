@@ -33,6 +33,8 @@ Route::middleware(['revalidate','auth'])->group(function(){
                 Route::get('/users', [UserController::class, 'showAll'])->name('users');
                 Route::get('/addUser', [UserController::class, 'showAddUserForm'])->name('addUser');
                 Route::post('/register', [UserController::class, 'register'])->name('user.register');
+                Route::put('/users/{id}', [UserController::class, 'update'])->name('user.edit');;
+                Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('user.delete');;
             });
         
             Route::group([
